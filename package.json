@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "dev:web": "turbo dev --filter=@polybet/web",
-    "dev:docs": "turbo dev --filter=@polybet/docs",
     "dev:desktop": "turbo dev --filter=@polybet/desktop",
     "dev:desktop:staging": "turbo dev:staging --filter=@polybet/desktop",
     "build": "turbo build",
