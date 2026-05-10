@@ -26,7 +26,7 @@ import (
 	"github.com/easyspace-ai/polybet/internal/store"
 )
 
-// Engine runs periodic Polymarket Gamma sync (SX execution intentionally omitted).
+// Engine runs periodic Polymarket Gamma sync.
 type Engine struct {
 	cfg    *config.Config
 	st     *store.Store

@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { LineChart, History as HistoryIcon, Settings as SettingsIcon, Shield, Wallet } from 'lucide-react';
 import { cn } from '../lib/utils';
-import { GITHUB_REPO_URL, X_PROFILE_URL } from '../lib/constants';
+import { GITHUB_REPO_URL } from '../lib/constants';
 
 const isPublic = import.meta.env.VITE_PUBLIC_MODE === 'true';
 
@@ -11,20 +11,6 @@ const isElectron =
 const isMacElectron =
   isElectron &&
   (navigator.platform.startsWith('Mac') || navigator.userAgent.includes('Mac OS'));
-
-function XIcon({ size = 16 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z" />
-    </svg>
-  );
-}
 
 // Official GitHub mark (inline SVG — lucide-react no longer ships brand icons due to trademark concerns)
 function GithubIcon({ size = 16 }: { size?: number }) {
@@ -69,7 +55,7 @@ export function Layout() {
       <div className="flex min-h-0 min-w-0 flex-1 flex-col md:flex-row">
         {/* Mobile top header (≤md). Hidden on desktop. */}
         <header className="md:hidden h-11 shrink-0 flex items-center justify-between px-3 bg-tm-bg-sunk border-b border-tm-bd">
-          <span className="font-mono text-[11px] font-bold tracking-[0.18em] text-tm-sx">SPMA</span>
+          <span className="font-mono text-[11px] font-bold tracking-[0.18em] text-tm-accent">SPMA</span>
           <div className="flex items-center gap-3">
             {isPublic && (
               <a
@@ -95,7 +81,7 @@ export function Layout() {
         {/* Desktop left rail (≥md). Hidden on mobile. */}
         <aside className="hidden md:flex w-14 shrink-0 flex-col items-stretch bg-tm-bg-sunk border-r border-tm-bd">
           <div className="h-10 flex items-center justify-center border-b border-tm-bd">
-            <span className="font-mono text-[10px] font-bold tracking-[0.15em] text-tm-sx">SPMA</span>
+            <span className="font-mono text-[10px] font-bold tracking-[0.15em] text-tm-accent">SPMA</span>
           </div>
 
           <nav className="flex-1 flex flex-col py-2">
@@ -108,7 +94,7 @@ export function Layout() {
                   cn(
                     'relative flex flex-col items-center justify-center gap-1 py-3 transition-colors',
                     'text-tm-tx-mut hover:text-tm-tx hover:bg-tm-bg-el/60',
-                    isActive && 'text-tm-tx bg-tm-bg-el border-l-2 border-tm-sx',
+                    isActive && 'text-tm-tx bg-tm-bg-el border-l-2 border-tm-accent',
                   )
                 }
               >
@@ -132,27 +118,13 @@ export function Layout() {
             </a>
           )}
 
-          {isPublic ? (
-            <a
-              href={X_PROFILE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="在 X 关注 @Declan_SX"
-              title="在 X 关注 @Declan_SX"
-              className="flex flex-col items-center justify-center gap-1 py-3 border-t border-tm-bd text-tm-tx-mut hover:text-tm-tx hover:bg-tm-bg-el/60 transition-colors"
-            >
-              <XIcon size={16} />
-              <span className="font-mono text-[9px] font-semibold tracking-[0.1em]">私信</span>
-            </a>
-          ) : (
-            <div className="h-12 border-t border-tm-bd flex flex-col items-center justify-center gap-1">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inset-0 rounded-full bg-tm-pos animate-tm-pulse" />
-                <span className="relative rounded-full h-1.5 w-1.5 bg-tm-pos" />
-              </span>
-              <span className="font-mono text-[8px] tracking-[0.1em] text-tm-tx-mut">在线</span>
-            </div>
-          )}
+          <div className="h-12 border-t border-tm-bd flex flex-col items-center justify-center gap-1">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inset-0 rounded-full bg-tm-pos animate-tm-pulse" />
+              <span className="relative rounded-full h-1.5 w-1.5 bg-tm-pos" />
+            </span>
+            <span className="font-mono text-[8px] tracking-[0.1em] text-tm-tx-mut">在线</span>
+          </div>
         </aside>
 
         <main className="flex-1 min-w-0 overflow-y-auto pb-14 md:pb-0">
@@ -180,7 +152,7 @@ export function Layout() {
               {({ isActive }) => (
                 <>
                   {isActive && (
-                    <span className="absolute top-0 left-4 right-4 h-0.5 bg-tm-sx" />
+                    <span className="absolute top-0 left-4 right-4 h-0.5 bg-tm-accent" />
                   )}
                   <Icon size={20} strokeWidth={1.75} />
                   <span className="font-mono text-[9px] font-semibold tracking-[0.1em]">{label}</span>

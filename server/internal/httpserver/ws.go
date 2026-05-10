@@ -9,7 +9,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 
-	"github.com/easyspace-ai/polybet/internal/fixturecache"
 	"github.com/easyspace-ai/polybet/internal/service/marketsvc"
 	"github.com/easyspace-ai/polybet/internal/service/risksvc"
 )
@@ -47,7 +46,6 @@ func registerWS(r *gin.Engine, d Deps) {
 			slog.Warn("ws_dash_markets_snapshot_build_failed", "request_id", rid, "err", err.Error())
 		}
 		_ = conn.WriteJSON(map[string]any{"type": "snapshot", "data": []any{}})
-		_ = conn.WriteJSON(map[string]any{"type": "fixtureSnapshot", "data": fixturecache.Global.All()})
 		_, _, _ = d.Risk.ListRiskPositionsEnriched(c, meta)
 
 		conn.SetReadDeadline(time.Now().Add(120 * time.Second))

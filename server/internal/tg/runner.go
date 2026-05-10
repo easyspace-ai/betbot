@@ -84,9 +84,9 @@ func sendStatus(ctx context.Context, hc *http.Client, token, chatID string, st *
 	if err != nil || t == nil {
 		msg += "Last trade: No trades yet"
 	} else {
-		plat := "Polymarket"
-		if t.Platform == "sx" {
-			plat = "SX Bet"
+		plat := t.Platform
+		if plat == "polymarket" {
+			plat = "Polymarket"
 		}
 		odds := fmt.Sprintf("%.1f%% (req)", t.RequestedOdds*100)
 		if t.FillOdds.Valid {

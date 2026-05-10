@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/easyspace-ai/polybet/internal/bookcache"
-	"github.com/easyspace-ai/polybet/internal/fixturecache"
 	"github.com/easyspace-ai/polybet/internal/store"
 )
 
@@ -47,29 +46,17 @@ func BuildMarketsPayload(ctx context.Context, st *store.Store, cache *bookcache.
 		if m.Line.Valid {
 			line = m.Line.Float64
 		}
-		sx := interface{}(nil)
-		if m.SxEventID.Valid && m.SxEventID.String != "" {
-			sx = m.SxEventID.String
-		}
-		var fx any
-		if m.SxEventID.Valid && m.SxEventID.String != "" {
-			if row, ok := fixturecache.Global.Get(m.SxEventID.String); ok {
-				fx = row
-			}
-		}
 		out = append(out, map[string]any{
 			"id": m.ID, "eventId": m.EventID, "platform": m.Platform, "externalId": m.ExternalID,
 			"sport": m.Sport, "league": m.League,
 			"homeTeam": m.HomeTeam, "awayTeam": m.AwayTeam,
 			"name": m.HomeTeam + " vs " + m.AwayTeam,
-			"startTime":    m.StartTime,
-			"status":       m.Status,
-			"betType":      m.BetType,
-			"line":         line,
-			"mainLine":     m.MainLine != 0,
-			"sxEventId":    sx,
-			"fixtureState": fx,
-			"outcomes":     arr,
+			"startTime": m.StartTime,
+			"status":    m.Status,
+			"betType":   m.BetType,
+			"line":      line,
+			"mainLine":  m.MainLine != 0,
+			"outcomes":  arr,
 		})
 	}
 	return out, nil

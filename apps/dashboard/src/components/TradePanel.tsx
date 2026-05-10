@@ -7,23 +7,9 @@ import { formatOdds } from '../lib/oddsFormat';
 import { useOddsFormat } from '../hooks/useOddsFormat';
 import { usePolyOrderBook } from '../hooks/useOrderBook';
 import { VenueLogo } from './VenueLogo';
-import { GITHUB_REPO_URL, X_PROFILE_URL, X_HANDLE } from '../lib/constants';
+import { GITHUB_REPO_URL } from '../lib/constants';
 
 const isPublic = import.meta.env.VITE_PUBLIC_MODE === 'true';
-
-function XMark({ size = 14 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z" />
-    </svg>
-  );
-}
 
 // Inline official GitHub mark — lucide-react no longer ships brand icons due to trademark.
 function GithubMark({ size = 14 }: { size?: number }) {
@@ -69,10 +55,8 @@ function simulateFill(levels: OrderBookLevel[], size: number): AnnotatedLevel[] 
   });
 }
 
-function venueChip(platform: 'sx' | 'polymarket'): { text: string; bg: string; border: string } {
-  return platform === 'polymarket'
-    ? { text: 'text-tm-poly', bg: 'bg-tm-poly/15', border: 'border-tm-poly' }
-    : { text: 'text-tm-sx', bg: 'bg-tm-sx/15', border: 'border-tm-sx' };
+function venueChip(): { text: string; bg: string; border: string } {
+  return { text: 'text-tm-poly', bg: 'bg-tm-poly/15', border: 'border-tm-poly' };
 }
 
 export function TradePanel({ outcomeId, outcomeLabel, onTradeExecuted, hideHeader }: TradePanelProps) {
@@ -219,7 +203,7 @@ export function TradePanel({ outcomeId, outcomeLabel, onTradeExecuted, hideHeade
           <p className="px-4 py-3 font-mono text-[11px] text-tm-tx-dim">暂无深度数据</p>
         ) : (
           annotated.slice(0, 10).map((a, i) => {
-            const chip = venueChip(a.level.platform);
+            const chip = venueChip();
             const decimal = formatOdds(a.level.odds, oddsFmt);
             const isFilled = a.status !== 'unfilled';
             // Mobile caps at 5 levels, desktop at 10. Render up to 10 always; rows past
@@ -235,7 +219,7 @@ export function TradePanel({ outcomeId, outcomeLabel, onTradeExecuted, hideHeade
                 )}
               >
                 <span className="inline-flex items-center justify-center w-8">
-                  <VenueLogo platform={a.level.platform} size={16} />
+                  <VenueLogo size={16} />
                 </span>
                 <span className={cn('font-mono text-[12px] font-semibold', isFilled ? chip.text : 'text-tm-tx')}>
                   {decimal}
@@ -245,10 +229,7 @@ export function TradePanel({ outcomeId, outcomeLabel, onTradeExecuted, hideHeade
                 </span>
                 <div className="h-1.5 rounded-full bg-tm-bd overflow-hidden">
                   <div
-                    className={cn(
-                      'h-full rounded-full transition-all',
-                      a.level.platform === 'polymarket' ? 'bg-tm-poly' : 'bg-tm-sx',
-                    )}
+                    className={cn('h-full rounded-full transition-all', 'bg-tm-poly')}
                     style={{ width: `${(a.fillFraction * 100).toFixed(0)}%` }}
                   />
                 </div>
@@ -269,28 +250,19 @@ export function TradePanel({ outcomeId, outcomeLabel, onTradeExecuted, hideHeade
             GitHub 仓库自行部署或二次开发。
           </p>
           <p className="text-[12px] text-tm-tx-dim leading-relaxed">
-            问题、建议或缺陷欢迎在 GitHub 提 Issue，或通过 X 私信联系。
+            问题、建议或缺陷欢迎在 GitHub 提 Issue。
           </p>
           <p className="font-mono text-[10px] text-tm-tx-mut truncate">
-            declansx/sports-prediction-market-aggregator
+            easyspace-ai/polybet
           </p>
           <a
             href={GITHUB_REPO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full font-mono text-[11px] font-semibold tracking-[0.15em] uppercase rounded-[var(--tm-rad)] border border-tm-bd bg-tm-bg-el text-tm-tx hover:bg-tm-sx hover:text-tm-bg hover:border-tm-sx transition-colors px-3 py-2.5"
+            className="flex items-center justify-center gap-2 w-full font-mono text-[11px] font-semibold tracking-[0.15em] uppercase rounded-[var(--tm-rad)] border border-tm-bd bg-tm-bg-el text-tm-tx hover:bg-tm-accent hover:text-tm-bg hover:border-tm-accent transition-colors px-3 py-2.5"
           >
             <GithubMark size={14} />
             <span>在 GitHub 查看 ↗</span>
-          </a>
-          <a
-            href={X_PROFILE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full font-mono text-[11px] font-semibold tracking-[0.15em] uppercase rounded-[var(--tm-rad)] border border-tm-bd bg-tm-bg-el text-tm-tx hover:bg-tm-sx hover:text-tm-bg hover:border-tm-sx transition-colors px-3 py-2.5"
-          >
-            <XMark size={14} />
-            <span>{X_HANDLE}</span>
           </a>
         </div>
       ) : (

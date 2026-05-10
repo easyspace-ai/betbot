@@ -17,7 +17,6 @@ import (
 	"github.com/easyspace-ai/polybet/internal/service/risksvc"
 	"github.com/easyspace-ai/polybet/internal/store"
 	marketsync "github.com/easyspace-ai/polybet/internal/sync"
-	"github.com/easyspace-ai/polybet/internal/sxfxt"
 	"github.com/easyspace-ai/polybet/internal/tg"
 	"github.com/easyspace-ai/polybet/internal/wsrelay"
 )
@@ -128,11 +127,6 @@ func (a *App) Run(ctx context.Context) error {
 	go a.polyWSLoop(ctx)
 	a.wg.Add(1)
 	go a.polyUserWSLoop(ctx)
-	a.wg.Add(1)
-	go func() {
-		defer a.wg.Done()
-		sxfxt.Run(ctx, a.Cfg, a.Store, a.Hub, a.Log)
-	}()
 	a.wg.Add(1)
 	go func() {
 		defer a.wg.Done()

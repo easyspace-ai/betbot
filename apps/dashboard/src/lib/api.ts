@@ -9,24 +9,6 @@ export interface MarketOutcome {
   canonicalKey?: string | null;
 }
 
-export interface FixturePeriod {
-  label: string;
-  isFinished: boolean;
-  teamOneScore: string;
-  teamTwoScore: string;
-}
-
-export interface FixtureState {
-  sxEventId: string;
-  status: number;
-  teamOneScore: number;
-  teamTwoScore: number;
-  currentPeriod: string;
-  periodTime: string;
-  periods: FixturePeriod[];
-  updatedAt: number;
-}
-
 export interface Market {
   id: string;
   platform: string;
@@ -39,8 +21,6 @@ export interface Market {
   betType?: string;
   line?: number | null;
   mainLine?: boolean;
-  sxEventId?: string | null;
-  fixtureState?: FixtureState | null;
   outcomes: MarketOutcome[];
 }
 
@@ -104,13 +84,11 @@ export interface TradesResponse {
 export interface OrderBookLevel {
   odds: number;
   size: number;
-  platform: 'sx' | 'polymarket';
+  platform: 'polymarket';
 }
 
 export interface OrderBookResponse {
   levels: OrderBookLevel[];
-  sxMarketHash?: string;
-  sxSide?: 0 | 1;
   polyTokenId?: string;
 }
 
@@ -207,13 +185,12 @@ export const deletePolymarketAccount = async (id: string): Promise<void> => {
 };
 
 export interface BestOddsCount {
-  sx: number;
   poly: number;
   total: number;
 }
 
 export interface WinnerEdgeDepth {
-  venue: 'sx' | 'poly';
+  venue: 'poly';
   avgSize: number;
   sampleCount: number;
 }

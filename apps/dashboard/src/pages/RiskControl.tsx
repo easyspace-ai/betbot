@@ -450,7 +450,7 @@ export function RiskControl() {
                   className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 font-mono text-[10px] text-tm-tx border-b border-tm-bd/50 pb-1.5 last:border-0"
                 >
                   <span className="text-tm-tx-dim shrink-0">{t.updatedAt.slice(5, 16)}</span>
-                  <span className="font-semibold text-tm-sx">{t.type}</span>
+                  <span className="font-semibold text-tm-accent">{t.type}</span>
                   <span
                     className={cn(
                       'uppercase text-[9px]',

@@ -59,7 +59,7 @@ export default {
         'tm-tx':      'hsl(var(--tm-tx) / <alpha-value>)',
         'tm-tx-dim':  'hsl(var(--tm-tx-dim) / <alpha-value>)',
         'tm-tx-mut':  'hsl(var(--tm-tx-mut) / <alpha-value>)',
-        'tm-sx':      'hsl(var(--tm-sx) / <alpha-value>)',
+        'tm-accent':  'hsl(var(--tm-accent) / <alpha-value>)',
         'tm-poly':    'hsl(var(--tm-poly) / <alpha-value>)',
         'tm-pos':     'hsl(var(--tm-pos) / <alpha-value>)',
         'tm-neg':     'hsl(var(--tm-neg) / <alpha-value>)',

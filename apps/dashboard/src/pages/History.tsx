@@ -70,7 +70,6 @@ function sideLabelZh(side: string): string {
 
 function TradeRow({ t }: { t: Trade }) {
   const [oddsFmt] = useOddsFormat();
-  const isSx = t.platform === 'sx';
   const size = t.executedSize != null ? t.executedSize : t.requestedSize;
   const statusLabel = statusLabelZh(t.status);
 
@@ -87,12 +86,12 @@ function TradeRow({ t }: { t: Trade }) {
         {t.outcomeLabel}
       </span>
       <span className="flex items-center">
-        <VenueLogo platform={isSx ? 'sx' : 'polymarket'} size={18} />
+        <VenueLogo size={18} />
       </span>
       <span
         className={cn(
           'font-mono text-[10px] font-semibold',
-          t.side === 'buy' ? 'text-tm-sx' : 'text-tm-tx-dim',
+          t.side === 'buy' ? 'text-tm-accent' : 'text-tm-tx-dim',
         )}
       >
         {sideLabelZh(t.side)}

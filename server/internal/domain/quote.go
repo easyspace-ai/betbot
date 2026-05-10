@@ -31,6 +31,5 @@ type MarketQuote struct {
 	Line         *float64
 	MainLine     bool
 	Outcomes     []OutcomeOdds
-	SxEventID    string
 	PolyEventID  string
 }

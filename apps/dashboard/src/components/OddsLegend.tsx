@@ -12,18 +12,12 @@ export function OddsLegend({ className }: OddsLegendProps) {
         'inline-flex items-center gap-2 font-mono text-[10px] tracking-wider text-tm-tx-mut',
         className,
       )}
-      title="盘口颜色表示当前更优报价所在平台"
+      title="盘口来自 Polymarket CLOB"
     >
-      <span className="text-tm-tx-dim">最优盘</span>
-      <span className="inline-flex items-center gap-1">
-        <span className="inline-block w-2 h-2 rounded-sm bg-tm-sx" />
-        <VenueLogo platform="sx" size={12} />
-        <span className="text-tm-sx">SX</span>
-      </span>
-      <span className="text-tm-bd-st">·</span>
+      <span className="text-tm-tx-dim">报价</span>
       <span className="inline-flex items-center gap-1">
         <span className="inline-block w-2 h-2 rounded-sm bg-tm-poly" />
-        <VenueLogo platform="polymarket" size={12} />
+        <VenueLogo size={12} />
         <span className="text-tm-poly">POLY</span>
       </span>
     </div>

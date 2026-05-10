@@ -59,7 +59,7 @@ export function Setup() {
   function skipProxy() {
     toast({
       title: '已跳过',
-      description: '未配置代理时，访问 Polymarket / SX 等外网需本机可直接连通；若环境需要代理，稍后在「设置」中补全。',
+      description: '未配置代理时，访问 Polymarket 等外网需本机可直接连通；若环境需要代理，稍后在「设置」中补全。',
       variant: 'default',
     });
     setStep(2);
@@ -130,7 +130,7 @@ export function Setup() {
     <div className="min-h-screen bg-tm-bg text-tm-tx flex flex-col">
       <header className="shrink-0 border-b border-tm-bd px-4 py-3 flex items-center justify-between gap-4">
         <div>
-          <h1 className="font-mono text-[11px] font-semibold tracking-[0.2em] text-tm-sx">首次安装</h1>
+          <h1 className="font-mono text-[11px] font-semibold tracking-[0.2em] text-tm-accent">首次安装</h1>
           <p className="font-mono text-[10px] text-tm-tx-mut mt-0.5">完成后再启动行情同步、实时通道与风控任务</p>
         </div>
         <div className="font-mono text-[9px] text-tm-tx-dim">
@@ -143,7 +143,7 @@ export function Setup() {
           <section className="space-y-4 rounded-sm border border-tm-bd bg-tm-bg-el p-4">
             <h2 className="font-mono text-[10px] font-semibold tracking-[0.15em] text-tm-tx-mut">1. 出站 HTTP 代理（可选）</h2>
             <p className="font-mono text-[10px] text-tm-tx-dim leading-relaxed">
-              若本机访问 Polymarket / SX 需要 HTTP(S) CONNECT 代理，在此填写（与「设置」中的 httpPlatformProxyUrl 相同）。仅保存到本机 SQLite，不经过外网。
+              若本机访问 Polymarket 需要 HTTP(S) CONNECT 代理，在此填写（与「设置」中的 httpPlatformProxyUrl 相同）。仅保存到本机 SQLite，不经过外网。
             </p>
             <input
               value={proxyUrl}
@@ -207,7 +207,7 @@ export function Setup() {
           <section className="space-y-4 rounded-sm border border-tm-bd bg-tm-bg-el p-4">
             <h2 className="font-mono text-[10px] font-semibold tracking-[0.15em] text-tm-tx-mut">3. 进入应用</h2>
             <p className="font-mono text-[10px] text-tm-tx-dim leading-relaxed">
-              确认后将标记安装完成，并启动市场同步、SX / Polymarket 实时连接、用户订单 WebSocket 与风控定时任务。之后仍可在「设置」「账号」中修改。
+              确认后将标记安装完成，并启动市场同步、Polymarket 实时连接、用户订单 WebSocket 与风控定时任务。之后仍可在「设置」「账号」中修改。
             </p>
             <div className="flex flex-wrap gap-2">
               <Button type="button" size="sm" className="h-8 text-[10px]" disabled={saving} onClick={() => void finish()}>

@@ -37,9 +37,6 @@ type Config struct {
 	PolymarketAPIURL  string
 	PolymarketCLOBWS  string
 	HTTPPlatformProxy string
-	SXBetAPIURL       string
-	SXBetAPIKey       string
-	SXBetWSURL        string
 	TelegramBotToken  string
 	TelegramChatID    string
 	ChainID           int64
@@ -89,10 +86,6 @@ func Load() (*Config, error) {
 	if rpc == "" {
 		rpc = "https://polygon-rpc.com"
 	}
-	sxURL := strings.TrimSpace(os.Getenv("SX_BET_API_URL"))
-	if sxURL == "" {
-		sxURL = "https://api.sx.bet"
-	}
 	return &Config{
 		PolyPrivateKey:    strings.TrimSpace(os.Getenv("POLYMARKET_PRIVATE_KEY")),
 		PolyAPIKey:        strings.TrimSpace(os.Getenv("POLYMARKET_API_KEY")),
@@ -110,9 +103,6 @@ func Load() (*Config, error) {
 		PolymarketAPIURL:  polyAPI,
 		PolymarketCLOBWS:  polyWS,
 		HTTPPlatformProxy: OutboundProxyURL(),
-		SXBetAPIURL:       sxURL,
-		SXBetAPIKey:       strings.TrimSpace(os.Getenv("SX_BET_API_KEY")),
-		SXBetWSURL:        strings.TrimSpace(os.Getenv("SX_BET_WS_URL")),
 		TelegramBotToken:  strings.TrimSpace(os.Getenv("TELEGRAM_BOT_TOKEN")),
 		TelegramChatID:    strings.TrimSpace(os.Getenv("TELEGRAM_AUTHORIZED_CHAT_ID")),
 		ChainID:           chainID,

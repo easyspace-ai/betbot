@@ -426,8 +426,8 @@ func NewRouter(d Deps) *gin.Engine {
 
 		api.GET("/stats/markets", func(c *gin.Context) {
 			c.JSON(200, gin.H{
-				"bestOddsMatched24h":    gin.H{"sx": 0, "poly": 0, "total": 0},
-				"bestOddsAllMatched24h": gin.H{"sx": 0, "poly": 0, "total": 0},
+				"bestOddsMatched24h":    gin.H{"poly": 0, "total": 0},
+				"bestOddsAllMatched24h": gin.H{"poly": 0, "total": 0},
 				"edgeMatched24h":        nil,
 				"edgeAllMatched24h":     nil,
 			})

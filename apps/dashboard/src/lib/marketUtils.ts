@@ -5,7 +5,6 @@ export interface MatchGroup {
   sport: string;
   league: string;
   startTime: string;
-  sxEventId?: string;
   outcomes: OutcomeRow[];
 }
 
@@ -14,7 +13,6 @@ export interface OutcomeRow {
   label: string;
   betType?: string;
   line?: number | null;
-  sx?: { impliedOdds: number; availableSize: number };
   polymarket?: { impliedOdds: number; availableSize: number };
   outcomeId: string;
   mainLine: boolean;
@@ -38,7 +36,7 @@ function mergePlatformOdds(
   if (!existing) return { ...next };
   // Best odds win (lowest implied probability = highest payout). Sum size
   // across siblings on the same platform (per-team binary markets on Poly,
-  // opposite-direction spread markets on SX).
+  // opposite-direction spread markets).
   const better = next.impliedOdds > 0 && (existing.impliedOdds === 0 || next.impliedOdds < existing.impliedOdds);
   return {
     impliedOdds: better ? next.impliedOdds : existing.impliedOdds,
@@ -60,7 +58,7 @@ export function matchGroupKey(
 ): string {
   const parts = name.split(' vs ');
   const teamKey = parts.length === 2 ? [...parts].sort().join('\x00') : name;
-  // Bucket by 6 hours so same-game SX/Poly events (which can have slightly
+  // Bucket by 6 hours so same-game events (which can have slightly
   // different startTimes due to platform reporting) merge while DIFFERENT
   // games (e.g. a 3-game series on consecutive days) stay separate.
   const t = new Date(startTime).getTime();
@@ -79,12 +77,10 @@ export function groupMarkets(markets: Market[]): MatchGroup[] {
         sport: m.sport,
         league: m.league,
         startTime: m.startTime,
-        sxEventId: m.sxEventId ?? undefined,
         outcomes: [],
       });
     }
     const group = byKey.get(key)!;
-    if (!group.sxEventId && m.sxEventId) group.sxEventId = m.sxEventId;
 
     for (const o of m.outcomes) {
       const key = outcomeMergeKey(o.canonicalKey, m.betType, m.line, o.label);
@@ -105,13 +101,9 @@ export function groupMarkets(markets: Market[]): MatchGroup[] {
       }
       if (m.mainLine) existing.mainLine = true;
       const next = { impliedOdds: o.impliedOdds, availableSize: o.availableSize };
-      if (m.platform === 'sx') {
-        existing.sx = mergePlatformOdds(existing.sx, next);
-      } else {
+      if (m.platform === 'polymarket') {
         existing.polymarket = mergePlatformOdds(existing.polymarket, next);
-        // Only switch the trade-target outcomeId to a Poly id if we still
-        // have no SX outcome on this row (router can route from either).
-        if (!existing.sx) existing.outcomeId = o.id;
+        existing.outcomeId = o.id;
       }
     }
   }
@@ -122,21 +114,12 @@ export function groupMarkets(markets: Market[]): MatchGroup[] {
 }
 
 export function getBestOdds(row: OutcomeRow): {
-  platform: 'sx' | 'polymarket';
+  platform: 'polymarket';
   impliedOdds: number;
   availableSize: number;
 } | null {
-  const sxValid = row.sx && row.sx.impliedOdds > 0;
   const polyValid = row.polymarket && row.polymarket.impliedOdds > 0;
-
-  if (sxValid && polyValid) {
-    return row.sx!.impliedOdds <= row.polymarket!.impliedOdds
-      ? { platform: 'sx', ...row.sx! }
-      : { platform: 'polymarket', ...row.polymarket! };
-  }
-  if (sxValid) return { platform: 'sx', ...row.sx! };
   if (polyValid) return { platform: 'polymarket', ...row.polymarket! };
-  if (row.sx) return { platform: 'sx', ...row.sx };
   if (row.polymarket) return { platform: 'polymarket', ...row.polymarket };
   return null;
 }

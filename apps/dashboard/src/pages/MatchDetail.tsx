@@ -11,14 +11,8 @@ import {
 import { cn } from '../lib/utils';
 import { formatOdds } from '../lib/oddsFormat';
 import { useOddsFormat } from '../hooks/useOddsFormat';
-import { LiveMatchHeader } from '../components/LiveMatchHeader';
 import { VenueLogo } from '../components/VenueLogo';
 import { OddsLegend } from '../components/OddsLegend';
-import { type FixtureState } from '../lib/wsBus';
-
-const IN_PLAY_STATUS = 2;
-
-type Platform = 'sx' | 'polymarket';
 
 interface BestCardProps {
   outcome: OutcomeRow;
@@ -32,8 +26,7 @@ function BestCard({ outcome, matchName, columnLabel, selection, onOddsClick }: B
   const [format] = useOddsFormat();
   const best = getBestOdds(outcome);
   const decimal = best && best.impliedOdds > 0 ? formatOdds(best.impliedOdds, format) : null;
-  const platform: Platform = best?.platform === 'polymarket' ? 'polymarket' : 'sx';
-  const accentBorder = decimal ? (platform === 'sx' ? 'border-l-tm-sx' : 'border-l-tm-poly') : 'border-l-tm-bd';
+  const accentBorder = decimal ? 'border-l-tm-poly' : 'border-l-tm-bd';
   const isSelected = selection?.outcomeId === outcome.outcomeId;
 
   return (
@@ -45,9 +38,7 @@ function BestCard({ outcome, matchName, columnLabel, selection, onOddsClick }: B
         accentBorder,
         'rounded-[var(--tm-rad)] text-left transition-all',
         decimal && 'hover:bg-tm-bg-el/80 hover:border-tm-bd-st cursor-pointer',
-        isSelected && (platform === 'sx'
-          ? 'ring-1 ring-tm-sx/50 bg-tm-sx/10'
-          : 'ring-1 ring-tm-poly/50 bg-tm-poly/10'),
+        isSelected && 'ring-1 ring-tm-poly/50 bg-tm-poly/10',
       )}
     >
       <div className="flex items-center gap-2 min-w-0">
@@ -59,7 +50,7 @@ function BestCard({ outcome, matchName, columnLabel, selection, onOddsClick }: B
       <div className="flex items-center gap-2 shrink-0">
         {decimal ? (
           <>
-            <VenueLogo platform={platform} size={18} />
+            <VenueLogo size={18} />
             <span className="font-mono text-[15px] font-semibold text-tm-tx tabular-nums w-[56px] text-right">{decimal}</span>
           </>
         ) : (
@@ -84,13 +75,11 @@ function DetailSection({ title, children }: { title: string; children: React.Rea
 interface MatchDetailProps {
   group: MatchGroup;
   selection: BetSlipSelection | null;
-  liveState?: FixtureState;
   onBack: () => void;
   onOddsClick: (outcomeId: string, label: string, matchName: string) => void;
 }
 
-export function MatchDetail({ group, selection, liveState, onBack, onOddsClick }: MatchDetailProps) {
-  const isLive = !!liveState && liveState.status === IN_PLAY_STATUS;
+export function MatchDetail({ group, selection, onBack, onOddsClick }: MatchDetailProps) {
   const { home, draw, away } = get1X2(group);
   const { mlHome, mlAway } = getSpreadMLTotal(group);
   const american = isAmericanSport(group);
@@ -106,7 +95,6 @@ export function MatchDetail({ group, selection, liveState, onBack, onOddsClick }
         </button>
         <div className="flex-1 min-w-0">
           <p className="text-[13px] font-semibold text-tm-tx truncate">{group.name}</p>
-          {isLive && liveState && <LiveMatchHeader state={liveState} />}
         </div>
         <p className="font-mono text-[10px] text-tm-tx-mut shrink-0 tracking-wider uppercase">
           {group.sport} · {group.league} · {formatDate(group.startTime)}

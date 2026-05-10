@@ -74,7 +74,7 @@ function OddsFormatToggle() {
             className={cn(
               'px-3 py-1.5 font-mono text-[10px] font-bold tracking-wider transition-colors',
               format === opt.value
-                ? 'bg-tm-sx text-black'
+                ? 'bg-tm-accent text-black'
                 : 'text-tm-tx-dim hover:text-tm-tx hover:bg-tm-bg-el',
             )}
           >
@@ -90,11 +90,11 @@ const KEY_DESCRIPTIONS: Record<string, string> = {
   maxTradeSize:
     '单笔交易金额上限。路由在拆单前会先比对请求规模与本值；超出则直接拒绝（size_exceeds_max），不会进行盘口遍历、资金分配或链上调用。',
   slippageTolerance:
-    '允许的最优盘口价与实际成交量加权均价之间的最大偏离。路由合并 SX 与 Polymarket 各档深度并撮合后，若偏离超过本阈值则中止（slippage_exceeded），写入失败记录并告警 Telegram，且不会提交订单。',
+    '允许的最优盘口价与实际成交量加权均价之间的最大偏离。路由合并 Polymarket 各档深度并撮合后，若偏离超过本阈值则中止（slippage_exceeded），写入失败记录并告警 Telegram，且不会提交订单。',
   pollingInterval:
-    '市场同步循环从 SX Bet 与 Polymarket 拉取报价的间隔（毫秒）。更短 = 盘口更新更及时，但 API 压力更大。',
+    '市场同步循环从 Polymarket 拉取报价的间隔（毫秒）。更短 = 盘口更新更及时，但 API 压力更大。',
   orderBookLevels:
-    '投注单 / 交易面板中，每侧实时推送的 SX Bet 盘口档位数。越大可见深度越多，经 WebSocket 传输的数据也越多。范围 3–25。',
+    '投注单 / 交易面板中，实时推送的 Polymarket 盘口档位数。越大可见深度越多，经 WebSocket 传输的数据也越多。范围 3–25。',
   polymarketFokBuyExtraTicks:
     'Polymarket FOK 买入：在最优卖价（best ask）之上额外允许的 tick 档数，用于放宽限价，减少「无法完全成交」被拒。路由仍会先按 slippageTolerance 约束计划价；此处在盘口侧再抬高上限。整数 0–50，默认 5。',
   polymarketFokSellExtraTicks:
@@ -257,7 +257,7 @@ export function Settings() {
             className={cn(
               'rounded-sm px-2.5 py-1 font-mono text-[10px] font-semibold tracking-wider transition-colors',
               tab === t.id
-                ? 'bg-tm-sx text-black'
+                ? 'bg-tm-accent text-black'
                 : 'border border-tm-bd bg-tm-bg-el text-tm-tx-dim hover:text-tm-tx',
             )}
           >
@@ -316,7 +316,7 @@ export function Settings() {
                           )}
                         </div>
 
-                        <div className="flex items-center gap-1.5 rounded-[var(--tm-rad)] border border-tm-bd bg-tm-bg-sunk px-2.5 py-1.5 focus-within:border-tm-sx">
+                        <div className="flex items-center gap-1.5 rounded-[var(--tm-rad)] border border-tm-bd bg-tm-bg-sunk px-2.5 py-1.5 focus-within:border-tm-accent">
                           <input
                             value={getValue(row.key)}
                             onChange={(e) =>
@@ -333,7 +333,7 @@ export function Settings() {
                           className={cn(
                             'rounded-[var(--tm-rad)] py-1.5 font-mono text-[10px] font-bold tracking-wider transition-colors',
                             isDirty && !isSaving
-                              ? 'bg-tm-sx text-black hover:bg-tm-sx/90'
+                              ? 'bg-tm-accent text-black hover:bg-tm-accent/90'
                               : 'bg-tm-bg-sunk text-tm-tx-mut cursor-not-allowed',
                           )}
                         >
@@ -353,14 +353,14 @@ export function Settings() {
                 <div className="font-mono text-[11px] font-semibold text-tm-tx">HTTP(S) 代理地址</div>
                 <p className="mt-1 font-mono text-[10px] leading-[1.55] text-tm-tx-mut">
                   与 <span className="text-tm-tx-dim">HTTP_PLATFORM_PROXY_URL</span>{' '}
-                  相同语义：非空时覆盖 embeddedEnv 中的代理设置，经 CONNECT 转发 SX / Polymarket 等出站请求。保存后立即生效。
+                  相同语义：非空时覆盖 embeddedEnv 中的代理设置，经 CONNECT 转发 Polymarket 等出站请求。保存后立即生效。
                 </p>
               </div>
               <input
                 value={proxyDraft}
                 onChange={(e) => setProxyDraft(e.target.value)}
                 placeholder="https://user:pass@host:port 或留空使用 embeddedEnv 默认值"
-                className="w-full rounded-[var(--tm-rad)] border border-tm-bd bg-tm-bg-sunk px-2.5 py-2 font-mono text-[12px] text-tm-tx outline-none focus:border-tm-sx"
+                className="w-full rounded-[var(--tm-rad)] border border-tm-bd bg-tm-bg-sunk px-2.5 py-2 font-mono text-[12px] text-tm-tx outline-none focus:border-tm-accent"
               />
               <button
                 type="button"
@@ -370,7 +370,7 @@ export function Settings() {
                   'w-full rounded-[var(--tm-rad)] py-2 font-mono text-[10px] font-bold tracking-wider',
                   saving === 'httpPlatformProxyUrl' || proxyDraft === rowValue(rows, 'httpPlatformProxyUrl')
                     ? 'bg-tm-bg-sunk text-tm-tx-mut cursor-not-allowed'
-                    : 'bg-tm-sx text-black hover:bg-tm-sx/90',
+                    : 'bg-tm-accent text-black hover:bg-tm-accent/90',
                 )}
               >
                 {saving === 'httpPlatformProxyUrl' ? '保存中…' : '保存代理'}
@@ -395,7 +395,7 @@ export function Settings() {
                     autoComplete="off"
                     value={tgTokenDraft}
                     onChange={(e) => setTgTokenDraft(e.target.value)}
-                    className="w-full rounded-[var(--tm-rad)] border border-tm-bd bg-tm-bg-sunk px-2.5 py-2 font-mono text-[12px] text-tm-tx outline-none focus:border-tm-sx"
+                    className="w-full rounded-[var(--tm-rad)] border border-tm-bd bg-tm-bg-sunk px-2.5 py-2 font-mono text-[12px] text-tm-tx outline-none focus:border-tm-accent"
                   />
                 </div>
                 <div>
@@ -405,7 +405,7 @@ export function Settings() {
                   <input
                     value={tgChatDraft}
                     onChange={(e) => setTgChatDraft(e.target.value)}
-                    className="w-full rounded-[var(--tm-rad)] border border-tm-bd bg-tm-bg-sunk px-2.5 py-2 font-mono text-[12px] text-tm-tx outline-none focus:border-tm-sx"
+                    className="w-full rounded-[var(--tm-rad)] border border-tm-bd bg-tm-bg-sunk px-2.5 py-2 font-mono text-[12px] text-tm-tx outline-none focus:border-tm-accent"
                   />
                 </div>
                 <button
@@ -434,7 +434,7 @@ export function Settings() {
                   }}
                   className={cn(
                     'w-full rounded-[var(--tm-rad)] py-2 font-mono text-[10px] font-bold tracking-wider',
-                    saving === 'telegram' ? 'bg-tm-bg-sunk text-tm-tx-mut' : 'bg-tm-sx text-black hover:bg-tm-sx/90',
+                    saving === 'telegram' ? 'bg-tm-bg-sunk text-tm-tx-mut' : 'bg-tm-accent text-black hover:bg-tm-accent/90',
                   )}
                 >
                   {saving === 'telegram' ? '保存中…' : '保存电报配置'}
@@ -478,7 +478,7 @@ export function Settings() {
                     }
                   }}
                   placeholder="输入标签，例如 EPL、Soccer、MLB"
-                  className="min-w-0 flex-1 rounded-[var(--tm-rad)] border border-tm-bd bg-tm-bg-sunk px-2.5 py-2 font-mono text-[11px] text-tm-tx outline-none focus:border-tm-sx"
+                  className="min-w-0 flex-1 rounded-[var(--tm-rad)] border border-tm-bd bg-tm-bg-sunk px-2.5 py-2 font-mono text-[11px] text-tm-tx outline-none focus:border-tm-accent"
                 />
                 <button
                   type="button"
@@ -502,7 +502,7 @@ export function Settings() {
                         'rounded-full border px-2 py-0.5 font-mono text-[10px] transition-colors',
                         selected
                           ? 'border-tm-bd bg-tm-bg-sunk text-tm-tx-mut cursor-default opacity-50'
-                          : 'border-tm-bd bg-tm-bg text-tm-tx hover:border-tm-sx',
+                          : 'border-tm-bd bg-tm-bg text-tm-tx hover:border-tm-accent',
                       )}
                     >
                       {label}
@@ -524,7 +524,7 @@ export function Settings() {
                   saving === 'eventClassificationTags' ||
                   JSON.stringify(tags) === rowValue(rows, 'eventClassificationTags')
                     ? 'bg-tm-bg-sunk text-tm-tx-mut cursor-not-allowed'
-                    : 'bg-tm-sx text-black hover:bg-tm-sx/90',
+                    : 'bg-tm-accent text-black hover:bg-tm-accent/90',
                 )}
               >
                 {saving === 'eventClassificationTags' ? '保存中…' : '保存赛事分类'}
@@ -557,7 +557,7 @@ export function Settings() {
                       },
                     ])
                   }
-                  className="shrink-0 rounded-[var(--tm-rad)] border border-tm-bd bg-tm-bg px-2 py-1 font-mono text-[10px] font-bold text-tm-tx hover:border-tm-sx"
+                  className="shrink-0 rounded-[var(--tm-rad)] border border-tm-bd bg-tm-bg px-2 py-1 font-mono text-[10px] font-bold text-tm-tx hover:border-tm-accent"
                 >
                   + 添加区间
                 </button>
@@ -667,7 +667,7 @@ export function Settings() {
                   saving === 'priceStopLossRanges' ||
                   JSON.stringify(priceRows) === rowValue(rows, 'priceStopLossRanges')
                     ? 'bg-tm-bg-sunk text-tm-tx-mut cursor-not-allowed'
-                    : 'bg-tm-sx text-black hover:bg-tm-sx/90',
+                    : 'bg-tm-accent text-black hover:bg-tm-accent/90',
                 )}
               >
                 {saving === 'priceStopLossRanges' ? '保存中…' : '保存价格区间'}

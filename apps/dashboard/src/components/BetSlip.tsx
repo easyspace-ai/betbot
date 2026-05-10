@@ -22,7 +22,7 @@ export function BetSlip({ selection, onClose, onTradeExecuted }: BetSlipProps) {
           </p>
           {selection ? (
             <>
-              <p className="text-[13px] font-semibold text-tm-sx mt-1 truncate">
+              <p className="text-[13px] font-semibold text-tm-accent mt-1 truncate">
                 ▸ {selection.label}
               </p>
               <p className="text-[11px] text-tm-tx-dim mt-0.5 truncate">

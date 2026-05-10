@@ -40,29 +40,6 @@ export type PolyOddsMessage =
   | { type: 'polyOddsSnapshot'; data: PolyOddsEntry[] }
   | { type: 'polyOddsUpdate'; tokenId: string; takerOdds: number; updatedAt: number };
 
-export interface FixturePeriod {
-  label: string;
-  isFinished: boolean;
-  teamOneScore: string;
-  teamTwoScore: string;
-}
-
-export interface FixtureState {
-  sxEventId: string;
-  status: number;
-  teamOneScore: number;
-  teamTwoScore: number;
-  currentPeriod: string;
-  periodTime: string;
-  periods: FixturePeriod[];
-  updatedAt: number;
-}
-
-export type FixtureMessage =
-  | { type: 'fixtureSnapshot'; data: FixtureState[] }
-  | { type: 'fixtureUpdate'; data: FixtureState }
-  | { type: 'fixtureRemove'; sxEventId: string };
-
 type IncomingMessage =
   | { type: 'snapshot'; data: BestOddsEntry[] }
   | { type: 'update'; data: BestOddsEntry }
@@ -72,14 +49,12 @@ type IncomingMessage =
   | { type: 'polyBookUpdate'; tokenId: string; levels: BookLevel[] }
   | { type: 'polyOddsSnapshot'; data: PolyOddsEntry[] }
   | { type: 'polyOddsUpdate'; tokenId: string; takerOdds: number; updatedAt: number }
-  | FixtureMessage
   | MarketLifecycleMessage;
 
 type OddsListener = (msg: { type: 'snapshot'; data: BestOddsEntry[] } | { type: 'update'; data: BestOddsEntry }) => void;
 type BookListener = (frame: BookFrame) => void;
 type PolyBookListener = (frame: PolyBookFrame) => void;
 type PolyOddsListener = (msg: PolyOddsMessage) => void;
-type FixtureListener = (msg: FixtureMessage) => void;
 type MarketLifecycleListener = (msg: MarketLifecycleMessage) => void;
 type StatusListener = (connected: boolean) => void;
 
@@ -98,11 +73,8 @@ class WsBus {
   private bookListeners = new Set<BookListener>();
   private polyBookListeners = new Set<PolyBookListener>();
   private polyOddsListeners = new Set<PolyOddsListener>();
-  private fixtureListeners = new Set<FixtureListener>();
   private marketLifecycleListeners = new Set<MarketLifecycleListener>();
   private statusListeners = new Set<StatusListener>();
-  // Retained so new listeners get the current fixture state on subscribe.
-  private fixtureCache = new Map<string, FixtureState>();
   // Mirror of the bot's market list. Populated by `marketsSnapshot` on WS
   // connect, then patched by `marketUpsert` / `marketRemoved`. Replayed to
   // late subscribers so a remounting page sees the current state without
@@ -150,18 +122,6 @@ class WsBus {
         for (const l of this.polyBookListeners) l(frame);
       } else if (msg.type === 'polyOddsSnapshot' || msg.type === 'polyOddsUpdate') {
         for (const l of this.polyOddsListeners) l(msg);
-      } else if (msg.type === 'fixtureSnapshot') {
-        this.fixtureCache.clear();
-        for (const s of msg.data) this.fixtureCache.set(s.sxEventId, s);
-        for (const l of this.fixtureListeners) l(msg);
-      } else if (msg.type === 'fixtureUpdate') {
-        const prev = this.fixtureCache.get(msg.data.sxEventId);
-        if (prev && prev.updatedAt >= msg.data.updatedAt) return;
-        this.fixtureCache.set(msg.data.sxEventId, msg.data);
-        for (const l of this.fixtureListeners) l(msg);
-      } else if (msg.type === 'fixtureRemove') {
-        this.fixtureCache.delete(msg.sxEventId);
-        for (const l of this.fixtureListeners) l(msg);
       } else if (msg.type === 'marketsSnapshot') {
         // Server may send [] before DB is ready or while building payload; do not treat
         // that as the authoritative snapshot (would block REST fallback in useMarketList).
@@ -216,16 +176,6 @@ class WsBus {
     this.ensureConnected();
     this.bookListeners.add(listener);
     return () => { this.bookListeners.delete(listener); };
-  }
-
-  onFixture(listener: FixtureListener): () => void {
-    this.ensureConnected();
-    this.fixtureListeners.add(listener);
-    // Replay current cached snapshot so a late-subscribing component gets initial state
-    if (this.fixtureCache.size > 0) {
-      listener({ type: 'fixtureSnapshot', data: Array.from(this.fixtureCache.values()) });
-    }
-    return () => { this.fixtureListeners.delete(listener); };
   }
 
   onMarketLifecycle(listener: MarketLifecycleListener): () => void {
