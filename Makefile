@@ -25,7 +25,7 @@
 
 SERVER := $(CURDIR)/server
 
-.PHONY: help install deps dashboard-build dashboard-embed go-build-server run-server test-go lint-dashboard desktop-resources desktop-build desktop-package clean-dashboard-embed all-desktop release-tag-push
+.PHONY: help install deps dashboard-build dashboard-embed go-build-server run-server test-go lint-dashboard desktop-resources desktop-build desktop-package desktop-package-win clean-dashboard-embed all-desktop release-tag-push
 
 help:
 	@echo "Polybet Makefile"
@@ -39,6 +39,7 @@ help:
 	@echo "  make desktop-resources    - dashboard-embed + bundle-cli (Go binary into Electron resources)"
 	@echo "  make desktop-build        - desktop-resources + electron-vite build"
 	@echo "  make desktop-package      - desktop-build + electron-builder (see apps/desktop/scripts/package.mjs)"
+	@echo "  make desktop-package-win  - desktop-build + Windows x64 + arm64 installers only (--publish never)"
 	@echo "  make all-desktop          - desktop-package (convenience)"
 	@echo ""
 	@echo "  GitHub Release (triggers .github/workflows/release.yml)"
@@ -86,6 +87,9 @@ desktop-build: desktop-resources
 
 desktop-package: desktop-build
 	cd "$(CURDIR)/apps/desktop" && pnpm run package
+
+desktop-package-win: desktop-build
+	cd "$(CURDIR)/apps/desktop" && pnpm run package:win
 
 all-desktop: desktop-package
 

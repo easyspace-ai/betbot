@@ -10,21 +10,44 @@ import (
 	"time"
 
 	"github.com/easyspace-ai/polybet/internal/config"
+	"github.com/easyspace-ai/polybet/internal/store"
 )
 
 const maxTelegramMessageRunes = 3500
 
-// Notify sends a plain-text Telegram message if bot token and chat id are configured.
-// It is best-effort, non-blocking, and ignores empty text.
-func Notify(cfg *config.Config, log *slog.Logger, text string) {
-	if cfg == nil {
-		return
+// ResolveTelegramCreds returns bot token and chat id. Non-empty env (cfg) wins per
+// field; otherwise values come from bot_config (dashboard / TELEGRAM_* parity with Node).
+func ResolveTelegramCreds(ctx context.Context, cfg *config.Config, st *store.Store) (token, chat string) {
+	if cfg != nil {
+		token = strings.TrimSpace(cfg.TelegramBotToken)
+		chat = strings.TrimSpace(cfg.TelegramChatID)
 	}
+	if st == nil {
+		return token, chat
+	}
+	if token == "" {
+		if v, ok, err := st.GetBotConfig(ctx, "telegramBotToken"); err == nil && ok {
+			token = strings.TrimSpace(v)
+		}
+	}
+	if chat == "" {
+		if v, ok, err := st.GetBotConfig(ctx, "telegramAuthorizedChatId"); err == nil && ok {
+			chat = strings.TrimSpace(v)
+		}
+	}
+	return token, chat
+}
+
+// Notify sends a plain-text Telegram message if bot token and chat id are configured
+// (env or store). It is best-effort, non-blocking, and ignores empty text.
+func Notify(ctx context.Context, cfg *config.Config, st *store.Store, log *slog.Logger, text string) {
 	if log == nil {
 		log = slog.Default()
 	}
-	token := strings.TrimSpace(cfg.TelegramBotToken)
-	chat := strings.TrimSpace(cfg.TelegramChatID)
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	token, chat := ResolveTelegramCreds(ctx, cfg, st)
 	t := strings.TrimSpace(text)
 	if token == "" || chat == "" || t == "" {
 		return

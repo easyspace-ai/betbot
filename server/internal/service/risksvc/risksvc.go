@@ -183,7 +183,7 @@ func (s *Service) ensureCloseTask(ctx context.Context, positionID, queueReason s
 	}
 	s.log.Info("risk_close_task_inserted", "position_id", positionID, "task_id", t.ID)
 	if queueReason != "" {
-		tg.Notify(s.cfg, s.log, formatCloseQueuedTelegram(queueReason, pos, positionID))
+		tg.Notify(ctx, s.cfg, s.st, s.log, formatCloseQueuedTelegram(queueReason, pos, positionID))
 	}
 	return nil
 }
@@ -301,7 +301,7 @@ func (s *Service) runClosePosition(ctx context.Context, cl *polywiring.AuthedCLO
 	}
 	_ = s.st.CancelOtherCloseTasks(ctx, positionID, taskID)
 	s.log.Info("risk_close_filled", "task_id", taskID, "position_id", positionID, "token_id", pos.TokenID)
-	tg.Notify(s.cfg, s.log, fmt.Sprintf(
+	tg.Notify(ctx, s.cfg, s.st, s.log, fmt.Sprintf(
 		"Polybet 平仓成交\n%s\n份额 %.2f · token %s",
 		strings.TrimSpace(pos.Title),
 		pos.SizeShares,
@@ -326,7 +326,7 @@ func (s *Service) runCloseAll(ctx context.Context, taskID string) error {
 	}
 	s.log.Info("risk_close_all_done", "task_id", taskID, "enqueued_closes", len(rows))
 	if len(rows) > 0 {
-		tg.Notify(s.cfg, s.log, fmt.Sprintf("Polybet 一键平仓\n已为 %d 个持仓创建平仓任务", len(rows)))
+		tg.Notify(ctx, s.cfg, s.st, s.log, fmt.Sprintf("Polybet 一键平仓\n已为 %d 个持仓创建平仓任务", len(rows)))
 	}
 	return nil
 }
@@ -393,7 +393,7 @@ func (s *Service) ApplyClobTradeIfNew(ctx context.Context, trade struct {
 		if err := s.st.MergeOpenRiskBuy(ctx, trade.AssetID, outcomeID, title, sideLabel, entry, size, cost, stop, "polymarket_clob"); err != nil {
 			return true, err
 		}
-		tg.Notify(s.cfg, s.log, fmt.Sprintf(
+		tg.Notify(ctx, s.cfg, s.st, s.log, fmt.Sprintf(
 			"Polybet 成交同步（买入）\n%s\n%.2f 股 @ %.1f¢ · 成本约 $%.2f · trade %s",
 			title, size, entry, cost, trade.ID,
 		))
@@ -404,7 +404,7 @@ func (s *Service) ApplyClobTradeIfNew(ctx context.Context, trade struct {
 		if err := s.st.ReduceOpenRiskSell(ctx, trade.AssetID, size, price, min); err != nil {
 			return true, err
 		}
-		tg.Notify(s.cfg, s.log, fmt.Sprintf(
+		tg.Notify(ctx, s.cfg, s.st, s.log, fmt.Sprintf(
 			"Polybet 成交同步（卖出）\nasset %s\n%.2f 股 @ %.4f · trade %s",
 			trade.AssetID, size, price, trade.ID,
 		))

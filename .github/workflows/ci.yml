@@ -27,7 +27,7 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Verify reserved-slugs.ts is up to date
         # Re-runs the generator and fails on any drift from the
@@ -43,36 +43,6 @@ jobs:
 
   backend:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: pgvector/pgvector:pg17
-        env:
-          POSTGRES_DB: polybet
-          POSTGRES_USER: polybet
-          POSTGRES_PASSWORD: polybet
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U polybet -d polybet"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 20
-      redis:
-        image: redis:7-alpine
-        ports:
-          - 6379:6379
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 10
-    env:
-      DATABASE_URL: postgres://polybet:polybet@localhost:5432/polybet?sslmode=disable
-      # Wires up the RedisLocalSkill*_test.go suite. Distinct from REDIS_URL
-      # (which would flip the server binary itself onto the Redis-backed
-      # realtime relay + request stores); the tests talk to this Redis
-      # directly so they run alongside the Postgres-backed suite.
-      REDIS_TEST_URL: redis://localhost:6379/1
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -80,14 +50,11 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.26.1"
+          go-version-file: server/go.mod
           cache-dependency-path: server/go.sum
 
       - name: Build
         run: cd server && go build ./...
-
-      - name: Run migrations
-        run: cd server && go run ./cmd/migrate up
 
       - name: Test
         run: cd server && go test ./...

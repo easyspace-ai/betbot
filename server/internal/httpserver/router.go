@@ -1,6 +1,7 @@
 package httpserver
 
 import (
+	"context"
 	"errors"
 	"log/slog"
 	"net/http"
@@ -11,6 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
+	"github.com/easyspace-ai/polybet/internal/homesettings"
 	"github.com/easyspace-ai/polybet/internal/polyprov"
 	"github.com/easyspace-ai/polybet/internal/service/balancesvc"
 	"github.com/easyspace-ai/polybet/internal/service/marketsvc"
@@ -222,6 +224,7 @@ func NewRouter(d Deps) *gin.Engine {
 				c.JSON(500, gin.H{"error": "update_failed"})
 				return
 			}
+			snapshotHomeBotSettings(c.Request.Context(), d.Store)
 			c.JSON(200, gin.H{"key": c.Param("key"), "value": body.Value})
 		})
 
@@ -448,6 +451,7 @@ func NewRouter(d Deps) *gin.Engine {
 
 		api.POST("/setup/complete", func(c *gin.Context) {
 			_ = d.Store.UpsertBotConfig(c, "onboardingComplete", "true")
+			snapshotHomeBotSettings(c.Request.Context(), d.Store)
 			c.JSON(200, gin.H{"ok": true})
 		})
 	}
@@ -455,6 +459,12 @@ func NewRouter(d Deps) *gin.Engine {
 	registerWS(r, d)
 	webui.Mount(r)
 	return r
+}
+
+func snapshotHomeBotSettings(ctx context.Context, st *store.Store) {
+	if err := homesettings.SnapshotToFile(ctx, st); err != nil {
+		slog.Warn("home_bot_settings_snapshot_failed", "err", err.Error())
+	}
 }
 
 func mapRouterErr(e *routersvc.RouterError) int {

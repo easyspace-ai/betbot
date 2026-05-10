@@ -47,7 +47,7 @@ func MaybeNotifyCollateralChanged(cfg *config.Config, log *slog.Logger, st *stor
 		}
 		prev := collatLastUSD
 		collatLastUSD = v
-		Notify(cfg, log, fmt.Sprintf(
+		Notify(ctx, cfg, st, log, fmt.Sprintf(
 			"Polybet 余额变动\nCLOB 约 $%.2f（此前 $%.2f）",
 			v, prev,
 		))

@@ -12,6 +12,7 @@ import (
 	"github.com/easyspace-ai/polybet/internal/bookcache"
 	"github.com/easyspace-ai/polybet/internal/config"
 	"github.com/easyspace-ai/polybet/internal/debounce"
+	"github.com/easyspace-ai/polybet/internal/homesettings"
 	"github.com/easyspace-ai/polybet/internal/httpserver"
 	"github.com/easyspace-ai/polybet/internal/service/marketsvc"
 	"github.com/easyspace-ai/polybet/internal/service/risksvc"
@@ -71,6 +72,20 @@ func (a *App) Run(ctx context.Context) error {
 		return err
 	}
 	a.Log.Info("boot_seed_config_ok")
+	if p, err := homesettings.FilePath(); err == nil {
+		if err := homesettings.ApplyFromFile(ctx, a.Store); err != nil {
+			a.Log.Warn("home_bot_settings_apply_failed", "path", p, "err", err.Error())
+		} else {
+			a.Log.Info("home_bot_settings_applied_if_present", "path", p)
+		}
+		if err := homesettings.SnapshotToFile(ctx, a.Store); err != nil {
+			a.Log.Warn("home_bot_settings_snapshot_failed", "path", p, "err", err.Error())
+		} else {
+			a.Log.Info("home_bot_settings_snapshot_ok", "path", p)
+		}
+	} else {
+		a.Log.Warn("home_bot_settings_path_failed", "err", err.Error())
+	}
 
 	deps := httpserver.Deps{
 		Cfg: a.Cfg, DB: a.DB, Store: a.Store, Cache: a.Cache, Hub: a.Hub, Risk: a.Risk, Debounce: a.Debounce,

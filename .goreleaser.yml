@@ -61,12 +61,12 @@ brews:
     ids:
       - versioned
     repository:
-      owner: polybet-ai
+      owner: easyspace-ai
       name: homebrew-tap
       branch: main
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
     directory: Formula
-    homepage: "https://github.com/polybet-ai/polybet"
+    homepage: "https://github.com/easyspace-ai/betbot"
     description: "Multica CLI — local agent runtime and management tool for the Multica platform"
     license: "Apache-2.0"
     install: |

@@ -68,7 +68,7 @@ func ExecutePlan(ctx context.Context, cfg *config.Config, st *store.Store, cache
 			reason := err.Error()
 			_ = st.MarkTradeFailed(ctx, tid, reason)
 			slog.Warn("trade_fok_buy_rejected", "trade_id", tid, "outcome_id", a.OutcomeID, "token_id", a.ExternalOutcomeID, "err", reason)
-			tg.Notify(cfg, slog.Default(), fmt.Sprintf(
+			tg.Notify(ctx, cfg, st, slog.Default(), fmt.Sprintf(
 				"Polybet 开单失败\n%s vs %s · $%.2f @ 期望 %.1f¢\n%s",
 				home, away, a.Size, a.ExpectedOdds*100, reason,
 			))
@@ -77,7 +77,7 @@ func ExecutePlan(ctx context.Context, cfg *config.Config, st *store.Store, cache
 		}
 		_ = st.MarkTradeFilled(ctx, tid, orderID, a.Size, fillOdds)
 		slog.Info("trade_fok_buy_filled", "trade_id", tid, "outcome_id", a.OutcomeID, "order_id", orderID, "fill_odds", fillOdds)
-		tg.Notify(cfg, slog.Default(), fmt.Sprintf(
+		tg.Notify(ctx, cfg, st, slog.Default(), fmt.Sprintf(
 			"Polybet 开单成交\n%s vs %s · %s · $%.2f @ 成交 %.1f¢\norder %s",
 			home, away, label, a.Size, fillOdds*100, orderID,
 		))

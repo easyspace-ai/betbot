@@ -285,6 +285,16 @@ export function Settings() {
               </div>
               <OddsFormatToggle />
 
+              <div className="mb-4 rounded-[var(--tm-rad)] border border-tm-bd bg-tm-bg-el px-3.5 py-3">
+                <div className="font-mono text-[11px] font-semibold text-tm-tx">配置文件</div>
+                <div className="mt-1 font-mono text-[10px] leading-[1.5] text-tm-tx-mut">
+                  服务端将机器人参数与{' '}
+                  <span className="text-tm-tx">~/.polybet/bot-settings.json</span>{' '}
+                  同步：进程启动时从该文件读入并覆盖数据库中同名键，每次在设置里保存后重写完整快照（文件权限 0600）。也可直接编辑该
+                  JSON 后重启服务。
+                </div>
+              </div>
+
               {generalRows.length === 0 && !error && (
                 <div className="font-mono text-[11px] text-tm-tx-mut tracking-wider">
                   未找到可编辑的通用配置项

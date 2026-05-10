@@ -15,22 +15,31 @@ import (
 	"github.com/easyspace-ai/polybet/internal/store"
 )
 
-// Run long-polls Telegram when TELEGRAM_BOT_TOKEN and TELEGRAM_AUTHORIZED_CHAT_ID are set.
+// Run long-polls Telegram when credentials are set (env or bot_config). If unset,
+// it sleeps and retries so dashboard saves apply without restarting the process.
 func Run(ctx context.Context, cfg *config.Config, st *store.Store, log *slog.Logger) {
-	token := strings.TrimSpace(cfg.TelegramBotToken)
-	chat := strings.TrimSpace(cfg.TelegramChatID)
-	if token == "" || chat == "" {
-		return
-	}
 	if log == nil {
 		log = slog.Default()
 	}
-	log.Info("telegram_bot_starting")
 	hc := &http.Client{Timeout: 65 * time.Second}
 	var offset int64
+	startedLog := false
 	for {
 		if ctx.Err() != nil {
 			return
+		}
+		token, chat := ResolveTelegramCreds(ctx, cfg, st)
+		if token == "" || chat == "" {
+			select {
+			case <-ctx.Done():
+				return
+			case <-time.After(30 * time.Second):
+				continue
+			}
+		}
+		if !startedLog {
+			log.Info("telegram_bot_starting")
+			startedLog = true
 		}
 		u := fmt.Sprintf("https://api.telegram.org/bot%s/getUpdates?timeout=60&offset=%d", url.PathEscape(token), offset)
 		req, err := http.NewRequestWithContext(ctx, http.MethodGet, u, nil)
