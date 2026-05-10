@@ -2,11 +2,11 @@ package polywiring
 
 import (
 	"fmt"
+	polymarket "github.com/easyspace-ai/polysdk"
 	"strings"
 
-	"github.com/GoPolymarket/polymarket-go-sdk"
-	"github.com/GoPolymarket/polymarket-go-sdk/pkg/auth"
-	"github.com/GoPolymarket/polymarket-go-sdk/pkg/clob"
+	"github.com/easyspace-ai/polysdk/pkg/auth"
+	"github.com/easyspace-ai/polysdk/pkg/clob"
 	"github.com/ethereum/go-ethereum/common"
 
 	"github.com/easyspace-ai/polybet/internal/config"

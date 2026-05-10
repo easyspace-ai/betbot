@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/GoPolymarket/polymarket-go-sdk/pkg/clob/clobtypes"
+	"github.com/easyspace-ai/polysdk/pkg/clob/clobtypes"
 
 	"github.com/easyspace-ai/polybet/internal/polyexec"
 	"github.com/easyspace-ai/polybet/internal/service/polysession"
@@ -15,13 +15,13 @@ import (
 const reconcileMinInterval = 60 * time.Second
 
 type Meta struct {
-	UserWsConnected           bool    `json:"userWsConnected"`
-	UserWsConnecting          bool    `json:"userWsConnecting"`
-	UserWsLastMessageAt       *string `json:"userWsLastMessageAt"`
-	RestTradesSyncLastAt      *string `json:"restTradesSyncLastAt"`
-	UserWsLastIssue           *string `json:"userWsLastIssue"`
-	OutboundProxyConfigured   bool    `json:"outboundProxyConfigured"`
-	MinOpenRiskShares         float64 `json:"minOpenRiskShares"`
+	UserWsConnected         bool    `json:"userWsConnected"`
+	UserWsConnecting        bool    `json:"userWsConnecting"`
+	UserWsLastMessageAt     *string `json:"userWsLastMessageAt"`
+	RestTradesSyncLastAt    *string `json:"restTradesSyncLastAt"`
+	UserWsLastIssue         *string `json:"userWsLastIssue"`
+	OutboundProxyConfigured bool    `json:"outboundProxyConfigured"`
+	MinOpenRiskShares       float64 `json:"minOpenRiskShares"`
 }
 
 func (s *Service) ListRiskPositionsEnriched(ctx context.Context, meta Meta) ([]map[string]any, Meta, error) {
@@ -147,13 +147,13 @@ func (s *Service) SyncRiskFromRESTTrades(ctx context.Context) error {
 // ParseUserWsTradePayload mirrors Node parseUserWsTradePayload (minimal).
 func ParseUserWsTradePayload(raw []byte) (struct {
 	ID, AssetID, Side, Size, Price, Status string
-	Market, Outcome string
+	Market, Outcome                        string
 }, bool) {
 	var o map[string]any
 	if err := json.Unmarshal(raw, &o); err != nil {
 		return struct {
 			ID, AssetID, Side, Size, Price, Status string
-			Market, Outcome string
+			Market, Outcome                        string
 		}{}, false
 	}
 	et := strings.ToLower(anyStr(o["event_type"]))
@@ -161,7 +161,7 @@ func ParseUserWsTradePayload(raw []byte) (struct {
 	if et != "trade" && ty != "TRADE" {
 		return struct {
 			ID, AssetID, Side, Size, Price, Status string
-			Market, Outcome string
+			Market, Outcome                        string
 		}{}, false
 	}
 	id := anyStr(o["id"])
@@ -169,12 +169,12 @@ func ParseUserWsTradePayload(raw []byte) (struct {
 	if id == "" || aid == "" {
 		return struct {
 			ID, AssetID, Side, Size, Price, Status string
-			Market, Outcome string
+			Market, Outcome                        string
 		}{}, false
 	}
 	return struct {
 		ID, AssetID, Side, Size, Price, Status string
-		Market, Outcome string
+		Market, Outcome                        string
 	}{
 		ID: id, AssetID: aid, Side: anyStr(o["side"]), Size: anyStr(o["size"]), Price: anyStr(o["price"]), Status: anyStr(o["status"]),
 		Market: anyStr(o["market"]), Outcome: anyStr(o["outcome"]),

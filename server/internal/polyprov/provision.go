@@ -3,10 +3,10 @@ package polyprov
 import (
 	"context"
 	"fmt"
+	polymarket "github.com/easyspace-ai/polysdk"
 	"strings"
 
-	"github.com/GoPolymarket/polymarket-go-sdk"
-	"github.com/GoPolymarket/polymarket-go-sdk/pkg/auth"
+	"github.com/easyspace-ai/polysdk/pkg/auth"
 	"github.com/ethereum/go-ethereum/common"
 
 	"github.com/easyspace-ai/polybet/internal/config"

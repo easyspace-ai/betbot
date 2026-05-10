@@ -25,7 +25,7 @@
 
 SERVER := $(CURDIR)/server
 
-.PHONY: help install deps dashboard-build dashboard-embed go-build-server run-server test-go lint-dashboard desktop-resources desktop-build desktop-package clean-dashboard-embed all-desktop
+.PHONY: help install deps dashboard-build dashboard-embed go-build-server run-server test-go lint-dashboard desktop-resources desktop-build desktop-package clean-dashboard-embed all-desktop release-tag-push
 
 help:
 	@echo "Polybet Makefile"
@@ -40,6 +40,10 @@ help:
 	@echo "  make desktop-build        - desktop-resources + electron-vite build"
 	@echo "  make desktop-package      - desktop-build + electron-builder (see apps/desktop/scripts/package.mjs)"
 	@echo "  make all-desktop          - desktop-package (convenience)"
+	@echo ""
+	@echo "  GitHub Release (triggers .github/workflows/release.yml)"
+	@echo "  make release-tag-push TAG=v0.1.2              - annotated tag at HEAD + git push origin TAG"
+	@echo "  make release-tag-push TAG=v0.1.2 MSG='...'    - same, but commit all + push branch first"
 	@echo ""
 
 install: deps
@@ -89,3 +93,29 @@ clean-dashboard-embed:
 	@test -f "$(SERVER)/go.mod" || exit 0
 	@rm -rf "$(SERVER)/internal/webui/dashboard-dist" && mkdir -p "$(SERVER)/internal/webui/dashboard-dist" && \
 	printf '%s\n' '<!doctype html><html><body><p>Run <code>make dashboard-embed</code></p></body></html>' > "$(SERVER)/internal/webui/dashboard-dist/index.html"
+
+# Push a semver Git tag so GitHub Actions runs release.yml (GoReleaser, Docker, desktop publish).
+# TAG must match .github/workflows/release.yml (verify job + on.push.tags filter).
+release-tag-push:
+	@test -n "$(TAG)" || (echo "error: set TAG=vX.Y.Z  e.g.  make release-tag-push TAG=v0.1.2"; exit 1)
+	@echo "$(TAG)" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$$' || \
+		(echo "error: TAG must look like v1.2.3 or v1.2.3-rc.1 (see .github/workflows/release.yml)"; exit 1)
+	@echo "$(TAG)" | grep -qv 'dirty' || (echo "error: tag name must not contain 'dirty' (workflow excludes it)"; exit 1)
+	@if git show-ref --verify --quiet "refs/tags/$(TAG)"; then \
+		echo "error: tag $(TAG) already exists locally — delete it or pick a new version"; exit 1; \
+	fi
+ifdef MSG
+	@if git diff --quiet && git diff --cached --quiet; then \
+		echo "note: working tree clean, skipping commit (MSG was set)"; \
+	else \
+		git add -A && git commit -m "$(MSG)"; \
+	fi
+	@current_branch=$$(git rev-parse --abbrev-ref HEAD); \
+		if [ "$$current_branch" = "HEAD" ]; then \
+			echo "error: detached HEAD — checkout a branch before using MSG="; exit 1; \
+		fi; \
+		git push origin "$$current_branch"
+endif
+	git tag -a "$(TAG)" -m "Release $(TAG)"
+	git push origin "$(TAG)"
+	@echo "Pushed tag $(TAG). Open Actions → Release on GitHub to watch the run."

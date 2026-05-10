@@ -2,9 +2,9 @@ package app
 
 import (
 	"context"
+	polymarket "github.com/easyspace-ai/polysdk"
 	"time"
 
-	"github.com/GoPolymarket/polymarket-go-sdk"
 	"github.com/easyspace-ai/polybet/internal/service/polysession"
 )
 

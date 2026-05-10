@@ -3,7 +3,7 @@ module github.com/easyspace-ai/polybet
 go 1.24.0
 
 require (
-	github.com/GoPolymarket/polymarket-go-sdk v0.0.0
+	github.com/easyspace-ai/polysdk v0.0.0-20260510124728-cef0c6a75345
 	github.com/ethereum/go-ethereum v1.17.2
 	github.com/gin-gonic/gin v1.10.0
 	github.com/google/uuid v1.6.0
@@ -71,5 +71,3 @@ require (
 	modernc.org/mathutil v1.6.0 // indirect
 	modernc.org/memory v1.8.0 // indirect
 )
-
-replace github.com/GoPolymarket/polymarket-go-sdk => ../polymarket-go-sdk

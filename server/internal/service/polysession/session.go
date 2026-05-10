@@ -6,7 +6,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/GoPolymarket/polymarket-go-sdk/pkg/auth"
+	"github.com/easyspace-ai/polysdk/pkg/auth"
 
 	"github.com/easyspace-ai/polybet/internal/config"
 	"github.com/easyspace-ai/polybet/internal/polyprov"

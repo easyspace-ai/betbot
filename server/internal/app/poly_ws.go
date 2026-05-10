@@ -2,11 +2,11 @@ package app
 
 import (
 	"context"
+	polymarket "github.com/easyspace-ai/polysdk"
 	"strconv"
 	"time"
 
-	"github.com/GoPolymarket/polymarket-go-sdk"
-	"github.com/GoPolymarket/polymarket-go-sdk/pkg/clob/ws"
+	"github.com/easyspace-ai/polysdk/pkg/clob/ws"
 )
 
 func (a *App) polyWSLoop(ctx context.Context) {
