@@ -1,6 +1,6 @@
 import { LoginPage } from "@polybet/views/auth";
 import { DragStrip } from "@polybet/views/platform";
-import { MulticaIcon } from "@polybet/ui/components/common/polybet-icon";
+import { MulticaIcon } from "@polybet/ui/components/common/multica-icon";
 
 function requireRuntimeAppUrl(): string {
   const runtimeConfig = window.desktopAPI.runtimeConfig;

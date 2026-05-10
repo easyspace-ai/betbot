@@ -117,7 +117,7 @@ describe("LoginPage", () => {
   it("renders email form with 'Sign in to Multica' title", () => {
     renderWithI18n(<LoginPage onSuccess={onSuccess} />);
     expect(
-      screen.getByText(/sign in to polybet/i),
+      screen.getByText(/sign in to multica/i),
     ).toBeInTheDocument();
     expect(
       screen.getByText(/enter your email to get a login code/i),
@@ -490,7 +490,7 @@ describe("LoginPage", () => {
     );
 
     expect(
-      screen.getByText(/sign in to polybet/i),
+      screen.getByText(/sign in to multica/i),
     ).toBeInTheDocument();
   });
 
@@ -676,7 +676,7 @@ describe("LoginPage", () => {
     await user.click(screen.getByRole("button", { name: /back/i }));
 
     expect(
-      screen.getByText(/sign in to polybet/i),
+      screen.getByText(/sign in to multica/i),
     ).toBeInTheDocument();
   });
 

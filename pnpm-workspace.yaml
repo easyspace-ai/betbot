@@ -52,7 +52,9 @@ catalog:
   # Testing
   vitest: "^4.1.0"
   jsdom: "^29.0.1"
-  "@vitejs/plugin-react": "^6.0.1"
+  # Must stay on 5.x while Vitest pulls Vite 6; plugin-react 6+ targets Vite 8 and breaks (vite/internal).
+  "@vitejs/plugin-react": "^5.1.4"
   "@testing-library/react": "^16.3.2"
+  "@testing-library/dom": "^10.4.0"
   "@testing-library/jest-dom": "^6.9.1"
   "@testing-library/user-event": "^14.6.1"

@@ -1,6 +1,6 @@
 "use client";
 
-import { MulticaIcon } from "@polybet/ui/components/common/polybet-icon";
+import { MulticaIcon } from "@polybet/ui/components/common/multica-icon";
 import { useT } from "../i18n";
 
 /**

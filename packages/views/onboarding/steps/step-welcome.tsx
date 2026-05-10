@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ArrowRight, Download, Loader2 } from "lucide-react";
 import { Button, buttonVariants } from "@polybet/ui/components/ui/button";
-import { MulticaIcon } from "@polybet/ui/components/common/polybet-icon";
+import { MulticaIcon } from "@polybet/ui/components/common/multica-icon";
 import { captureDownloadIntent } from "@polybet/core/analytics";
 import { cn } from "@polybet/ui/lib/utils";
 import { DragStrip } from "@polybet/views/platform";
