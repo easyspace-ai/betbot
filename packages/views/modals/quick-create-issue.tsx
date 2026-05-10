@@ -4,45 +4,45 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeftRight, Check, ChevronRight, Maximize2, Minimize2, X as XIcon } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { DialogTitle } from "@multica/ui/components/ui/dialog";
+import { DialogTitle } from "@polybet/ui/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@multica/ui/components/ui/dropdown-menu";
-import { Button } from "@multica/ui/components/ui/button";
-import { Switch } from "@multica/ui/components/ui/switch";
-import { api, ApiError } from "@multica/core/api";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useCurrentWorkspace } from "@multica/core/paths";
-import { agentListOptions } from "@multica/core/workspace/queries";
-import { projectListOptions } from "@multica/core/projects/queries";
-import { useQuickCreateStore } from "@multica/core/issues/stores/quick-create-store";
-import { useIssueDraftStore } from "@multica/core/issues/stores/draft-store";
-import { useCreateModeStore } from "@multica/core/issues/stores/create-mode-store";
+} from "@polybet/ui/components/ui/dropdown-menu";
+import { Button } from "@polybet/ui/components/ui/button";
+import { Switch } from "@polybet/ui/components/ui/switch";
+import { api, ApiError } from "@polybet/core/api";
+import { useWorkspaceId } from "@polybet/core/hooks";
+import { useCurrentWorkspace } from "@polybet/core/paths";
+import { agentListOptions } from "@polybet/core/workspace/queries";
+import { projectListOptions } from "@polybet/core/projects/queries";
+import { useQuickCreateStore } from "@polybet/core/issues/stores/quick-create-store";
+import { useIssueDraftStore } from "@polybet/core/issues/stores/draft-store";
+import { useCreateModeStore } from "@polybet/core/issues/stores/create-mode-store";
 import {
   runtimeListOptions,
   checkQuickCreateCliVersion,
   readRuntimeCliVersion,
   MIN_QUICK_CREATE_CLI_VERSION,
-} from "@multica/core/runtimes";
-import { useFileUpload } from "@multica/core/hooks/use-file-upload";
-import { formatShortcut, modKey, enterKey } from "@multica/core/platform";
-import type { Agent } from "@multica/core/types";
+} from "@polybet/core/runtimes";
+import { useFileUpload } from "@polybet/core/hooks/use-file-upload";
+import { formatShortcut, modKey, enterKey } from "@polybet/core/platform";
+import type { Agent } from "@polybet/core/types";
 import { ActorAvatar } from "../common/actor-avatar";
 import { PillButton } from "../common/pill-button";
 import { ProjectPicker } from "../projects/components/project-picker";
 import { canAssignAgent } from "../issues/components/pickers/assignee-picker";
-import { useAuthStore } from "@multica/core/auth";
-import { memberListOptions } from "@multica/core/workspace/queries";
+import { useAuthStore } from "@polybet/core/auth";
+import { memberListOptions } from "@polybet/core/workspace/queries";
 import {
   ContentEditor,
   type ContentEditorRef,
   useFileDropZone,
   FileDropOverlay,
 } from "../editor";
-import { FileUploadButton } from "@multica/ui/components/common/file-upload-button";
+import { FileUploadButton } from "@polybet/ui/components/common/file-upload-button";
 import { useT } from "../i18n";
 
 // AgentCreatePanel — agent-mode body of the create-issue dialog. Renders
@@ -157,7 +157,7 @@ export function AgentCreatePanel({
   }, [projectsLoaded, projects, projectId, lastProjectId, setLastProjectId]);
 
   // Daemon CLI version gate. The agent-create flow needs the runtime's
-  // bundled multica CLI to be ≥ MIN_QUICK_CREATE_CLI_VERSION; older
+  // bundled polybet CLI to be ≥ MIN_QUICK_CREATE_CLI_VERSION; older
   // daemons handle attachments and partial-failure retries incorrectly
   // (see PR #1851 / MUL-1496). Pre-check on the picker so the user gets
   // immediate feedback instead of waiting for the inbox failure; the

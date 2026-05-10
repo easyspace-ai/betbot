@@ -98,18 +98,28 @@ export function stripLeadingSeparator(argv) {
  *   - "v0.1.36"                → "0.1.36"
  *   - "v0.1.35-14-gf1415e96"   → "0.1.35-14-gf1415e96"  (semver prerelease)
  *   - "v0.1.35-…-dirty"        → same, dirty suffix preserved
- *   - "f1415e96" (no tag)      → "0.0.0-f1415e96"        (fallback)
+ *   - "f1415e96" (no tag)      → "0.0.0+git.f1415e96"   (build metadata)
+ *   - "494bfb4-dirty"          → "0.0.0+git.494bfb4.dirty"
+ *     (digit-leading short hashes must not use /^\d/ — that misclassified them
+ *     as semver and broke electron-updater, which validates app.getVersion().)
  *
  * Leading `v` is stripped so the result is valid semver for package.json.
  */
 export function normalizeGitVersion(raw) {
   if (!raw) return null;
   const stripped = raw.replace(/^v/, "");
-  if (!/^\d/.test(stripped)) {
-    // No reachable tag — `git describe` fell back to just the commit hash.
-    return `0.0.0-${stripped}`;
+  // Tag-based `git describe` output always contains at least major.minor after
+  // the optional `v`. Bare describe is only a hex object name, optionally
+  // with `-dirty` — including hashes like `494bfb4…` that start with a digit.
+  if (/^\d+\.\d+/.test(stripped)) {
+    return stripped;
   }
-  return stripped;
+  const meta = stripped
+    .replace(/[^0-9A-Za-z]+/g, ".")
+    .replace(/\.{2,}/g, ".")
+    .replace(/^\.+|\.+$/g, "");
+  if (!meta) return null;
+  return `0.0.0+git.${meta}`;
 }
 
 function deriveVersion() {

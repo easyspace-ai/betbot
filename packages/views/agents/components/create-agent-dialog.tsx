@@ -11,8 +11,8 @@ import type {
   RuntimeDevice,
   MemberWithUser,
   CreateAgentRequest,
-} from "@multica/core/types";
-import { isImeComposing } from "@multica/core/utils";
+} from "@polybet/core/types";
+import { isImeComposing } from "@polybet/core/utils";
 import {
   Dialog,
   DialogContent,
@@ -20,21 +20,21 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@multica/ui/components/ui/dialog";
+} from "@polybet/ui/components/ui/dialog";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@multica/ui/components/ui/popover";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
-import { Label } from "@multica/ui/components/ui/label";
+} from "@polybet/ui/components/ui/popover";
+import { Button } from "@polybet/ui/components/ui/button";
+import { Input } from "@polybet/ui/components/ui/input";
+import { Label } from "@polybet/ui/components/ui/label";
 import { toast } from "sonner";
 import {
   AGENT_DESCRIPTION_MAX_LENGTH,
   VISIBILITY_DESCRIPTION,
   VISIBILITY_LABEL,
-} from "@multica/core/agents";
+} from "@polybet/core/agents";
 import { CharCounter } from "./char-counter";
 import { useT } from "../../i18n";
 

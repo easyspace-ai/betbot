@@ -16,14 +16,14 @@ import {
   Trash2,
   UserMinus,
 } from "lucide-react";
-import type { AgentTask, Issue } from "@multica/core/types";
-import { api } from "@multica/core/api";
+import type { AgentTask, Issue } from "@polybet/core/types";
+import { api } from "@polybet/core/api";
 import {
   ALL_STATUSES,
   PRIORITY_ORDER,
   PRIORITY_CONFIG,
-} from "@multica/core/issues/config";
-import { issueKeys } from "@multica/core/issues/queries";
+} from "@polybet/core/issues/config";
+import { issueKeys } from "@polybet/core/issues/queries";
 import { StatusIcon } from "../components/status-icon";
 import { PriorityIcon } from "../components/priority-icon";
 import { ActorAvatar } from "../../common/actor-avatar";
@@ -33,14 +33,14 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
   DropdownMenuSeparator,
-} from "@multica/ui/components/ui/dropdown-menu";
+} from "@polybet/ui/components/ui/dropdown-menu";
 import {
   ContextMenuItem,
   ContextMenuSub,
   ContextMenuSubTrigger,
   ContextMenuSubContent,
   ContextMenuSeparator,
-} from "@multica/ui/components/ui/context-menu";
+} from "@polybet/ui/components/ui/context-menu";
 import type { UseIssueActionsResult } from "./use-issue-actions";
 import { useT } from "../../i18n";
 

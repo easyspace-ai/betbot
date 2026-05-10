@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Builds the `betbot` CLI from server/cmd/betbot and copies the binary
+// Builds the polybet binary from server/cmd/server and copies it
 // into apps/desktop/resources/bin/ so electron-vite (dev) and electron-
 // builder (prod) pick it up.
 
@@ -11,7 +11,10 @@ import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(here, "..", "..", "..");
-const serverDir = join(repoRoot, "server");
+
+const serverDir = process.env.SERVER_DIR?.trim()
+  ? process.env.SERVER_DIR.trim()
+  : join(repoRoot, "server");
 
 const PLATFORM_TO_GOOS = {
   darwin: "darwin",
@@ -50,7 +53,7 @@ function normalizeRuntimeArch(arch) {
 }
 
 function binaryNameForPlatform(platform) {
-  return platform === "win32" ? "betbot.exe" : "betbot";
+  return platform === "win32" ? "polybet.exe" : "polybet";
 }
 
 const targetPlatform = normalizeRuntimePlatform(
@@ -108,7 +111,7 @@ if (hasGo()) {
       ldflags,
       "-o",
       srcBinary,
-      "./cmd/betbot",
+      "./cmd/server",
     ],
     {
       cwd: serverDir,
@@ -123,16 +126,15 @@ if (hasGo()) {
   );
 } else {
   console.warn(
-    "[bundle-cli] `go` not found in PATH — skipping CLI build. " +
-      "Desktop will use whatever is already in resources/bin/, or fall back " +
-      "to auto-installing the latest release at runtime.",
+    "[bundle-cli] `go` not found in PATH — skipping polybet build. " +
+      "Desktop will use whatever is already in resources/bin/ if present.",
   );
 }
 
 if (!(await exists(srcBinary))) {
   console.warn(
-    `[bundle-cli] ${srcBinary} not present — Desktop will fall back to ` +
-      `auto-installing the latest release at runtime.`,
+    `[bundle-cli] ${srcBinary} not present — Electron will load the built-in ` +
+      `renderer unless you build the polybet binary.`,
   );
   await rm(destDir, { recursive: true, force: true });
   process.exit(0);

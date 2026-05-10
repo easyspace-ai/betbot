@@ -1,7 +1,7 @@
 import { CheckCircle2, ChevronRight } from "lucide-react";
-import { useActorName } from "@multica/core/workspace/hooks";
-import { Card } from "@multica/ui/components/ui/card";
-import type { TimelineEntry } from "@multica/core/types";
+import { useActorName } from "@polybet/core/workspace/hooks";
+import { Card } from "@polybet/ui/components/ui/card";
+import type { TimelineEntry } from "@polybet/core/types";
 import { useT } from "../../i18n";
 
 interface ResolvedThreadBarProps {

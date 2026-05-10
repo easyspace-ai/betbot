@@ -12,24 +12,24 @@ import {
 import { ReactRenderer } from "@tiptap/react";
 import { computePosition, offset, flip, shift } from "@floating-ui/dom";
 import type { QueryClient } from "@tanstack/react-query";
-import { getCurrentWsId } from "@multica/core/platform";
-import { flattenIssueBuckets, issueKeys } from "@multica/core/issues/queries";
-import { workspaceKeys } from "@multica/core/workspace/queries";
-import { useAuthStore } from "@multica/core/auth";
-import { canAssignAgentToIssue } from "@multica/core/permissions";
-import { api } from "@multica/core/api";
-import { isImeComposing } from "@multica/core/utils";
+import { getCurrentWsId } from "@polybet/core/platform";
+import { flattenIssueBuckets, issueKeys } from "@polybet/core/issues/queries";
+import { workspaceKeys } from "@polybet/core/workspace/queries";
+import { useAuthStore } from "@polybet/core/auth";
+import { canAssignAgentToIssue } from "@polybet/core/permissions";
+import { api } from "@polybet/core/api";
+import { isImeComposing } from "@polybet/core/utils";
 import type {
   Issue,
   ListIssuesCache,
   MemberWithUser,
   Agent,
-} from "@multica/core/types";
+} from "@polybet/core/types";
 import { ActorAvatar } from "../../common/actor-avatar";
 import { StatusIcon } from "../../issues/components/status-icon";
 import { useT } from "../../i18n";
-import { Badge } from "@multica/ui/components/ui/badge";
-import type { IssueStatus } from "@multica/core/types";
+import { Badge } from "@polybet/ui/components/ui/badge";
+import type { IssueStatus } from "@polybet/core/types";
 import type { SuggestionOptions, SuggestionProps } from "@tiptap/suggestion";
 import {
   getRecencyMap,

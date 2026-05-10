@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { Loader2, Plus, Save, Trash2 } from "lucide-react";
-import type { Agent, RuntimeDevice } from "@multica/core/types";
-import { createSafeId } from "@multica/core/utils";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
+import type { Agent, RuntimeDevice } from "@polybet/core/types";
+import { createSafeId } from "@polybet/core/utils";
+import { Button } from "@polybet/ui/components/ui/button";
+import { Input } from "@polybet/ui/components/ui/input";
 import { toast } from "sonner";
 import { useT } from "../../../i18n";
 

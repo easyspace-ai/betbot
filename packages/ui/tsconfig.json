@@ -1,5 +1,5 @@
 {
-  "extends": "@betbot/tsconfig/react-library.json",
+  "extends": "@polybet/tsconfig/react-library.json",
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": ".",

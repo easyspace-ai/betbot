@@ -9,19 +9,19 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from "@multica/ui/components/ui/card";
-import { Input } from "@multica/ui/components/ui/input";
-import { Button } from "@multica/ui/components/ui/button";
-import { Label } from "@multica/ui/components/ui/label";
+} from "@polybet/ui/components/ui/card";
+import { Input } from "@polybet/ui/components/ui/input";
+import { Button } from "@polybet/ui/components/ui/button";
+import { Label } from "@polybet/ui/components/ui/label";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
-} from "@multica/ui/components/ui/input-otp";
-import { useAuthStore } from "@multica/core/auth";
-import { workspaceKeys } from "@multica/core/workspace/queries";
-import { api } from "@multica/core/api";
-import type { User } from "@multica/core/types";
+} from "@polybet/ui/components/ui/input-otp";
+import { useAuthStore } from "@polybet/core/auth";
+import { workspaceKeys } from "@polybet/core/workspace/queries";
+import { api } from "@polybet/core/api";
+import type { User } from "@polybet/core/types";
 import { useT } from "../i18n";
 
 // ---------------------------------------------------------------------------

@@ -15,26 +15,26 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@multica/ui/components/ui/tooltip";
+} from "@polybet/ui/components/ui/tooltip";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import type {
   Agent,
   AgentTask,
   Issue,
   TaskFailureReason,
-} from "@multica/core/types";
+} from "@polybet/core/types";
 import {
   type AgentActivity,
   agentTaskSnapshotOptions,
   agentTasksOptions,
   summarizeActivityWindow,
   useWorkspaceActivityMap,
-} from "@multica/core/agents";
-import { api } from "@multica/core/api";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useWorkspacePaths } from "@multica/core/paths";
-import { issueDetailOptions } from "@multica/core/issues/queries";
-import { timeAgo } from "@multica/core/utils";
+} from "@polybet/core/agents";
+import { api } from "@polybet/core/api";
+import { useWorkspaceId } from "@polybet/core/hooks";
+import { useWorkspacePaths } from "@polybet/core/paths";
+import { issueDetailOptions } from "@polybet/core/issues/queries";
+import { timeAgo } from "@polybet/core/utils";
 import { AppLink } from "../../../navigation";
 import { TranscriptButton } from "../../../common/task-transcript";
 import { taskStatusConfig } from "../../config";

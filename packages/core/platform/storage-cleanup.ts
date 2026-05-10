@@ -12,10 +12,10 @@ const WORKSPACE_SCOPED_KEYS = [
   "multica_issues_view",
   "multica_issues_scope",
   "multica_my_issues_view",
-  "multica:chat:selectedAgentId",
-  "multica:chat:activeSessionId",
-  "multica:chat:drafts",
-  "multica:chat:expanded",
+  "polybet:chat:selectedAgentId",
+  "polybet:chat:activeSessionId",
+  "polybet:chat:drafts",
+  "polybet:chat:expanded",
   "multica_navigation",
 ];
 

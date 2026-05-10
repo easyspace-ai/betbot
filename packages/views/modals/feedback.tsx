@@ -8,21 +8,21 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
-import { Button } from "@multica/ui/components/ui/button";
+} from "@polybet/ui/components/ui/dialog";
+import { Button } from "@polybet/ui/components/ui/button";
 import {
   ContentEditor,
   type ContentEditorRef,
   useFileDropZone,
   FileDropOverlay,
 } from "../editor";
-import { useCreateFeedback, useFeedbackDraftStore } from "@multica/core/feedback";
-import { useCurrentWorkspace } from "@multica/core/paths";
-import { useFileUpload } from "@multica/core/hooks/use-file-upload";
-import { api } from "@multica/core/api";
-import { captureFeedbackOpened } from "@multica/core/analytics";
+import { useCreateFeedback, useFeedbackDraftStore } from "@polybet/core/feedback";
+import { useCurrentWorkspace } from "@polybet/core/paths";
+import { useFileUpload } from "@polybet/core/hooks/use-file-upload";
+import { api } from "@polybet/core/api";
+import { captureFeedbackOpened } from "@polybet/core/analytics";
 import { useT } from "../i18n";
-import { formatShortcut, modKey, enterKey } from "@multica/core/platform";
+import { formatShortcut, modKey, enterKey } from "@polybet/core/platform";
 
 const MAX_MESSAGE_LEN = 10000;
 

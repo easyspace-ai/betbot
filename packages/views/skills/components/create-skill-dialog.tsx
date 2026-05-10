@@ -14,30 +14,30 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
-import { api } from "@multica/core/api";
-import type { Skill } from "@multica/core/types";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { isImeComposing } from "@multica/core/utils";
+import { api } from "@polybet/core/api";
+import type { Skill } from "@polybet/core/types";
+import { useWorkspaceId } from "@polybet/core/hooks";
+import { isImeComposing } from "@polybet/core/utils";
 import {
   skillDetailOptions,
   workspaceKeys,
-} from "@multica/core/workspace/queries";
+} from "@polybet/core/workspace/queries";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
+} from "@polybet/ui/components/ui/dialog";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@multica/ui/components/ui/tooltip";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
-import { Label } from "@multica/ui/components/ui/label";
-import { Textarea } from "@multica/ui/components/ui/textarea";
-import { useScrollFade } from "@multica/ui/hooks/use-scroll-fade";
-import { cn } from "@multica/ui/lib/utils";
+} from "@polybet/ui/components/ui/tooltip";
+import { Button } from "@polybet/ui/components/ui/button";
+import { Input } from "@polybet/ui/components/ui/input";
+import { Label } from "@polybet/ui/components/ui/label";
+import { Textarea } from "@polybet/ui/components/ui/textarea";
+import { useScrollFade } from "@polybet/ui/hooks/use-scroll-fade";
+import { cn } from "@polybet/ui/lib/utils";
 import { openExternal } from "../../platform";
 import { RuntimeLocalSkillImportPanel } from "./runtime-local-skill-import-panel";
 import { useT } from "../../i18n";

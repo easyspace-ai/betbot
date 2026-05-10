@@ -10,9 +10,9 @@ import {
   Save,
   Trash2,
 } from "lucide-react";
-import type { Agent } from "@multica/core/types";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
+import type { Agent } from "@polybet/core/types";
+import { Button } from "@polybet/ui/components/ui/button";
+import { Input } from "@polybet/ui/components/ui/input";
 import { toast } from "sonner";
 import { useT } from "../../../i18n";
 

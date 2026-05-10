@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { ArrowRight, Check, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
-import { Label } from "@multica/ui/components/ui/label";
-import { Textarea } from "@multica/ui/components/ui/textarea";
-import { joinCloudWaitlist } from "@multica/core/onboarding";
+import { Button } from "@polybet/ui/components/ui/button";
+import { Input } from "@polybet/ui/components/ui/input";
+import { Label } from "@polybet/ui/components/ui/label";
+import { Textarea } from "@polybet/ui/components/ui/textarea";
+import { joinCloudWaitlist } from "@polybet/core/onboarding";
 import { useT } from "../../i18n";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

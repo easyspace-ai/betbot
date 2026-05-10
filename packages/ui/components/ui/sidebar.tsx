@@ -5,24 +5,24 @@ import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
 import { cva, type VariantProps } from "class-variance-authority"
 
-import { useIsMobile } from "@multica/ui/hooks/use-mobile"
-import { cn } from "@multica/ui/lib/utils"
-import { Button } from "@multica/ui/components/ui/button"
-import { Input } from "@multica/ui/components/ui/input"
-import { Separator } from "@multica/ui/components/ui/separator"
+import { useIsMobile } from "@polybet/ui/hooks/use-mobile"
+import { cn } from "@polybet/ui/lib/utils"
+import { Button } from "@polybet/ui/components/ui/button"
+import { Input } from "@polybet/ui/components/ui/input"
+import { Separator } from "@polybet/ui/components/ui/separator"
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@multica/ui/components/ui/sheet"
-import { Skeleton } from "@multica/ui/components/ui/skeleton"
+} from "@polybet/ui/components/ui/sheet"
+import { Skeleton } from "@polybet/ui/components/ui/skeleton"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@multica/ui/components/ui/tooltip"
+} from "@polybet/ui/components/ui/tooltip"
 import { PanelLeftIcon } from "lucide-react"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"

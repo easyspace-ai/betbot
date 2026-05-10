@@ -51,7 +51,7 @@ vi.mock("@tanstack/react-query", () => ({
   },
 }));
 
-vi.mock("@multica/core/api", () => ({
+vi.mock("@polybet/core/api", () => ({
   api: {
     quickCreateIssue: mockQuickCreateIssue,
   },
@@ -60,46 +60,46 @@ vi.mock("@multica/core/api", () => ({
   },
 }));
 
-vi.mock("@multica/core/hooks", () => ({
+vi.mock("@polybet/core/hooks", () => ({
   useWorkspaceId: () => "ws-test",
 }));
 
-vi.mock("@multica/core/paths", () => ({
+vi.mock("@polybet/core/paths", () => ({
   useCurrentWorkspace: () => ({ name: "Test Workspace" }),
 }));
 
-vi.mock("@multica/core/workspace/queries", () => ({
+vi.mock("@polybet/core/workspace/queries", () => ({
   agentListOptions: () => ({ queryKey: ["agents"] }),
   memberListOptions: () => ({ queryKey: ["members"] }),
 }));
 
-vi.mock("@multica/core/projects/queries", () => ({
+vi.mock("@polybet/core/projects/queries", () => ({
   projectListOptions: () => ({ queryKey: ["projects"] }),
 }));
 
-vi.mock("@multica/core/issues/stores/quick-create-store", () => ({
+vi.mock("@polybet/core/issues/stores/quick-create-store", () => ({
   useQuickCreateStore: (selector?: (state: typeof mockQuickCreateStore) => unknown) =>
     (selector ? selector(mockQuickCreateStore) : mockQuickCreateStore),
 }));
 
-vi.mock("@multica/core/issues/stores/create-mode-store", () => ({
+vi.mock("@polybet/core/issues/stores/create-mode-store", () => ({
   useCreateModeStore: (selector?: (state: { setLastMode: typeof mockSetLastMode }) => unknown) =>
     (selector ? selector({ setLastMode: mockSetLastMode }) : { setLastMode: mockSetLastMode }),
 }));
 
-vi.mock("@multica/core/auth", () => ({
+vi.mock("@polybet/core/auth", () => ({
   useAuthStore: (selector?: (state: { user: { id: string } }) => unknown) =>
     (selector ? selector({ user: { id: "user-1" } }) : { user: { id: "user-1" } }),
 }));
 
-vi.mock("@multica/core/runtimes", () => ({
+vi.mock("@polybet/core/runtimes", () => ({
   runtimeListOptions: () => ({ queryKey: ["runtimes"] }),
   checkQuickCreateCliVersion: () => ({ state: "ok", min: "1.0.0" }),
   readRuntimeCliVersion: () => "1.2.3",
   MIN_QUICK_CREATE_CLI_VERSION: "1.0.0",
 }));
 
-vi.mock("@multica/core/hooks/use-file-upload", () => ({
+vi.mock("@polybet/core/hooks/use-file-upload", () => ({
   useFileUpload: () => ({ uploadWithToast: vi.fn(), uploading: false }),
 }));
 
@@ -165,13 +165,13 @@ vi.mock("../editor", () => {
   };
 });
 
-vi.mock("@multica/ui/components/ui/dialog", () => ({
+vi.mock("@polybet/ui/components/ui/dialog", () => ({
   DialogTitle: ({ children, className }: { children: ReactNode; className?: string }) => (
     <div className={className}>{children}</div>
   ),
 }));
 
-vi.mock("@multica/ui/components/ui/dropdown-menu", () => ({
+vi.mock("@polybet/ui/components/ui/dropdown-menu", () => ({
   DropdownMenu: ({ children }: { children: ReactNode }) => <>{children}</>,
   DropdownMenuTrigger: ({ render }: { render: ReactNode }) => <>{render}</>,
   DropdownMenuContent: ({ children }: { children: ReactNode }) => <>{children}</>,
@@ -180,7 +180,7 @@ vi.mock("@multica/ui/components/ui/dropdown-menu", () => ({
   ),
 }));
 
-vi.mock("@multica/ui/components/ui/button", () => ({
+vi.mock("@polybet/ui/components/ui/button", () => ({
   Button: ({ children, disabled, onClick }: { children: ReactNode; disabled?: boolean; onClick?: () => void }) => (
     <button type="button" disabled={disabled} onClick={onClick}>
       {children}
@@ -188,7 +188,7 @@ vi.mock("@multica/ui/components/ui/button", () => ({
   ),
 }));
 
-vi.mock("@multica/ui/components/ui/switch", () => ({
+vi.mock("@polybet/ui/components/ui/switch", () => ({
   Switch: ({ checked, onCheckedChange }: { checked: boolean; onCheckedChange: (v: boolean) => void }) => (
     <input
       aria-label="Create another"
@@ -199,7 +199,7 @@ vi.mock("@multica/ui/components/ui/switch", () => ({
   ),
 }));
 
-vi.mock("@multica/ui/components/common/file-upload-button", () => ({
+vi.mock("@polybet/ui/components/common/file-upload-button", () => ({
   FileUploadButton: () => <button type="button">Upload file</button>,
 }));
 
@@ -209,7 +209,7 @@ vi.mock("sonner", () => ({
   },
 }));
 
-import { I18nProvider } from "@multica/core/i18n/react";
+import { I18nProvider } from "@polybet/core/i18n/react";
 import enCommon from "../locales/en/common.json";
 import enModals from "../locales/en/modals.json";
 import { AgentCreatePanel } from "./quick-create-issue";

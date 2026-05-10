@@ -4,25 +4,25 @@ import { useMemo, useState, useCallback, useRef, useEffect } from "react";
 import { useDefaultLayout, usePanelRef } from "react-resizable-panels";
 import { Check, ChevronRight, Link2, ListTodo, MoreHorizontal, PanelRight, Pin, PinOff, Plus, Trash2, UserMinus } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@polybet/ui/lib/utils";
 import { toast } from "sonner";
-import type { Issue, IssueStatus, ProjectStatus, ProjectPriority } from "@multica/core/types";
-import { useAuthStore } from "@multica/core/auth";
-import { projectDetailOptions } from "@multica/core/projects/queries";
-import { useUpdateProject, useDeleteProject } from "@multica/core/projects/mutations";
-import { pinListOptions } from "@multica/core/pins";
-import { useCreatePin, useDeletePin } from "@multica/core/pins";
-import { myIssueListOptions, childIssueProgressOptions, type MyIssuesFilter } from "@multica/core/issues/queries";
-import { useUpdateIssue } from "@multica/core/issues/mutations";
-import { useModalStore } from "@multica/core/modals";
-import { memberListOptions, agentListOptions } from "@multica/core/workspace/queries";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useCurrentWorkspace, useWorkspacePaths } from "@multica/core/paths";
-import { useActorName } from "@multica/core/workspace/hooks";
-import { PROJECT_STATUS_ORDER, PROJECT_STATUS_CONFIG, PROJECT_PRIORITY_ORDER } from "@multica/core/projects/config";
-import { BOARD_STATUSES } from "@multica/core/issues/config";
-import { createIssueViewStore } from "@multica/core/issues/stores/view-store";
-import { ViewStoreProvider, useViewStore } from "@multica/core/issues/stores/view-store-context";
+import type { Issue, IssueStatus, ProjectStatus, ProjectPriority } from "@polybet/core/types";
+import { useAuthStore } from "@polybet/core/auth";
+import { projectDetailOptions } from "@polybet/core/projects/queries";
+import { useUpdateProject, useDeleteProject } from "@polybet/core/projects/mutations";
+import { pinListOptions } from "@polybet/core/pins";
+import { useCreatePin, useDeletePin } from "@polybet/core/pins";
+import { myIssueListOptions, childIssueProgressOptions, type MyIssuesFilter } from "@polybet/core/issues/queries";
+import { useUpdateIssue } from "@polybet/core/issues/mutations";
+import { useModalStore } from "@polybet/core/modals";
+import { memberListOptions, agentListOptions } from "@polybet/core/workspace/queries";
+import { useWorkspaceId } from "@polybet/core/hooks";
+import { useCurrentWorkspace, useWorkspacePaths } from "@polybet/core/paths";
+import { useActorName } from "@polybet/core/workspace/hooks";
+import { PROJECT_STATUS_ORDER, PROJECT_STATUS_CONFIG, PROJECT_PRIORITY_ORDER } from "@polybet/core/projects/config";
+import { BOARD_STATUSES } from "@polybet/core/issues/config";
+import { createIssueViewStore } from "@polybet/core/issues/stores/view-store";
+import { ViewStoreProvider, useViewStore } from "@polybet/core/issues/stores/view-store-context";
 import { filterIssues } from "../../issues/utils/filter";
 import { getProjectIssueMetrics } from "./project-issue-metrics";
 import { ActorAvatar } from "../../common/actor-avatar";
@@ -34,29 +34,29 @@ import { IssuesHeader } from "../../issues/components/issues-header";
 import { BoardView } from "../../issues/components/board-view";
 import { ListView } from "../../issues/components/list-view";
 import { BatchActionToolbar } from "../../issues/components/batch-action-toolbar";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { Button } from "@multica/ui/components/ui/button";
-import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@multica/ui/components/ui/resizable";
-import { Sheet, SheetContent } from "@multica/ui/components/ui/sheet";
-import { useIsMobile } from "@multica/ui/hooks/use-mobile";
+import { Skeleton } from "@polybet/ui/components/ui/skeleton";
+import { Button } from "@polybet/ui/components/ui/button";
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@polybet/ui/components/ui/resizable";
+import { Sheet, SheetContent } from "@polybet/ui/components/ui/sheet";
+import { useIsMobile } from "@polybet/ui/hooks/use-mobile";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@multica/ui/components/ui/dropdown-menu";
+} from "@polybet/ui/components/ui/dropdown-menu";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@multica/ui/components/ui/popover";
+} from "@polybet/ui/components/ui/popover";
 import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-} from "@multica/ui/components/ui/tooltip";
-import { EmojiPicker } from "@multica/ui/components/common/emoji-picker";
+} from "@polybet/ui/components/ui/tooltip";
+import { EmojiPicker } from "@polybet/ui/components/common/emoji-picker";
 import { PageHeader } from "../../layout/page-header";
 import {
   AlertDialog,
@@ -67,7 +67,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@multica/ui/components/ui/alert-dialog";
+} from "@polybet/ui/components/ui/alert-dialog";
 import { useT } from "../../i18n";
 import { useProjectStatusLabels, useProjectPriorityLabels } from "./labels";
 

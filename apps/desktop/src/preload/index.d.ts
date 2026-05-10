@@ -1,5 +1,6 @@
 import { ElectronAPI } from "@electron-toolkit/preload";
 import type { RuntimeConfigResult } from "../shared/runtime-config";
+import type { PolybetProjectBootstrap } from "../shared/polybet-project-config";
 
 interface DesktopAPI {
   /** App version + normalized OS, captured synchronously at preload time. */
@@ -13,6 +14,15 @@ interface DesktopAPI {
   onSystemLocaleChanged: (callback: (locale: string) => void) => () => void;
   /** Validated runtime endpoint config, or a blocking config error. */
   runtimeConfig: RuntimeConfigResult;
+  /** Local embedded Go server: ~/.polybet/polybet-project.json + bootstrap flags. */
+  polybetBootstrap: PolybetProjectBootstrap;
+  savePolybetProjectConfig: (
+    raw: Record<string, unknown>,
+  ) => Promise<{ ok: true } | { ok: false; errors: string[] }>;
+  relaunchApp: () => Promise<void>;
+  verifyPolymarketOutbound: (opts?: {
+    outboundProxyUrl?: string;
+  }) => Promise<{ ok: true } | { ok: false; error: string }>;
   /** Listen for auth token delivered via deep link. Returns an unsubscribe function. */
   onAuthToken: (callback: (token: string) => void) => () => void;
   /** Listen for invitation IDs delivered via deep link. Returns an unsubscribe function. */
@@ -41,43 +51,6 @@ interface DesktopAPI {
   ) => () => void;
 }
 
-interface DaemonStatus {
-  state: "running" | "stopped" | "starting" | "stopping" | "installing_cli" | "cli_not_found";
-  pid?: number;
-  uptime?: string;
-  daemonId?: string;
-  deviceName?: string;
-  agents?: string[];
-  workspaceCount?: number;
-  profile?: string;
-  serverUrl?: string;
-}
-
-interface DaemonPrefs {
-  autoStart: boolean;
-  autoStop: boolean;
-}
-
-interface DaemonAPI {
-  start: () => Promise<{ success: boolean; error?: string }>;
-  stop: () => Promise<{ success: boolean; error?: string }>;
-  restart: () => Promise<{ success: boolean; error?: string }>;
-  getStatus: () => Promise<DaemonStatus>;
-  onStatusChange: (callback: (status: DaemonStatus) => void) => () => void;
-  setTargetApiUrl: (url: string) => Promise<void>;
-  syncToken: (token: string, userId: string) => Promise<void>;
-  clearToken: () => Promise<void>;
-  isCliInstalled: () => Promise<boolean>;
-  getPrefs: () => Promise<DaemonPrefs>;
-  setPrefs: (prefs: Partial<DaemonPrefs>) => Promise<DaemonPrefs>;
-  autoStart: () => Promise<void>;
-  retryInstall: () => Promise<void>;
-  startLogStream: () => void;
-  stopLogStream: () => void;
-  onLogLine: (callback: (line: string) => void) => () => void;
-  openLogFile: () => Promise<{ success: boolean; error?: string }>;
-}
-
 interface UpdaterAPI {
   onUpdateAvailable: (callback: (info: { version: string; releaseNotes?: string }) => void) => () => void;
   onDownloadProgress: (callback: (progress: { percent: number }) => void) => () => void;
@@ -94,7 +67,6 @@ declare global {
   interface Window {
     electron: ElectronAPI;
     desktopAPI: DesktopAPI;
-    daemonAPI: DaemonAPI;
     updater: UpdaterAPI;
   }
 }

@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { ProjectDetail } from "@multica/views/projects/components";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { projectDetailOptions } from "@multica/core/projects/queries";
+import { ProjectDetail } from "@polybet/views/projects/components";
+import { useWorkspaceId } from "@polybet/core/hooks";
+import { projectDetailOptions } from "@polybet/core/projects/queries";
 import { useDocumentTitle } from "@/hooks/use-document-title";
 
 export function ProjectDetailPage() {

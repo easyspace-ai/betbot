@@ -4,8 +4,8 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { motion } from "motion/react";
 import { Minus, Maximize2, Minimize2, ChevronDown, ChevronRight, Plus, Check, Trash2 } from "lucide-react";
-import { Button } from "@multica/ui/components/ui/button";
-import { Tooltip, TooltipTrigger, TooltipContent } from "@multica/ui/components/ui/tooltip";
+import { Button } from "@polybet/ui/components/ui/button";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@polybet/ui/components/ui/tooltip";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,7 +14,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@multica/ui/components/ui/dropdown-menu";
+} from "@polybet/ui/components/ui/dropdown-menu";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,13 +24,13 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@multica/ui/components/ui/alert-dialog";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useAuthStore } from "@multica/core/auth";
-import { agentListOptions, memberListOptions } from "@multica/core/workspace/queries";
-import { canAssignAgent } from "@multica/views/issues/components";
-import { api } from "@multica/core/api";
-import { useAgentPresenceDetail, useWorkspaceAgentAvailability } from "@multica/core/agents";
+} from "@polybet/ui/components/ui/alert-dialog";
+import { useWorkspaceId } from "@polybet/core/hooks";
+import { useAuthStore } from "@polybet/core/auth";
+import { agentListOptions, memberListOptions } from "@polybet/core/workspace/queries";
+import { canAssignAgent } from "@polybet/views/issues/components";
+import { api } from "@polybet/core/api";
+import { useAgentPresenceDetail, useWorkspaceAgentAvailability } from "@polybet/core/agents";
 import { ActorAvatar } from "../../common/actor-avatar";
 import { OfflineBanner } from "./offline-banner";
 import { NoAgentBanner } from "./no-agent-banner";
@@ -40,13 +40,13 @@ import {
   pendingChatTaskOptions,
   pendingChatTasksOptions,
   chatKeys,
-} from "@multica/core/chat/queries";
+} from "@polybet/core/chat/queries";
 import {
   useCreateChatSession,
   useDeleteChatSession,
   useMarkChatSessionRead,
-} from "@multica/core/chat/mutations";
-import { useChatStore } from "@multica/core/chat";
+} from "@polybet/core/chat/mutations";
+import { useChatStore } from "@polybet/core/chat";
 import { ChatMessageList, ChatMessageSkeleton } from "./chat-message-list";
 import { ChatInput } from "./chat-input";
 import {
@@ -57,8 +57,8 @@ import {
 } from "./context-anchor";
 import { ChatResizeHandles } from "./chat-resize-handles";
 import { useChatResize } from "./use-chat-resize";
-import { createLogger } from "@multica/core/logger";
-import type { Agent, ChatMessage, ChatPendingTask, ChatSession } from "@multica/core/types";
+import { createLogger } from "@polybet/core/logger";
+import type { Agent, ChatMessage, ChatPendingTask, ChatSession } from "@polybet/core/types";
 import { useT } from "../../i18n";
 
 const uiLogger = createLogger("chat.ui");

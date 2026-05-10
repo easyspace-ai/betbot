@@ -1,5 +1,5 @@
 {
-  "name": "@betbot/ui",
+  "name": "@polybet/ui",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -56,7 +56,7 @@
     "react-dom": "catalog:"
   },
   "devDependencies": {
-    "@betbot/tsconfig": "workspace:*",
+    "@polybet/tsconfig": "workspace:*",
     "@types/linkify-it": "^5.0.0",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",

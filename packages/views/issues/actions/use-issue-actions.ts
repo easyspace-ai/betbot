@@ -8,22 +8,22 @@ import type {
   MemberWithUser,
   Agent,
   UpdateIssueRequest,
-} from "@multica/core/types";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useWorkspacePaths } from "@multica/core/paths";
-import { useModalStore } from "@multica/core/modals";
-import { useUpdateIssue } from "@multica/core/issues/mutations";
+} from "@polybet/core/types";
+import { useAuthStore } from "@polybet/core/auth";
+import { useWorkspaceId } from "@polybet/core/hooks";
+import { useWorkspacePaths } from "@polybet/core/paths";
+import { useModalStore } from "@polybet/core/modals";
+import { useUpdateIssue } from "@polybet/core/issues/mutations";
 import {
   memberListOptions,
   agentListOptions,
-} from "@multica/core/workspace/queries";
-import { pinListOptions, useCreatePin, useDeletePin } from "@multica/core/pins";
+} from "@polybet/core/workspace/queries";
+import { pinListOptions, useCreatePin, useDeletePin } from "@polybet/core/pins";
 import { canAssignAgent } from "../components/pickers";
 import { useNavigation } from "../../navigation";
 import { useT } from "../../i18n";
 
-const BACKLOG_HINT_LS_KEY = "multica:backlog-agent-hint-dismissed";
+const BACKLOG_HINT_LS_KEY = "polybet:backlog-agent-hint-dismissed";
 
 export interface UseIssueActionsResult {
   // Derived data for rendering menu rows

@@ -15,15 +15,15 @@ export type RuntimeConfigResult =
 
 export const DEFAULT_RUNTIME_CONFIG: RuntimeConfig = Object.freeze({
   schemaVersion: 1,
-  apiUrl: "https://api.multica.ai",
-  wsUrl: "wss://api.multica.ai/ws",
-  appUrl: "https://multica.ai",
+  apiUrl: "https://api.polybet.ai",
+  wsUrl: "wss://api.polybet.ai/ws",
+  appUrl: "https://polybet.ai",
 });
 
 const LOCAL_DEV_RUNTIME_CONFIG: RuntimeConfig = Object.freeze({
   schemaVersion: 1,
-  apiUrl: "http://localhost:8080",
-  wsUrl: "ws://localhost:8080/ws",
+  apiUrl: "http://localhost:7655",
+  wsUrl: "ws://localhost:7655/ws",
   appUrl: "http://localhost:3000",
 });
 
@@ -93,8 +93,8 @@ export function deriveWsUrl(apiUrl: string): string {
   return trimTrailingSlash(url.toString());
 }
 
-// Convention: api hosts are exposed at `api.<web-host>` (api.multica.ai →
-// multica.ai, api.test.multica.ai → test.multica.ai). Strip the leading
+// Convention: api hosts are exposed at `api.<web-host>` (api.polybet.ai →
+// polybet.ai, api.test.polybet.ai → test.polybet.ai). Strip the leading
 // `api.` label so a single `apiUrl` configuration produces the right
 // shareable web URL. Hosts that don't match the convention (no leading
 // `api.` label, or short two-label hosts like `api.local`) fall through
@@ -110,8 +110,8 @@ export function deriveAppUrl(apiUrl: string): string {
   return trimTrailingSlash(url.toString());
 }
 
-// Dev variant: when the api host is the local backend (`localhost:8080` /
-// `127.0.0.1:8080`), the renderer is served from a different port (3000),
+// Dev variant: when the api host is the local backend (`localhost:7655` /
+// `127.0.0.1:7655`), the renderer is served from a different port (3000),
 // so deriving by host alone is wrong. Fall back to the local dev web URL
 // in that case; for any non-local host (e.g. a remote test environment),
 // trust the production-style derivation so `apiUrl=https://api.test.x`

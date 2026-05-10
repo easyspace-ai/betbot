@@ -38,9 +38,9 @@ import {
   type MouseEvent as ReactMouseEvent,
 } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
-import { cn } from "@multica/ui/lib/utils";
-import type { UploadResult } from "@multica/core/hooks/use-file-upload";
-import { useWorkspaceSlug } from "@multica/core/paths";
+import { cn } from "@polybet/ui/lib/utils";
+import type { UploadResult } from "@polybet/core/hooks/use-file-upload";
+import { useWorkspaceSlug } from "@polybet/core/paths";
 import { useQueryClient } from "@tanstack/react-query";
 import { createEditorExtensions } from "./extensions";
 import { uploadAndInsertFile } from "./extensions/file-upload";

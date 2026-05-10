@@ -1,8 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@multica/ui/styles/tokens.css";
-@import "@multica/ui/styles/base.css";
+/* Repo-relative: @tailwindcss/vite CSS @import does not resolve @polybet/ui
+   package exports the same way as TS; match @source paths below. */
+@import "../../../../../packages/ui/styles/tokens.css";
+@import "../../../../../packages/ui/styles/base.css";
 
 @custom-variant dark (&:is(.dark *));
 

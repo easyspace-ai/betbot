@@ -1,15 +1,36 @@
 import { app, BrowserWindow, ipcMain, nativeImage, Notification } from "electron";
-import { homedir } from "os";
 import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
-import fixPath from "fix-path";
+import fixPathImport from "fix-path";
+
+// fix-path is ESM-only; bundled main is CJS and `require("fix-path")` yields
+// `{ default: fn }`, so default import is not callable unless we unwrap.
+const fixPath: () => void =
+  typeof fixPathImport === "function"
+    ? fixPathImport
+    : (fixPathImport as { default: () => void }).default;
 import { setupAutoUpdater } from "./updater";
-import { setupDaemonManager } from "./daemon-manager";
+import {
+  getLocalDashboardURL,
+  maybeStartSportsRouterSidecar,
+  stopEmbeddedPolybetSidecar,
+} from "./sports-router-sidecar";
+import { probeGammaApiReachable } from "./gamma-outbound-probe";
+import { getUserProfileHomeDir } from "./user-profile-paths";
 import { openExternalSafely } from "./external-url";
 import { installContextMenu } from "./context-menu";
 import { getAppVersion } from "./app-version";
 import { loadRuntimeConfig } from "./runtime-config-loader";
 import type { RuntimeConfigResult } from "../shared/runtime-config";
+import {
+  getPolybetProjectBootstrap,
+  loadPolybetProjectConfigFromDisk,
+  markGammaOutboundVerifiedOnDisk,
+  refreshPolybetProjectBootstrap,
+  resetOutboundProbeState,
+  savePolybetProjectConfigJson,
+  setOutboundProbeFailure,
+} from "./polybet-project-store";
 
 // Bundled icon used for dev-mode dock/taskbar branding. In production the
 // app bundle icon (from electron-builder) wins; this path is only consumed
@@ -19,10 +40,10 @@ const DEV_ICON_PATH = join(__dirname, "../../resources/icon.png");
 // macOS/Linux GUI launches inherit a minimal PATH from launchd that omits
 // the user's shell config (~/.zshrc, Homebrew, nvm, ~/.local/bin, etc.).
 // Run the user's login shell once to recover the real PATH so the bundled
-// multica CLI can find agent binaries like claude/codex/opencode. Must run
+// polybet CLI can find agent binaries like claude/codex/opencode. Must run
 // before any child_process.spawn / execFile call in the main process —
 // ES module imports are hoisted, so this block executes before createWindow
-// or any daemon-manager spawn.
+// or any child_process spawn.
 if (process.platform !== "win32") {
   fixPath();
   // Fallback: prepend common install locations in case fix-path came up
@@ -31,12 +52,12 @@ if (process.platform !== "win32") {
   const fallbackPaths = [
     "/opt/homebrew/bin",
     "/usr/local/bin",
-    join(homedir(), ".local/bin"),
+    join(getUserProfileHomeDir(), ".local/bin"),
   ];
   process.env.PATH = `${fallbackPaths.join(":")}:${process.env.PATH ?? ""}`;
 }
 
-const PROTOCOL = "multica";
+const PROTOCOL = "polybet";
 
 let mainWindow: BrowserWindow | null = null;
 let runtimeConfigResult: RuntimeConfigResult = {
@@ -51,7 +72,7 @@ function handleDeepLink(url: string): void {
     const parsed = new URL(url);
     if (parsed.protocol !== `${PROTOCOL}:`) return;
 
-    // multica://auth/callback?token=<jwt>
+    // polybet://auth/callback?token=<jwt>
     if (parsed.hostname === "auth" && parsed.pathname === "/callback") {
       const token = parsed.searchParams.get("token");
       if (token && mainWindow) {
@@ -60,7 +81,7 @@ function handleDeepLink(url: string): void {
       return;
     }
 
-    // multica://invite/<invitationId>
+    // polybet://invite/<invitationId>
     // Dispatched from the web invite page when the user chooses "Open in
     // desktop app". The renderer opens the invite overlay — no tab, no
     // route persistence, so deep-linking the same invite twice stays safe.
@@ -113,7 +134,7 @@ function createWindow(): void {
       preload: join(__dirname, "../preload/index.js"),
       sandbox: false,
       webSecurity: false,
-      additionalArguments: [`--multica-locale=${systemLocale}`],
+      additionalArguments: [`--polybet-locale=${systemLocale}`],
     },
   });
 
@@ -166,7 +187,23 @@ function createWindow(): void {
 
   installContextMenu(mainWindow.webContents);
 
-  if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {
+  const localDash = getLocalDashboardURL();
+  let allowEmbedded = Boolean(localDash);
+  try {
+    const boot = getPolybetProjectBootstrap();
+    if (
+      !boot.project.ok ||
+      boot.project.config.gammaOutboundVerified !== true ||
+      boot.outboundProbeFailed
+    ) {
+      allowEmbedded = false;
+    }
+  } catch {
+    allowEmbedded = false;
+  }
+  if (allowEmbedded && localDash) {
+    void mainWindow.loadURL(localDash);
+  } else if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {
     mainWindow.loadURL(process.env["ELECTRON_RENDERER_URL"]);
   } else {
     mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
@@ -225,6 +262,97 @@ if (!gotTheLock) {
   });
 
   app.whenReady().then(async () => {
+    resetOutboundProbeState();
+    let projectResult = await loadPolybetProjectConfigFromDisk();
+    refreshPolybetProjectBootstrap(projectResult);
+
+    ipcMain.handle("polybet-project:save", async (_event, raw: unknown) => {
+      return savePolybetProjectConfigJson(raw);
+    });
+    ipcMain.handle("app:relaunch", () => {
+      app.relaunch();
+      app.exit(0);
+    });
+    ipcMain.handle(
+      "polybet-project:verify-outbound",
+      async (
+        _evt,
+        opts?: { outboundProxyUrl?: string },
+      ): Promise<{ ok: true } | { ok: false; error: string }> => {
+        const cur = await loadPolybetProjectConfigFromDisk();
+        if (!cur.ok) {
+          return { ok: false, error: "Missing or invalid polybet-project.json" };
+        }
+        const useFormProxy =
+          opts &&
+          typeof opts === "object" &&
+          typeof opts.outboundProxyUrl === "string";
+        const proxyForProbe = useFormProxy
+          ? opts.outboundProxyUrl!.trim() || undefined
+          : cur.config.outboundProxyUrl;
+        const probe = await probeGammaApiReachable(proxyForProbe);
+        if (!probe.ok) {
+          return { ok: false, error: probe.error };
+        }
+        await markGammaOutboundVerifiedOnDisk(
+          useFormProxy ? { outboundProxyUrl: opts!.outboundProxyUrl } : undefined,
+        );
+        stopEmbeddedPolybetSidecar();
+        const latest = await loadPolybetProjectConfigFromDisk();
+        if (!latest.ok) {
+          return {
+            ok: false,
+            error: "Config disappeared after verification — check ~/.polybet/polybet-project.json",
+          };
+        }
+        refreshPolybetProjectBootstrap(latest);
+        const started = await maybeStartSportsRouterSidecar(latest.config);
+        if (!started) {
+          return {
+            ok: false,
+            error:
+              "Polymarket is reachable but the local server failed to start. Check DATABASE_URL and logs.",
+          };
+        }
+        const dash = getLocalDashboardURL();
+        if (mainWindow && dash) {
+          await mainWindow.loadURL(dash);
+        } else {
+          mainWindow?.reload();
+        }
+        return { ok: true };
+      },
+    );
+
+    const started = await maybeStartSportsRouterSidecar(
+      projectResult.ok ? projectResult.config : null,
+    );
+
+    if (
+      started &&
+      projectResult.ok &&
+      projectResult.config.gammaOutboundVerified !== true
+    ) {
+      const probe = await probeGammaApiReachable(
+        projectResult.config.outboundProxyUrl,
+      );
+      if (probe.ok) {
+        await markGammaOutboundVerifiedOnDisk();
+        projectResult = await loadPolybetProjectConfigFromDisk();
+        resetOutboundProbeState();
+      } else {
+        setOutboundProbeFailure(probe.error);
+        stopEmbeddedPolybetSidecar();
+        console.error("[polybet] Gamma outbound probe failed:", probe.error);
+      }
+    }
+
+    refreshPolybetProjectBootstrap(projectResult);
+
+    ipcMain.on("polybet-bootstrap:get", (event) => {
+      event.returnValue = getPolybetProjectBootstrap();
+    });
+
     const viteEnv = import.meta.env as ImportMetaEnv & {
       readonly VITE_API_URL?: string;
       readonly VITE_WS_URL?: string;
@@ -244,7 +372,7 @@ if (!gotTheLock) {
     });
 
     electronApp.setAppUserModelId(
-      is.dev ? "ai.multica.desktop.dev" : "ai.multica.desktop",
+      is.dev ? "ai.polybet.desktop.dev" : "ai.polybet.desktop",
     );
 
     // macOS: replace the default Electron dock icon with the bundled logo
@@ -354,7 +482,6 @@ if (!gotTheLock) {
     createWindow();
 
     setupAutoUpdater(() => mainWindow);
-    setupDaemonManager(() => mainWindow);
 
     // macOS: deep link arrives via open-url event
     app.on("open-url", (_event, url) => {

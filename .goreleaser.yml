@@ -1,12 +1,12 @@
 version: 2
 
-project_name: multica
+project_name: polybet
 
 builds:
-  - id: multica
-    main: ./cmd/multica
+  - id: polybet
+    main: ./cmd/polybet
     dir: server
-    binary: multica
+    binary: polybet
     ldflags:
       - -s -w
       - -X main.version={{.Version}}
@@ -23,7 +23,7 @@ builds:
       - arm64
 
 archives:
-  # Legacy archive name kept so already-released CLIs (whose `multica update`
+  # Legacy archive name kept so already-released CLIs (whose `polybet update`
   # looks for `multica_{os}_{arch}.{ext}`) can keep self-updating. Remove
   # once those versions are no longer in use.
   - id: legacy
@@ -57,19 +57,19 @@ changelog:
       - "^chore:"
 
 brews:
-  - name: multica
+  - name: polybet
     ids:
       - versioned
     repository:
-      owner: multica-ai
+      owner: polybet-ai
       name: homebrew-tap
       branch: main
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
     directory: Formula
-    homepage: "https://github.com/multica-ai/multica"
+    homepage: "https://github.com/polybet-ai/polybet"
     description: "Multica CLI — local agent runtime and management tool for the Multica platform"
     license: "Apache-2.0"
     install: |
-      bin.install "multica"
+      bin.install "polybet"
     test: |
-      system "#{bin}/multica", "version"
+      system "#{bin}/polybet", "version"

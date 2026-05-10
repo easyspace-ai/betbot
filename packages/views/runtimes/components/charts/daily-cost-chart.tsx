@@ -10,7 +10,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
-} from "@multica/ui/components/ui/chart";
+} from "@polybet/ui/components/ui/chart";
 import type { DailyCostStackData } from "../../utils";
 
 // Three-segment stack (input / output / cache write) — keeps the user's

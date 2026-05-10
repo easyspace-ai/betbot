@@ -14,14 +14,14 @@ import type {
   AgentRuntime,
   MemberWithUser,
   SkillSummary,
-} from "@multica/core/types";
-import { timeAgo } from "@multica/core/utils";
-import { ActorAvatar } from "@multica/ui/components/common/actor-avatar";
+} from "@polybet/core/types";
+import { timeAgo } from "@polybet/core/utils";
+import { ActorAvatar } from "@polybet/ui/components/common/actor-avatar";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@multica/ui/components/ui/tooltip";
+} from "@polybet/ui/components/ui/tooltip";
 import { readOrigin, totalFileCount } from "../lib/origin";
 import { useT } from "../../i18n";
 

@@ -2,7 +2,7 @@ import type {
   RuntimeUsage,
   RuntimeUsageByAgent,
   RuntimeUsageByHour,
-} from "@multica/core/types";
+} from "@polybet/core/types";
 
 // ---------------------------------------------------------------------------
 // Formatting helpers

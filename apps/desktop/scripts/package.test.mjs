@@ -38,11 +38,16 @@ describe("normalizeGitVersion", () => {
     expect(normalizeGitVersion("v1.0.0-rc.2")).toBe("1.0.0-rc.2");
   });
 
-  it("falls back to 0.0.0-<hash> when no tags are reachable", () => {
+  it("falls back to semver build metadata when no tags are reachable", () => {
     // `git describe --tags --always` returns just the short commit hash
     // when there are no tags in the history at all.
-    expect(normalizeGitVersion("f1415e96")).toBe("0.0.0-f1415e96");
-    expect(normalizeGitVersion("abc1234")).toBe("0.0.0-abc1234");
+    expect(normalizeGitVersion("f1415e96")).toBe("0.0.0+git.f1415e96");
+    expect(normalizeGitVersion("abc1234")).toBe("0.0.0+git.abc1234");
+  });
+
+  it("handles digit-leading short hashes and -dirty (electron-updater semver)", () => {
+    expect(normalizeGitVersion("494bfb4-dirty")).toBe("0.0.0+git.494bfb4.dirty");
+    expect(normalizeGitVersion("0123456")).toBe("0.0.0+git.0123456");
   });
 });
 

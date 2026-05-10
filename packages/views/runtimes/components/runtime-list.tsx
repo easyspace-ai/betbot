@@ -8,17 +8,17 @@ import type {
   AgentRuntime,
   AgentTask,
   MemberWithUser,
-} from "@multica/core/types";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceId } from "@multica/core/hooks";
+} from "@polybet/core/types";
+import { useAuthStore } from "@polybet/core/auth";
+import { useWorkspaceId } from "@polybet/core/hooks";
 import {
   agentListOptions,
   memberListOptions,
-} from "@multica/core/workspace/queries";
-import { latestCliVersionOptions } from "@multica/core/runtimes";
-import { agentTaskSnapshotOptions } from "@multica/core/agents";
-import { paths, useWorkspaceSlug } from "@multica/core/paths";
-import { DataTable } from "@multica/ui/components/ui/data-table";
+} from "@polybet/core/workspace/queries";
+import { latestCliVersionOptions } from "@polybet/core/runtimes";
+import { agentTaskSnapshotOptions } from "@polybet/core/agents";
+import { paths, useWorkspaceSlug } from "@polybet/core/paths";
+import { DataTable } from "@polybet/ui/components/ui/data-table";
 import { useNavigation } from "../../navigation";
 import { type RuntimeRow, createRuntimeColumns } from "./runtime-columns";
 import { useT } from "../../i18n";

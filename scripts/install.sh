@@ -2,22 +2,22 @@
 # Multica installer — installs the CLI and optionally provisions a self-host server.
 #
 # Install / upgrade CLI only:
-#   curl -fsSL https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/polybet-ai/polybet/main/scripts/install.sh | bash
 #
 # Install CLI + provision self-host server:
-#   curl -fsSL https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.sh | bash -s -- --with-server
+#   curl -fsSL https://raw.githubusercontent.com/polybet-ai/polybet/main/scripts/install.sh | bash -s -- --with-server
 #
-# After installation, run `multica setup` to configure your environment.
+# After installation, run `polybet setup` to configure your environment.
 #
 set -euo pipefail
 
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
-REPO_URL="https://github.com/multica-ai/multica.git"
-REPO_WEB_URL="https://github.com/multica-ai/multica"  # without .git, for GitHub web APIs
-INSTALL_DIR="${MULTICA_INSTALL_DIR:-$HOME/.multica/server}"
-BREW_PACKAGE="multica-ai/tap/multica"
+REPO_URL="https://github.com/polybet-ai/polybet.git"
+REPO_WEB_URL="https://github.com/polybet-ai/polybet"  # without .git, for GitHub web APIs
+INSTALL_DIR="${MULTICA_INSTALL_DIR:-$HOME/.polybet/server}"
+BREW_PACKAGE="polybet-ai/tap/polybet"
 
 # Colors (disabled when not a terminal)
 if [ -t 1 ] || [ -t 2 ]; then
@@ -47,7 +47,7 @@ detect_os() {
     Linux)  OS="linux" ;;
     MINGW*|MSYS*|CYGWIN*)
             fail "This script does not support Windows. Use the PowerShell installer instead:
-  irm https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.ps1 | iex" ;;
+  irm https://raw.githubusercontent.com/polybet-ai/polybet/main/scripts/install.ps1 | iex" ;;
     *)      fail "Unsupported operating system: $(uname -s). Multica supports macOS, Linux, and Windows." ;;
   esac
 
@@ -65,7 +65,7 @@ detect_os() {
 # ---------------------------------------------------------------------------
 install_cli_brew() {
   info "Installing Multica CLI via Homebrew..."
-  if ! brew tap multica-ai/tap 2>/dev/null; then
+  if ! brew tap polybet-ai/tap 2>/dev/null; then
     fail "Failed to add Homebrew tap. Check your network connection."
   fi
   # brew install exits non-zero if already installed on older Homebrew versions
@@ -73,7 +73,7 @@ install_cli_brew() {
     if brew list "$BREW_PACKAGE" >/dev/null 2>&1; then
       ok "Multica CLI already installed via Homebrew"
     else
-      fail "Failed to install multica via Homebrew."
+      fail "Failed to install polybet via Homebrew."
     fi
   else
     ok "Multica CLI installed via Homebrew"
@@ -91,29 +91,29 @@ install_cli_binary() {
   fi
 
   local version="${latest#v}"
-  local url="https://github.com/multica-ai/multica/releases/download/${latest}/multica-cli-${version}-${OS}-${ARCH}.tar.gz"
+  local url="https://github.com/polybet-ai/polybet/releases/download/${latest}/polybet-cli-${version}-${OS}-${ARCH}.tar.gz"
   local tmp_dir
   tmp_dir=$(mktemp -d)
 
   info "Downloading $url ..."
-  if ! curl -fsSL "$url" -o "$tmp_dir/multica.tar.gz"; then
+  if ! curl -fsSL "$url" -o "$tmp_dir/polybet.tar.gz"; then
     rm -rf "$tmp_dir"
     fail "Failed to download CLI binary."
   fi
 
-  tar -xzf "$tmp_dir/multica.tar.gz" -C "$tmp_dir" multica
+  tar -xzf "$tmp_dir/polybet.tar.gz" -C "$tmp_dir" polybet
 
   # Try /usr/local/bin first, fall back to ~/.local/bin
   local bin_dir="/usr/local/bin"
   if [ -w "$bin_dir" ]; then
-    mv "$tmp_dir/multica" "$bin_dir/multica"
+    mv "$tmp_dir/polybet" "$bin_dir/polybet"
   elif command_exists sudo; then
-    sudo mv "$tmp_dir/multica" "$bin_dir/multica"
+    sudo mv "$tmp_dir/polybet" "$bin_dir/polybet"
   else
     bin_dir="$HOME/.local/bin"
     mkdir -p "$bin_dir"
-    mv "$tmp_dir/multica" "$bin_dir/multica"
-    chmod +x "$bin_dir/multica"
+    mv "$tmp_dir/polybet" "$bin_dir/polybet"
+    chmod +x "$bin_dir/polybet"
     # Add to PATH if not already there
     if ! echo "$PATH" | tr ':' '\n' | grep -q "^$bin_dir$"; then
       export PATH="$bin_dir:$PATH"
@@ -122,7 +122,7 @@ install_cli_binary() {
   fi
 
   rm -rf "$tmp_dir"
-  ok "Multica CLI installed to $bin_dir/multica"
+  ok "Multica CLI installed to $bin_dir/polybet"
 }
 
 add_to_path() {
@@ -201,10 +201,10 @@ upgrade_cli_brew() {
 }
 
 install_cli() {
-  if command_exists multica; then
+  if command_exists polybet; then
     local current_ver
-    # `multica version` outputs "multica v0.1.13 (commit: abc1234)" — extract just the version
-    current_ver=$(multica version 2>/dev/null | awk '{print $2}' || echo "unknown")
+    # `polybet version` outputs "polybet v0.1.13 (commit: abc1234)" — extract just the version
+    current_ver=$(polybet version 2>/dev/null | awk '{print $2}' || echo "unknown")
 
     local latest_ver
     latest_ver=$(get_latest_version)
@@ -226,7 +226,7 @@ install_cli() {
     fi
 
     local new_ver
-    new_ver=$(multica version 2>/dev/null | awk '{print $2}' || echo "unknown")
+    new_ver=$(polybet version 2>/dev/null | awk '{print $2}' || echo "unknown")
     ok "Multica CLI upgraded ($current_ver → $new_ver)"
     return 0
   fi
@@ -238,8 +238,8 @@ install_cli() {
   fi
 
   # Verify
-  if ! command_exists multica; then
-    fail "CLI installed but 'multica' not found on PATH. You may need to restart your shell."
+  if ! command_exists polybet; then
+    fail "CLI installed but 'polybet' not found on PATH. You may need to restart your shell."
   fi
 }
 
@@ -322,7 +322,7 @@ setup_server() {
   info "Waiting for backend to be ready..."
   local ready=false
   for i in $(seq 1 45); do
-    if curl -sf http://localhost:8080/health >/dev/null 2>&1; then
+    if curl -sf http://localhost:7655/health >/dev/null 2>&1; then
       ready=true
       break
     fi
@@ -357,11 +357,11 @@ run_default() {
   printf "\n"
   printf "  ${BOLD}Next: configure your environment${RESET}\n"
   printf "\n"
-  printf "     ${CYAN}multica setup${RESET}                # Connect to Multica Cloud (multica.ai)\n"
-  printf "     ${CYAN}multica setup self-host${RESET}       # Connect to a self-hosted server\n"
+  printf "     ${CYAN}polybet setup${RESET}                # Connect to Multica Cloud (polybet.ai)\n"
+  printf "     ${CYAN}polybet setup self-host${RESET}       # Connect to a self-hosted server\n"
   printf "\n"
   printf "  ${BOLD}Self-hosting?${RESET} Install the server first:\n"
-  printf "     curl -fsSL https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.sh | bash -s -- --with-server\n"
+  printf "     curl -fsSL https://raw.githubusercontent.com/polybet-ai/polybet/main/scripts/install.sh | bash -s -- --with-server\n"
   printf "\n"
 }
 
@@ -385,18 +385,18 @@ run_with_server() {
   printf "${BOLD}${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}\n"
   printf "\n"
   printf "  ${BOLD}Frontend:${RESET}  http://localhost:3000\n"
-  printf "  ${BOLD}Backend:${RESET}   http://localhost:8080\n"
+  printf "  ${BOLD}Backend:${RESET}   http://localhost:7655\n"
   printf "  ${BOLD}Server at:${RESET} %s\n" "$INSTALL_DIR"
   printf "\n"
   printf "  ${BOLD}Next: configure your CLI to connect${RESET}\n"
   printf "\n"
-  printf "     ${CYAN}multica setup self-host${RESET}   # Configure + authenticate + start daemon\n"
+  printf "     ${CYAN}polybet setup self-host${RESET}   # Configure + authenticate + start daemon\n"
   printf "\n"
   printf "  ${BOLD}Login:${RESET} configure ${CYAN}RESEND_API_KEY${RESET} in .env for email codes,\n"
   printf "  or read the generated code from backend logs when Resend is unset.\n"
   printf "\n"
   printf "  ${BOLD}To stop all services:${RESET}\n"
-  printf "     curl -fsSL https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.sh | bash -s -- --stop\n"
+  printf "     curl -fsSL https://raw.githubusercontent.com/polybet-ai/polybet/main/scripts/install.sh | bash -s -- --stop\n"
   printf "\n"
 }
 
@@ -419,8 +419,8 @@ run_stop() {
     warn "No Multica installation found at $INSTALL_DIR"
   fi
 
-  if command_exists multica; then
-    multica daemon stop 2>/dev/null && ok "Daemon stopped" || true
+  if command_exists polybet; then
+    polybet daemon stop 2>/dev/null && ok "Daemon stopped" || true
   fi
 
   printf "\n"
@@ -444,7 +444,7 @@ main() {
         echo "  --with-server   Install CLI + provision a self-host server (Docker)"
         echo "  --stop          Stop a self-hosted installation"
         echo ""
-        echo "After installation, run 'multica setup' to configure your environment."
+        echo "After installation, run 'polybet setup' to configure your environment."
         exit 0
         ;;
       *) warn "Unknown option: $1" ;;

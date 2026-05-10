@@ -2,17 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { Save, Plus, Trash2 } from "lucide-react";
-import { Input } from "@multica/ui/components/ui/input";
-import { Button } from "@multica/ui/components/ui/button";
-import { Card, CardContent } from "@multica/ui/components/ui/card";
+import { Input } from "@polybet/ui/components/ui/input";
+import { Button } from "@polybet/ui/components/ui/button";
+import { Card, CardContent } from "@polybet/ui/components/ui/card";
 import { toast } from "sonner";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useCurrentWorkspace } from "@multica/core/paths";
-import { memberListOptions, workspaceKeys } from "@multica/core/workspace/queries";
-import { api } from "@multica/core/api";
-import type { Workspace, WorkspaceRepo } from "@multica/core/types";
+import { useAuthStore } from "@polybet/core/auth";
+import { useWorkspaceId } from "@polybet/core/hooks";
+import { useCurrentWorkspace } from "@polybet/core/paths";
+import { memberListOptions, workspaceKeys } from "@polybet/core/workspace/queries";
+import { api } from "@polybet/core/api";
+import type { Workspace, WorkspaceRepo } from "@polybet/core/types";
 import { useT } from "../../i18n";
 
 export function RepositoriesTab() {

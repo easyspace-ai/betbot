@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
-import { captureEvent, setPersonProperties } from "@multica/core/analytics";
-import { Button } from "@multica/ui/components/ui/button";
+import { captureEvent, setPersonProperties } from "@polybet/core/analytics";
+import { Button } from "@polybet/ui/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -11,11 +11,11 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
-import { cn } from "@multica/ui/lib/utils";
-import { useScrollFade } from "@multica/ui/hooks/use-scroll-fade";
-import type { AgentRuntime } from "@multica/core/types";
-import { DragStrip } from "@multica/views/platform";
+} from "@polybet/ui/components/ui/dialog";
+import { cn } from "@polybet/ui/lib/utils";
+import { useScrollFade } from "@polybet/ui/hooks/use-scroll-fade";
+import type { AgentRuntime } from "@polybet/core/types";
+import { DragStrip } from "@polybet/views/platform";
 import { StepHeader } from "../components/step-header";
 import { RuntimeAsidePanel } from "../components/runtime-aside-panel";
 import { useRuntimePicker } from "../components/use-runtime-picker";

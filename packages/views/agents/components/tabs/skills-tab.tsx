@@ -4,14 +4,14 @@ import { useState } from "react";
 import { FileText, Info, Plus, Trash2 } from "lucide-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import type { Agent } from "@multica/core/types";
-import { api } from "@multica/core/api";
-import { useWorkspaceId } from "@multica/core/hooks";
+import type { Agent } from "@polybet/core/types";
+import { api } from "@polybet/core/api";
+import { useWorkspaceId } from "@polybet/core/hooks";
 import {
   skillListOptions,
   workspaceKeys,
-} from "@multica/core/workspace/queries";
-import { Button } from "@multica/ui/components/ui/button";
+} from "@polybet/core/workspace/queries";
+import { Button } from "@polybet/ui/components/ui/button";
 import { SkillAddDialog } from "../skill-add-dialog";
 import { useT } from "../../../i18n";
 

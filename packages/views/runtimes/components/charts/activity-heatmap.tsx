@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import type { RuntimeUsage } from "@multica/core/types";
+import type { RuntimeUsage } from "@polybet/core/types";
 import { estimateCost } from "../../utils";
 import { useT } from "../../../i18n";
 

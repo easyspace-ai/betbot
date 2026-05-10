@@ -12,10 +12,10 @@
   },
   "iconLibrary": "lucide",
   "aliases": {
-    "components": "@betbot/ui/components",
-    "ui": "@betbot/ui/components/ui",
-    "hooks": "@betbot/ui/hooks",
-    "lib": "@betbot/ui/lib",
-    "utils": "@betbot/ui/lib/utils"
+    "components": "@polybet/ui/components",
+    "ui": "@polybet/ui/components/ui",
+    "hooks": "@polybet/ui/hooks",
+    "lib": "@polybet/ui/lib",
+    "utils": "@polybet/ui/lib/utils"
   }
 }

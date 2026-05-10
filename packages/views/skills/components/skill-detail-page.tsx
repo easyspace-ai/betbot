@@ -22,23 +22,23 @@ import type {
   Skill,
   SkillFile,
   UpdateSkillRequest,
-} from "@multica/core/types";
+} from "@polybet/core/types";
 import { toast } from "sonner";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { api } from "@multica/core/api";
-import { timeAgo } from "@multica/core/utils";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useWorkspacePaths } from "@multica/core/paths";
+import { api } from "@polybet/core/api";
+import { timeAgo } from "@polybet/core/utils";
+import { useWorkspaceId } from "@polybet/core/hooks";
+import { useWorkspacePaths } from "@polybet/core/paths";
 import {
   agentListOptions,
   memberListOptions,
   selectSkillAssignments,
   skillDetailOptions,
   workspaceKeys,
-} from "@multica/core/workspace/queries";
-import { runtimeListOptions } from "@multica/core/runtimes";
-import { ActorAvatar } from "@multica/ui/components/common/actor-avatar";
-import { Button, buttonVariants } from "@multica/ui/components/ui/button";
+} from "@polybet/core/workspace/queries";
+import { runtimeListOptions } from "@polybet/core/runtimes";
+import { ActorAvatar } from "@polybet/ui/components/common/actor-avatar";
+import { Button, buttonVariants } from "@polybet/ui/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -46,20 +46,20 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
-import { Input } from "@multica/ui/components/ui/input";
-import { Label } from "@multica/ui/components/ui/label";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { Textarea } from "@multica/ui/components/ui/textarea";
+} from "@polybet/ui/components/ui/dialog";
+import { Input } from "@polybet/ui/components/ui/input";
+import { Label } from "@polybet/ui/components/ui/label";
+import { Skeleton } from "@polybet/ui/components/ui/skeleton";
+import { Textarea } from "@polybet/ui/components/ui/textarea";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@multica/ui/components/ui/tooltip";
+} from "@polybet/ui/components/ui/tooltip";
 import { AppLink, useNavigation } from "../../navigation";
 import { useCanEditSkill } from "../hooks/use-can-edit-skill";
-import { useSkillPermissions } from "@multica/core/permissions";
-import { CapabilityBanner } from "@multica/ui/components/common/capability-banner";
+import { useSkillPermissions } from "@polybet/core/permissions";
+import { CapabilityBanner } from "@polybet/ui/components/common/capability-banner";
 import { readOrigin, totalFileCount, type OriginInfo } from "../lib/origin";
 import { FileTree } from "./file-tree";
 import { FileViewer } from "./file-viewer";

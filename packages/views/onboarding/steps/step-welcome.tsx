@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import { ArrowRight, Download, Loader2 } from "lucide-react";
-import { Button, buttonVariants } from "@multica/ui/components/ui/button";
-import { MulticaIcon } from "@multica/ui/components/common/multica-icon";
-import { captureDownloadIntent } from "@multica/core/analytics";
-import { cn } from "@multica/ui/lib/utils";
-import { DragStrip } from "@multica/views/platform";
-import { STATUS_CONFIG } from "@multica/core/issues/config";
-import type { IssueStatus } from "@multica/core/types";
+import { Button, buttonVariants } from "@polybet/ui/components/ui/button";
+import { MulticaIcon } from "@polybet/ui/components/common/polybet-icon";
+import { captureDownloadIntent } from "@polybet/core/analytics";
+import { cn } from "@polybet/ui/lib/utils";
+import { DragStrip } from "@polybet/views/platform";
+import { STATUS_CONFIG } from "@polybet/core/issues/config";
+import type { IssueStatus } from "@polybet/core/types";
 import { StatusIcon } from "../../issues/components/status-icon";
 import { ProviderLogo } from "../../runtimes/components/provider-logo";
 import { useT } from "../../i18n";

@@ -19,7 +19,7 @@ import {
   UserMinus,
   UserPen,
 } from "lucide-react";
-import { Button } from "@multica/ui/components/ui/button";
+import { Button } from "@polybet/ui/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -32,23 +32,23 @@ import {
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
-} from "@multica/ui/components/ui/dropdown-menu";
+} from "@polybet/ui/components/ui/dropdown-menu";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@multica/ui/components/ui/popover";
-import { Switch } from "@multica/ui/components/ui/switch";
+} from "@polybet/ui/components/ui/popover";
+import { Switch } from "@polybet/ui/components/ui/switch";
 import {
   ALL_STATUSES,
   PRIORITY_ORDER,
-} from "@multica/core/issues/config";
+} from "@polybet/core/issues/config";
 import { StatusIcon, PriorityIcon } from ".";
 import { useQuery } from "@tanstack/react-query";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { memberListOptions, agentListOptions } from "@multica/core/workspace/queries";
-import { projectListOptions } from "@multica/core/projects/queries";
-import { labelListOptions } from "@multica/core/labels/queries";
+import { useWorkspaceId } from "@polybet/core/hooks";
+import { memberListOptions, agentListOptions } from "@polybet/core/workspace/queries";
+import { projectListOptions } from "@polybet/core/projects/queries";
+import { labelListOptions } from "@polybet/core/labels/queries";
 import { ProjectIcon } from "../../projects/components/project-icon";
 import { ActorAvatar } from "../../common/actor-avatar";
 import { LabelChip } from "../../labels/label-chip";
@@ -56,14 +56,14 @@ import {
   SORT_OPTIONS,
   CARD_PROPERTY_OPTIONS,
   type ActorFilterValue,
-} from "@multica/core/issues/stores/view-store";
-import { useViewStore, useViewStoreApi } from "@multica/core/issues/stores/view-store-context";
+} from "@polybet/core/issues/stores/view-store";
+import { useViewStore, useViewStoreApi } from "@polybet/core/issues/stores/view-store-context";
 import {
   useIssuesScopeStore,
   type IssuesScope,
-} from "@multica/core/issues/stores/issues-scope-store";
-import { Tooltip, TooltipTrigger, TooltipContent } from "@multica/ui/components/ui/tooltip";
-import type { Issue } from "@multica/core/types";
+} from "@polybet/core/issues/stores/issues-scope-store";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@polybet/ui/components/ui/tooltip";
+import type { Issue } from "@polybet/core/types";
 import { useT } from "../../i18n";
 
 // ---------------------------------------------------------------------------

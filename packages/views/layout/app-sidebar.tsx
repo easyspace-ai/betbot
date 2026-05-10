@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@polybet/ui/lib/utils";
 import { AppLink, useNavigation } from "../navigation";
 import { HelpLauncher } from "./help-launcher";
 import {
@@ -33,12 +33,12 @@ import {
   Zap,
 } from "lucide-react";
 import { WorkspaceAvatar } from "../workspace/workspace-avatar";
-import { ActorAvatar } from "@multica/ui/components/common/actor-avatar";
-import { Tooltip, TooltipTrigger, TooltipContent } from "@multica/ui/components/ui/tooltip";
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@multica/ui/components/ui/collapsible";
+import { ActorAvatar } from "@polybet/ui/components/common/actor-avatar";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@polybet/ui/components/ui/tooltip";
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@polybet/ui/components/ui/collapsible";
 import { StatusIcon } from "../issues/components/status-icon";
-import { useIssueDraftStore } from "@multica/core/issues/stores/draft-store";
-import { useCreateModeStore } from "@multica/core/issues/stores/create-mode-store";
+import { useIssueDraftStore } from "@polybet/core/issues/stores/draft-store";
+import { useCreateModeStore } from "@polybet/core/issues/stores/create-mode-store";
 import {
   Sidebar,
   SidebarContent,
@@ -51,7 +51,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from "@multica/ui/components/ui/sidebar";
+} from "@polybet/ui/components/ui/sidebar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -60,20 +60,20 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@multica/ui/components/ui/dropdown-menu";
-import { useAuthStore } from "@multica/core/auth";
-import { useCurrentWorkspace, useWorkspacePaths, paths } from "@multica/core/paths";
-import { workspaceListOptions, myInvitationListOptions, workspaceKeys } from "@multica/core/workspace/queries";
+} from "@polybet/ui/components/ui/dropdown-menu";
+import { useAuthStore } from "@polybet/core/auth";
+import { useCurrentWorkspace, useWorkspacePaths, paths } from "@polybet/core/paths";
+import { workspaceListOptions, myInvitationListOptions, workspaceKeys } from "@polybet/core/workspace/queries";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { inboxKeys, deduplicateInboxItems } from "@multica/core/inbox/queries";
-import { api, ApiError } from "@multica/core/api";
-import { useModalStore } from "@multica/core/modals";
-import { useMyRuntimesNeedUpdate } from "@multica/core/runtimes/hooks";
-import { pinListOptions } from "@multica/core/pins/queries";
-import { useDeletePin, useReorderPins } from "@multica/core/pins/mutations";
-import { issueDetailOptions } from "@multica/core/issues/queries";
-import { projectDetailOptions } from "@multica/core/projects/queries";
-import type { PinnedItem } from "@multica/core/types";
+import { inboxKeys, deduplicateInboxItems } from "@polybet/core/inbox/queries";
+import { api, ApiError } from "@polybet/core/api";
+import { useModalStore } from "@polybet/core/modals";
+import { useMyRuntimesNeedUpdate } from "@polybet/core/runtimes/hooks";
+import { pinListOptions } from "@polybet/core/pins/queries";
+import { useDeletePin, useReorderPins } from "@polybet/core/pins/mutations";
+import { issueDetailOptions } from "@polybet/core/issues/queries";
+import { projectDetailOptions } from "@polybet/core/projects/queries";
+import type { PinnedItem } from "@polybet/core/types";
 import { useLogout } from "../auth";
 import { ProjectIcon } from "../projects/components/project-icon";
 import { useT } from "../i18n";

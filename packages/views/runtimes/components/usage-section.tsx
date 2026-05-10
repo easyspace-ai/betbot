@@ -3,15 +3,15 @@
 import { useMemo, useState } from "react";
 import { BarChart3, ChevronRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { agentListOptions } from "@multica/core/workspace/queries";
-import type { RuntimeUsage } from "@multica/core/types";
+import { Skeleton } from "@polybet/ui/components/ui/skeleton";
+import { useWorkspaceId } from "@polybet/core/hooks";
+import { agentListOptions } from "@polybet/core/workspace/queries";
+import type { RuntimeUsage } from "@polybet/core/types";
 import {
   runtimeUsageOptions,
   runtimeUsageByAgentOptions,
   runtimeUsageByHourOptions,
-} from "@multica/core/runtimes/queries";
+} from "@polybet/core/runtimes/queries";
 import {
   formatTokens,
   estimateCost,

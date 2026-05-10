@@ -8,24 +8,24 @@ import {
   projectResourcesOptions,
   useCreateProjectResource,
   useDeleteProjectResource,
-} from "@multica/core/projects";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useCurrentWorkspace } from "@multica/core/paths";
+} from "@polybet/core/projects";
+import { useWorkspaceId } from "@polybet/core/hooks";
+import { useCurrentWorkspace } from "@polybet/core/paths";
 import type {
   GithubRepoResourceRef,
   ProjectResource,
-} from "@multica/core/types";
-import { Button } from "@multica/ui/components/ui/button";
+} from "@polybet/core/types";
+import { Button } from "@polybet/ui/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@multica/ui/components/ui/popover";
+} from "@polybet/ui/components/ui/popover";
 import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-} from "@multica/ui/components/ui/tooltip";
+} from "@polybet/ui/components/ui/tooltip";
 import { useT } from "../../i18n";
 
 // Project Resources sidebar section.

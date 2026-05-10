@@ -6,8 +6,8 @@ import {
   captureDownloadIntent,
   captureEvent,
   setPersonProperties,
-} from "@multica/core/analytics";
-import { Button } from "@multica/ui/components/ui/button";
+} from "@polybet/core/analytics";
+import { Button } from "@polybet/ui/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -15,11 +15,11 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
-import { useScrollFade } from "@multica/ui/hooks/use-scroll-fade";
-import { cn } from "@multica/ui/lib/utils";
-import type { AgentRuntime } from "@multica/core/types";
-import { DragStrip } from "@multica/views/platform";
+} from "@polybet/ui/components/ui/dialog";
+import { useScrollFade } from "@polybet/ui/hooks/use-scroll-fade";
+import { cn } from "@polybet/ui/lib/utils";
+import type { AgentRuntime } from "@polybet/core/types";
+import { DragStrip } from "@polybet/views/platform";
 import { StepHeader } from "../components/step-header";
 import { RuntimeAsidePanel } from "../components/runtime-aside-panel";
 import { CompactRuntimeRow } from "../components/compact-runtime-row";
@@ -497,7 +497,7 @@ function CliWaitingStatus({ dialogOpen }: { dialogOpen: boolean }) {
     return () => window.clearInterval(id);
   }, [dialogOpen]);
 
-  // Stage thresholds are rough — `multica setup` typical flow is
+  // Stage thresholds are rough — `polybet setup` typical flow is
   //   ~1s save config → browser-tab auth (user-driven, 5–30s) →
   //   ~2s daemon boot → immediate WS register. So under 15s means
   //   "still normal", 15–45s means "probably stuck on browser auth",
@@ -539,21 +539,21 @@ function CliWaitingStatus({ dialogOpen }: { dialogOpen: boolean }) {
         {stage === "normal" && (
           <>
             {t(($) => $.step_platform.stage_normal_prefix)}
-            <span className="font-mono">{"multica setup"}</span>
+            <span className="font-mono">{"polybet setup"}</span>
             {t(($) => $.step_platform.stage_normal_suffix)}
           </>
         )}
         {stage === "midway" && (
           <>
             {t(($) => $.step_platform.stage_midway_prefix)}
-            <span className="font-mono">{"multica setup"}</span>
+            <span className="font-mono">{"polybet setup"}</span>
             {t(($) => $.step_platform.stage_midway_suffix)}
           </>
         )}
         {stage === "slow" && (
           <>
             {t(($) => $.step_platform.stage_slow_prefix)}
-            <span className="font-mono">{"multica setup"}</span>
+            <span className="font-mono">{"polybet setup"}</span>
             {t(($) => $.step_platform.stage_slow_suffix)}
           </>
         )}

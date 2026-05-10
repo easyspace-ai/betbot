@@ -33,24 +33,24 @@ import type { Editor } from "@tiptap/core";
 import { posToDOMRect } from "@tiptap/core";
 import { NodeSelection } from "@tiptap/pm/state";
 import { toast } from "sonner";
-import { useCreateIssue } from "@multica/core/issues/mutations";
+import { useCreateIssue } from "@polybet/core/issues/mutations";
 import { useT } from "../i18n";
-import { modKey } from "@multica/core/platform";
-import { Toggle } from "@multica/ui/components/ui/toggle";
-import { Separator } from "@multica/ui/components/ui/separator";
+import { modKey } from "@polybet/core/platform";
+import { Toggle } from "@polybet/ui/components/ui/toggle";
+import { Separator } from "@polybet/ui/components/ui/separator";
 import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
   TooltipProvider,
-} from "@multica/ui/components/ui/tooltip";
+} from "@polybet/ui/components/ui/tooltip";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@multica/ui/components/ui/popover";
-import { Input } from "@multica/ui/components/ui/input";
-import { Button } from "@multica/ui/components/ui/button";
+} from "@polybet/ui/components/ui/popover";
+import { Input } from "@polybet/ui/components/ui/input";
+import { Button } from "@polybet/ui/components/ui/button";
 import {
   Bold,
   Italic,

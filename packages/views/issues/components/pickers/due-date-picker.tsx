@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import { CalendarDays } from "lucide-react";
-import type { UpdateIssueRequest } from "@multica/core/types";
-import { Calendar } from "@multica/ui/components/ui/calendar";
+import type { UpdateIssueRequest } from "@polybet/core/types";
+import { Calendar } from "@polybet/ui/components/ui/calendar";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@multica/ui/components/ui/popover";
-import { Button } from "@multica/ui/components/ui/button";
+} from "@polybet/ui/components/ui/popover";
+import { Button } from "@polybet/ui/components/ui/button";
 import { useT } from "../../../i18n";
 
 export function DueDatePicker({

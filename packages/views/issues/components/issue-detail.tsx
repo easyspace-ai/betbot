@@ -19,27 +19,27 @@ import {
   Users,
 } from "lucide-react";
 import { PageHeader } from "../../layout/page-header";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { Button } from "@multica/ui/components/ui/button";
-import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@multica/ui/components/ui/resizable";
-import { Sheet, SheetContent } from "@multica/ui/components/ui/sheet";
-import { useIsMobile } from "@multica/ui/hooks/use-mobile";
+import { Skeleton } from "@polybet/ui/components/ui/skeleton";
+import { Button } from "@polybet/ui/components/ui/button";
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@polybet/ui/components/ui/resizable";
+import { Sheet, SheetContent } from "@polybet/ui/components/ui/sheet";
+import { useIsMobile } from "@polybet/ui/hooks/use-mobile";
 import { ContentEditor, type ContentEditorRef, TitleEditor, useFileDropZone, FileDropOverlay } from "../../editor";
-import { FileUploadButton } from "@multica/ui/components/common/file-upload-button";
+import { FileUploadButton } from "@polybet/ui/components/common/file-upload-button";
 import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-} from "@multica/ui/components/ui/tooltip";
-import { Popover, PopoverTrigger, PopoverContent } from "@multica/ui/components/ui/popover";
-import { Checkbox } from "@multica/ui/components/ui/checkbox";
-import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from "@multica/ui/components/ui/command";
-import { AvatarGroup, AvatarGroupCount } from "@multica/ui/components/ui/avatar";
+} from "@polybet/ui/components/ui/tooltip";
+import { Popover, PopoverTrigger, PopoverContent } from "@polybet/ui/components/ui/popover";
+import { Checkbox } from "@polybet/ui/components/ui/checkbox";
+import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from "@polybet/ui/components/ui/command";
+import { AvatarGroup, AvatarGroupCount } from "@polybet/ui/components/ui/avatar";
 import { ActorAvatar } from "../../common/actor-avatar";
 import { PropRow } from "../../common/prop-row";
-import type { Issue, IssueStatus, IssuePriority, TimelineEntry, UpdateIssueRequest } from "@multica/core/types";
-import { STATUS_CONFIG, PRIORITY_CONFIG } from "@multica/core/issues/config";
-import { useUpdateIssue } from "@multica/core/issues/mutations";
+import type { Issue, IssueStatus, IssuePriority, TimelineEntry, UpdateIssueRequest } from "@polybet/core/types";
+import { STATUS_CONFIG, PRIORITY_CONFIG } from "@polybet/core/issues/config";
+import { useUpdateIssue } from "@polybet/core/issues/mutations";
 import { toast } from "sonner";
 import { StatusIcon, PriorityIcon, StatusPicker, PriorityPicker, DueDatePicker, AssigneePicker, LabelPicker } from ".";
 import { IssueActionsDropdown, useIssueActions } from "../actions";
@@ -51,23 +51,23 @@ import { collectThreadReplies } from "./thread-utils";
 import { AgentLiveCard } from "./agent-live-card";
 import { ExecutionLogSection } from "./execution-log-section";
 import { useQuery } from "@tanstack/react-query";
-import { useAuthStore } from "@multica/core/auth";
-import { useCurrentWorkspace, useWorkspacePaths } from "@multica/core/paths";
-import { useActorName } from "@multica/core/workspace/hooks";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { issueListOptions, issueDetailOptions, childIssuesOptions, issueUsageOptions } from "@multica/core/issues/queries";
-import { memberListOptions, agentListOptions } from "@multica/core/workspace/queries";
-import { useRecentIssuesStore } from "@multica/core/issues/stores";
-import { useIssueSelectionStore } from "@multica/core/issues/stores/selection-store";
+import { useAuthStore } from "@polybet/core/auth";
+import { useCurrentWorkspace, useWorkspacePaths } from "@polybet/core/paths";
+import { useActorName } from "@polybet/core/workspace/hooks";
+import { useWorkspaceId } from "@polybet/core/hooks";
+import { issueListOptions, issueDetailOptions, childIssuesOptions, issueUsageOptions } from "@polybet/core/issues/queries";
+import { memberListOptions, agentListOptions } from "@polybet/core/workspace/queries";
+import { useRecentIssuesStore } from "@polybet/core/issues/stores";
+import { useIssueSelectionStore } from "@polybet/core/issues/stores/selection-store";
 import { BatchActionToolbar } from "./batch-action-toolbar";
 import { useIssueTimeline } from "../hooks/use-issue-timeline";
 import { useIssueReactions } from "../hooks/use-issue-reactions";
 import { useIssueSubscribers } from "../hooks/use-issue-subscribers";
-import { ReactionBar } from "@multica/ui/components/common/reaction-bar";
-import { useFileUpload } from "@multica/core/hooks/use-file-upload";
-import { api } from "@multica/core/api";
-import { timeAgo } from "@multica/core/utils";
-import { cn } from "@multica/ui/lib/utils";
+import { ReactionBar } from "@polybet/ui/components/common/reaction-bar";
+import { useFileUpload } from "@polybet/core/hooks/use-file-upload";
+import { api } from "@polybet/core/api";
+import { timeAgo } from "@polybet/core/utils";
+import { cn } from "@polybet/ui/lib/utils";
 
 import { ProgressRing } from "./progress-ring";
 import { useT } from "../../i18n";

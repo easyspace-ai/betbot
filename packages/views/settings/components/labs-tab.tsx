@@ -2,15 +2,15 @@
 
 import { useState } from "react";
 import { GitCommitHorizontal } from "lucide-react";
-import { Card, CardContent } from "@multica/ui/components/ui/card";
-import { Switch } from "@multica/ui/components/ui/switch";
-import { Label } from "@multica/ui/components/ui/label";
+import { Card, CardContent } from "@polybet/ui/components/ui/card";
+import { Switch } from "@polybet/ui/components/ui/switch";
+import { Label } from "@polybet/ui/components/ui/label";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
-import { useCurrentWorkspace } from "@multica/core/paths";
-import { workspaceKeys } from "@multica/core/workspace/queries";
-import { api } from "@multica/core/api";
-import type { Workspace } from "@multica/core/types";
+import { useCurrentWorkspace } from "@polybet/core/paths";
+import { workspaceKeys } from "@polybet/core/workspace/queries";
+import { api } from "@polybet/core/api";
+import type { Workspace } from "@polybet/core/types";
 import { useT } from "../../i18n";
 
 export function LabsTab() {
@@ -68,7 +68,7 @@ export function LabsTab() {
                   <p className="text-sm text-muted-foreground">
                     {t(($) => $.labs.co_authored_by_description_prefix)}{" "}
                     <code className="rounded bg-muted px-1 py-0.5 text-xs">
-                      {"Co-authored-by: multica-agent <github@multica.ai>"}
+                      {"Co-authored-by: polybet-agent <github@polybet.ai>"}
                     </code>{" "}
                     {t(($) => $.labs.co_authored_by_description_suffix)}
                   </p>

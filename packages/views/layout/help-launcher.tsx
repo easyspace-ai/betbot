@@ -6,12 +6,12 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@multica/ui/components/ui/dropdown-menu";
-import { useModalStore } from "@multica/core/modals";
+} from "@polybet/ui/components/ui/dropdown-menu";
+import { useModalStore } from "@polybet/core/modals";
 import { useT } from "../i18n";
 
-const DOCS_URL = "https://multica.ai/docs";
-const CHANGELOG_URL = "https://multica.ai/changelog";
+const DOCS_URL = "https://polybet.ai/docs";
+const CHANGELOG_URL = "https://polybet.ai/changelog";
 
 export function HelpLauncher() {
   const { t } = useT("layout");

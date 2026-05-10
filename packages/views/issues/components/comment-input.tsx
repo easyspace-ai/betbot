@@ -2,13 +2,13 @@
 
 import { useRef, useState, useCallback } from "react";
 import { ArrowUp, Loader2, Maximize2, Minimize2 } from "lucide-react";
-import { Button } from "@multica/ui/components/ui/button";
-import { Tooltip, TooltipTrigger, TooltipContent } from "@multica/ui/components/ui/tooltip";
-import { cn } from "@multica/ui/lib/utils";
+import { Button } from "@polybet/ui/components/ui/button";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@polybet/ui/components/ui/tooltip";
+import { cn } from "@polybet/ui/lib/utils";
 import { ContentEditor, type ContentEditorRef, useFileDropZone, FileDropOverlay } from "../../editor";
-import { FileUploadButton } from "@multica/ui/components/common/file-upload-button";
-import { useFileUpload } from "@multica/core/hooks/use-file-upload";
-import { api } from "@multica/core/api";
+import { FileUploadButton } from "@polybet/ui/components/common/file-upload-button";
+import { useFileUpload } from "@polybet/core/hooks/use-file-upload";
+import { api } from "@polybet/core/api";
 import { useT } from "../../i18n";
 
 interface CommentInputProps {

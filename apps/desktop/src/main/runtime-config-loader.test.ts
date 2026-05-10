@@ -6,7 +6,7 @@ import { loadRuntimeConfig } from "./runtime-config-loader";
 
 describe("loadRuntimeConfig", () => {
   it("uses dev env and ignores desktop.json during electron-vite dev", async () => {
-    const dir = await mkdtemp(join(tmpdir(), "multica-desktop-config-"));
+    const dir = await mkdtemp(join(tmpdir(), "polybet-desktop-config-"));
     const configPath = join(dir, "desktop.json");
     await writeFile(
       configPath,
@@ -18,8 +18,8 @@ describe("loadRuntimeConfig", () => {
         isDev: true,
         configPath,
         env: {
-          apiUrl: "http://localhost:8080",
-          wsUrl: "ws://localhost:8080/ws",
+          apiUrl: "http://localhost:7655",
+          wsUrl: "ws://localhost:7655/ws",
           appUrl: "http://localhost:3000",
         },
       }),
@@ -27,15 +27,15 @@ describe("loadRuntimeConfig", () => {
       ok: true,
       config: {
         schemaVersion: 1,
-        apiUrl: "http://localhost:8080",
-        wsUrl: "ws://localhost:8080/ws",
+        apiUrl: "http://localhost:7655",
+        wsUrl: "ws://localhost:7655/ws",
         appUrl: "http://localhost:3000",
       },
     });
   });
 
   it("uses cloud defaults when packaged config is absent", async () => {
-    const dir = await mkdtemp(join(tmpdir(), "multica-desktop-config-"));
+    const dir = await mkdtemp(join(tmpdir(), "polybet-desktop-config-"));
     await expect(
       loadRuntimeConfig({
         isDev: false,
@@ -46,15 +46,15 @@ describe("loadRuntimeConfig", () => {
       ok: true,
       config: {
         schemaVersion: 1,
-        apiUrl: "https://api.multica.ai",
-        wsUrl: "wss://api.multica.ai/ws",
-        appUrl: "https://multica.ai",
+        apiUrl: "https://api.polybet.ai",
+        wsUrl: "wss://api.polybet.ai/ws",
+        appUrl: "https://polybet.ai",
       },
     });
   });
 
   it("parses a valid packaged desktop.json", async () => {
-    const dir = await mkdtemp(join(tmpdir(), "multica-desktop-config-"));
+    const dir = await mkdtemp(join(tmpdir(), "polybet-desktop-config-"));
     const configPath = join(dir, "desktop.json");
     await writeFile(
       configPath,
@@ -75,7 +75,7 @@ describe("loadRuntimeConfig", () => {
   });
 
   it("fails closed when packaged desktop.json is invalid", async () => {
-    const dir = await mkdtemp(join(tmpdir(), "multica-desktop-config-"));
+    const dir = await mkdtemp(join(tmpdir(), "polybet-desktop-config-"));
     const configPath = join(dir, "desktop.json");
     await writeFile(configPath, "{");
 

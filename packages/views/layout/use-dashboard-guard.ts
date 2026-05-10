@@ -2,15 +2,15 @@
 
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigationStore } from "@multica/core/navigation";
-import { useAuthStore } from "@multica/core/auth";
+import { useNavigationStore } from "@polybet/core/navigation";
+import { useAuthStore } from "@polybet/core/auth";
 import {
   paths,
   resolvePostAuthDestination,
   useCurrentWorkspace,
   useHasOnboarded,
-} from "@multica/core/paths";
-import { workspaceListOptions } from "@multica/core/workspace";
+} from "@polybet/core/paths";
+import { workspaceListOptions } from "@polybet/core/workspace";
 import { useNavigation } from "../navigation";
 
 /**

@@ -1,5 +1,5 @@
-import { cn } from "@multica/ui/lib/utils";
-import type { AgentRuntime } from "@multica/core/types";
+import { cn } from "@polybet/ui/lib/utils";
+import type { AgentRuntime } from "@polybet/core/types";
 import { ProviderLogo } from "../../runtimes/components/provider-logo";
 import { useT } from "../../i18n";
 

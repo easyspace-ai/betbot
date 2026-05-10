@@ -7,33 +7,33 @@ import type {
   AgentRuntime,
   RuntimeLocalSkillSummary,
   Skill,
-} from "@multica/core/types";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceId } from "@multica/core/hooks";
+} from "@polybet/core/types";
+import { useAuthStore } from "@polybet/core/auth";
+import { useWorkspaceId } from "@polybet/core/hooks";
 import {
   runtimeListOptions,
   runtimeLocalSkillsKeys,
   runtimeLocalSkillsOptions,
   resolveRuntimeLocalSkillImport,
-} from "@multica/core/runtimes";
+} from "@polybet/core/runtimes";
 import {
   skillDetailOptions,
   workspaceKeys,
-} from "@multica/core/workspace/queries";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
-import { Label } from "@multica/ui/components/ui/label";
-import { Badge } from "@multica/ui/components/ui/badge";
+} from "@polybet/core/workspace/queries";
+import { Button } from "@polybet/ui/components/ui/button";
+import { Input } from "@polybet/ui/components/ui/input";
+import { Label } from "@polybet/ui/components/ui/label";
+import { Badge } from "@polybet/ui/components/ui/badge";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@multica/ui/components/ui/select";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { Textarea } from "@multica/ui/components/ui/textarea";
-import { useScrollFade } from "@multica/ui/hooks/use-scroll-fade";
+} from "@polybet/ui/components/ui/select";
+import { Skeleton } from "@polybet/ui/components/ui/skeleton";
+import { Textarea } from "@polybet/ui/components/ui/textarea";
+import { useScrollFade } from "@polybet/ui/hooks/use-scroll-fade";
 import { toast } from "sonner";
 import { useT } from "../../i18n";
 

@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { IssueDetail } from "@multica/views/issues/components";
-import { ErrorBoundary } from "@multica/ui/components/common/error-boundary";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { issueDetailOptions } from "@multica/core/issues/queries";
+import { IssueDetail } from "@polybet/views/issues/components";
+import { ErrorBoundary } from "@polybet/ui/components/common/error-boundary";
+import { useWorkspaceId } from "@polybet/core/hooks";
+import { issueDetailOptions } from "@polybet/core/issues/queries";
 import { useDocumentTitle } from "@/hooks/use-document-title";
 
 export function IssueDetailPage() {

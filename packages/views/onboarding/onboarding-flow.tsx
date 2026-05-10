@@ -3,9 +3,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { captureEvent } from "@multica/core/analytics";
-import { setCurrentWorkspace } from "@multica/core/platform";
-import { useAuthStore } from "@multica/core/auth";
+import { captureEvent } from "@polybet/core/analytics";
+import { setCurrentWorkspace } from "@polybet/core/platform";
+import { useAuthStore } from "@polybet/core/auth";
 import {
   completeOnboarding,
   ONBOARDING_STEP_ORDER,
@@ -13,10 +13,10 @@ import {
   type OnboardingCompletionPath,
   type OnboardingStep,
   type QuestionnaireAnswers,
-} from "@multica/core/onboarding";
-import { workspaceListOptions, workspaceKeys } from "@multica/core/workspace/queries";
-import type { Agent, AgentRuntime, Workspace } from "@multica/core/types";
-import { DragStrip } from "@multica/views/platform";
+} from "@polybet/core/onboarding";
+import { workspaceListOptions, workspaceKeys } from "@polybet/core/workspace/queries";
+import type { Agent, AgentRuntime, Workspace } from "@polybet/core/types";
+import { DragStrip } from "@polybet/views/platform";
 import { StepHeader } from "./components/step-header";
 import { StepWelcome } from "./steps/step-welcome";
 import { StepQuestionnaire } from "./steps/step-questionnaire";

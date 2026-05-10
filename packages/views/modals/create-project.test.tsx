@@ -3,17 +3,17 @@ import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 
 const longRepoUrl =
-  "https://github.com/multica-ai/a-very-long-repository-name-that-needs-a-tooltip";
+  "https://github.com/polybet-ai/a-very-long-repository-name-that-needs-a-tooltip";
 
 vi.mock("@tanstack/react-query", () => ({
   useQuery: () => ({ data: [] }),
 }));
 
-vi.mock("@multica/core/projects/mutations", () => ({
+vi.mock("@polybet/core/projects/mutations", () => ({
   useCreateProject: () => ({ mutateAsync: vi.fn() }),
 }));
 
-vi.mock("@multica/core/projects", () => ({
+vi.mock("@polybet/core/projects", () => ({
   useProjectDraftStore: (selector: (state: unknown) => unknown) =>
     selector({
       draft: {
@@ -30,11 +30,11 @@ vi.mock("@multica/core/projects", () => ({
     }),
 }));
 
-vi.mock("@multica/core/hooks", () => ({
+vi.mock("@polybet/core/hooks", () => ({
   useWorkspaceId: () => "workspace-1",
 }));
 
-vi.mock("@multica/core/paths", () => ({
+vi.mock("@polybet/core/paths", () => ({
   useCurrentWorkspace: () => ({
     id: "workspace-1",
     name: "Test Workspace",
@@ -46,12 +46,12 @@ vi.mock("@multica/core/paths", () => ({
   }),
 }));
 
-vi.mock("@multica/core/workspace/queries", () => ({
+vi.mock("@polybet/core/workspace/queries", () => ({
   memberListOptions: () => ({ queryKey: ["members"], queryFn: vi.fn() }),
   agentListOptions: () => ({ queryKey: ["agents"], queryFn: vi.fn() }),
 }));
 
-vi.mock("@multica/core/workspace/hooks", () => ({
+vi.mock("@polybet/core/workspace/hooks", () => ({
   useActorName: () => ({ getActorName: vi.fn() }),
 }));
 
@@ -85,13 +85,13 @@ vi.mock("../common/actor-avatar", () => ({
   ActorAvatar: () => <span data-testid="actor-avatar" />,
 }));
 
-vi.mock("@multica/ui/components/ui/dialog", () => ({
+vi.mock("@polybet/ui/components/ui/dialog", () => ({
   Dialog: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
   DialogContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
   DialogTitle: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));
 
-vi.mock("@multica/ui/components/ui/dropdown-menu", () => ({
+vi.mock("@polybet/ui/components/ui/dropdown-menu", () => ({
   DropdownMenu: ({ children }: { children: React.ReactNode }) => <>{children}</>,
   DropdownMenuTrigger: ({ render }: { render: React.ReactNode }) => <>{render}</>,
   DropdownMenuContent: ({ children }: { children: React.ReactNode }) => <>{children}</>,
@@ -108,13 +108,13 @@ vi.mock("@multica/ui/components/ui/dropdown-menu", () => ({
   ),
 }));
 
-vi.mock("@multica/ui/components/ui/popover", () => ({
+vi.mock("@polybet/ui/components/ui/popover", () => ({
   Popover: ({ children }: { children: React.ReactNode }) => <>{children}</>,
   PopoverTrigger: ({ render }: { render: React.ReactNode }) => <>{render}</>,
   PopoverContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));
 
-vi.mock("@multica/ui/components/ui/tooltip", () => ({
+vi.mock("@polybet/ui/components/ui/tooltip", () => ({
   Tooltip: ({ children }: { children: React.ReactNode }) => <>{children}</>,
   TooltipTrigger: ({ render }: { render: React.ReactNode }) => <>{render}</>,
   TooltipContent: ({ children }: { children: React.ReactNode }) => (
@@ -122,7 +122,7 @@ vi.mock("@multica/ui/components/ui/tooltip", () => ({
   ),
 }));
 
-vi.mock("@multica/ui/components/ui/button", () => ({
+vi.mock("@polybet/ui/components/ui/button", () => ({
   Button: ({
     children,
     disabled,
@@ -140,11 +140,11 @@ vi.mock("@multica/ui/components/ui/button", () => ({
   ),
 }));
 
-vi.mock("@multica/ui/components/common/emoji-picker", () => ({
+vi.mock("@polybet/ui/components/common/emoji-picker", () => ({
   EmojiPicker: () => null,
 }));
 
-vi.mock("@multica/ui/lib/utils", () => ({
+vi.mock("@polybet/ui/lib/utils", () => ({
   cn: (...values: Array<string | false | null | undefined>) =>
     values.filter(Boolean).join(" "),
 }));

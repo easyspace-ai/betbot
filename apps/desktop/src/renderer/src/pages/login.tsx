@@ -1,6 +1,6 @@
-import { LoginPage } from "@multica/views/auth";
-import { DragStrip } from "@multica/views/platform";
-import { MulticaIcon } from "@multica/ui/components/common/multica-icon";
+import { LoginPage } from "@polybet/views/auth";
+import { DragStrip } from "@polybet/views/platform";
+import { MulticaIcon } from "@polybet/ui/components/common/polybet-icon";
 
 function requireRuntimeAppUrl(): string {
   const runtimeConfig = window.desktopAPI.runtimeConfig;
@@ -16,7 +16,7 @@ export function DesktopLoginPage() {
   const webUrl = requireRuntimeAppUrl();
   const handleGoogleLogin = () => {
     // Open web login page in the default browser with platform=desktop flag.
-    // The web callback will redirect back via multica:// deep link with the token.
+    // The web callback will redirect back via polybet:// deep link with the token.
     window.desktopAPI.openExternal(
       `${webUrl}/login?platform=desktop`,
     );

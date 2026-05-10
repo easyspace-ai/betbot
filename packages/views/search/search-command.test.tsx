@@ -2,7 +2,7 @@ import { act, type ReactNode } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { I18nProvider } from "@multica/core/i18n/react";
+import { I18nProvider } from "@polybet/core/i18n/react";
 import { SearchCommand } from "./search-command";
 import { useSearchStore } from "./search-store";
 import enCommon from "../locales/en/common.json";
@@ -48,7 +48,7 @@ const {
   mockSetTheme: vi.fn(),
   mockTheme: { current: "system" as "light" | "dark" | "system" },
   mockPathname: { current: "/ws-test/issues" as string },
-  mockGetShareableUrl: vi.fn((p: string) => `https://app.multica/${p}`),
+  mockGetShareableUrl: vi.fn((p: string) => `https://app.polybet/${p}`),
   mockWorkspaces: {
     current: [] as Array<{ id: string; name: string; slug: string }>,
   },
@@ -60,25 +60,25 @@ const {
   mockClipboardWrite: vi.fn(() => Promise.resolve()),
 }));
 
-vi.mock("@multica/core/api", () => ({
+vi.mock("@polybet/core/api", () => ({
   api: {
     searchIssues: mockSearchIssues,
     searchProjects: mockSearchProjects,
   },
 }));
 
-vi.mock("@multica/core/issues/stores", () => ({
+vi.mock("@polybet/core/issues/stores", () => ({
   useRecentIssuesStore: (selector?: (state: { items: typeof mockRecentItems.current }) => unknown) => {
     const state = { items: mockRecentItems.current };
     return selector ? selector(state) : state;
   },
 }));
 
-vi.mock("@multica/core", () => ({
+vi.mock("@polybet/core", () => ({
   useWorkspaceId: () => "ws-test",
 }));
 
-vi.mock("@multica/core/paths", () => ({
+vi.mock("@polybet/core/paths", () => ({
   paths: {
     workspace: (slug: string) => ({
       issues: () => `/${slug}/issues`,
@@ -99,17 +99,17 @@ vi.mock("@multica/core/paths", () => ({
   }),
 }));
 
-vi.mock("@multica/core/issues/queries", () => ({
+vi.mock("@polybet/core/issues/queries", () => ({
   issueDetailOptions: (_wsId: string, id: string) => ({
     queryKey: ["issues", "ws-test", "detail", id],
   }),
 }));
 
-vi.mock("@multica/core/workspace/queries", () => ({
+vi.mock("@polybet/core/workspace/queries", () => ({
   workspaceListOptions: () => ({ queryKey: ["workspaces", "list"], enabled: false }),
 }));
 
-vi.mock("@multica/core/modals", () => ({
+vi.mock("@polybet/core/modals", () => ({
   useModalStore: Object.assign(vi.fn(), {
     getState: () => ({ open: mockOpenModal }),
   }),
@@ -143,7 +143,7 @@ vi.mock("../navigation", () => ({
   }),
 }));
 
-vi.mock("@multica/ui/components/common/theme-provider", () => ({
+vi.mock("@polybet/ui/components/common/theme-provider", () => ({
   useTheme: () => ({ theme: mockTheme.current, setTheme: mockSetTheme }),
 }));
 
@@ -161,7 +161,7 @@ describe("SearchCommand", () => {
     mockSetTheme.mockReset();
     mockTheme.current = "system";
     mockPathname.current = "/ws-test/issues";
-    mockGetShareableUrl.mockReset().mockImplementation((p: string) => `https://app.multica/${p}`);
+    mockGetShareableUrl.mockReset().mockImplementation((p: string) => `https://app.polybet/${p}`);
     mockWorkspaces.current = [];
     mockCurrentWorkspace.current = null;
     mockOpenModal.mockReset();
@@ -318,7 +318,7 @@ describe("SearchCommand", () => {
     await user.click(linkItem);
 
     expect(mockGetShareableUrl).toHaveBeenCalledWith("/ws-test/issues/issue-1");
-    expect(mockClipboardWrite).toHaveBeenCalledWith("https://app.multica//ws-test/issues/issue-1");
+    expect(mockClipboardWrite).toHaveBeenCalledWith("https://app.polybet//ws-test/issues/issue-1");
     expect(mockToastSuccess).toHaveBeenCalledWith("Link copied");
 
     // Reopen palette and test identifier copy

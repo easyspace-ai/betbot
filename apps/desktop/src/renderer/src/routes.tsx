@@ -12,18 +12,17 @@ import { AutopilotDetailPage } from "./pages/autopilot-detail-page";
 import { SkillDetailPage } from "./pages/skill-detail-page";
 import { AgentDetailPage } from "./pages/agent-detail-page";
 import { RuntimeDetailPage } from "./pages/runtime-detail-page";
-import { IssuesPage } from "@multica/views/issues/components";
-import { ProjectsPage } from "@multica/views/projects/components";
-import { AutopilotsPage } from "@multica/views/autopilots/components";
-import { MyIssuesPage } from "@multica/views/my-issues";
-import { SkillsPage } from "@multica/views/skills";
+import { IssuesPage } from "@polybet/views/issues/components";
+import { ProjectsPage } from "@polybet/views/projects/components";
+import { AutopilotsPage } from "@polybet/views/autopilots/components";
+import { MyIssuesPage } from "@polybet/views/my-issues";
+import { SkillsPage } from "@polybet/views/skills";
 import { DesktopRuntimesPage } from "./components/desktop-runtimes-page";
-import { AgentsPage } from "@multica/views/agents";
-import { InboxPage } from "@multica/views/inbox";
-import { SettingsPage } from "@multica/views/settings";
-import { ErrorBoundary } from "@multica/ui/components/common/error-boundary";
-import { Download, Server } from "lucide-react";
-import { DaemonSettingsTab } from "./components/daemon-settings-tab";
+import { AgentsPage } from "@polybet/views/agents";
+import { InboxPage } from "@polybet/views/inbox";
+import { SettingsPage } from "@polybet/views/settings";
+import { ErrorBoundary } from "@polybet/ui/components/common/error-boundary";
+import { Download } from "lucide-react";
 import { UpdatesSettingsTab } from "./components/updates-settings-tab";
 import { WorkspaceRouteLayout } from "./components/workspace-route-layout";
 
@@ -151,12 +150,6 @@ export const appRoutes: RouteObject[] = [
             element: (
               <SettingsPage
                 extraAccountTabs={[
-                  {
-                    value: "daemon",
-                    label: "Daemon",
-                    icon: Server,
-                    content: <DaemonSettingsTab />,
-                  },
                   {
                     value: "updates",
                     label: "Updates",

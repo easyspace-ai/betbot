@@ -1,6 +1,6 @@
-import { app } from "electron";
 import { readFile } from "fs/promises";
 import { join } from "path";
+import { getUserProfileHomeDir } from "./user-profile-paths";
 import {
   DEFAULT_RUNTIME_CONFIG,
   parseRuntimeConfig,
@@ -41,7 +41,7 @@ export async function loadRuntimeConfig(options: {
 }
 
 export function desktopConfigPath(): string {
-  return join(app.getPath("home"), ".multica", "desktop.json");
+  return join(getUserProfileHomeDir(), ".polybet", "desktop.json");
 }
 
 function isMissingFileError(err: unknown): boolean {

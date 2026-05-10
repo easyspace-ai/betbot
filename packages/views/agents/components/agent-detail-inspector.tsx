@@ -12,29 +12,29 @@ import type {
   Agent,
   AgentRuntime,
   MemberWithUser,
-} from "@multica/core/types";
+} from "@polybet/core/types";
 import {
   AGENT_DESCRIPTION_MAX_LENGTH,
   type AgentPresenceDetail,
-} from "@multica/core/agents";
-import { api } from "@multica/core/api";
-import { useFileUpload } from "@multica/core/hooks/use-file-upload";
-import { isImeComposing, timeAgo } from "@multica/core/utils";
-import { Button } from "@multica/ui/components/ui/button";
+} from "@polybet/core/agents";
+import { api } from "@polybet/core/api";
+import { useFileUpload } from "@polybet/core/hooks/use-file-upload";
+import { isImeComposing, timeAgo } from "@polybet/core/utils";
+import { Button } from "@polybet/ui/components/ui/button";
 import { ActorAvatar } from "../../common/actor-avatar";
-import { Input } from "@multica/ui/components/ui/input";
+import { Input } from "@polybet/ui/components/ui/input";
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
+} from "@polybet/ui/components/ui/dialog";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@multica/ui/components/ui/popover";
+} from "@polybet/ui/components/ui/popover";
 import { PropRow } from "../../common/prop-row";
 import { availabilityConfig } from "../presence";
 import { CharCounter } from "./char-counter";

@@ -1,5 +1,5 @@
 {
-  "name": "@betbot/core",
+  "name": "@polybet/core",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -99,7 +99,7 @@
     "react": "catalog:"
   },
   "devDependencies": {
-    "@betbot/tsconfig": "workspace:*",
+    "@polybet/tsconfig": "workspace:*",
     "@types/react": "catalog:",
     "jsdom": "catalog:",
     "typescript": "catalog:",

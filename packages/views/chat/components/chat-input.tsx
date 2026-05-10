@@ -2,11 +2,11 @@
 
 import type { ReactNode } from "react";
 import { useRef, useState } from "react";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@polybet/ui/lib/utils";
 import { ContentEditor, type ContentEditorRef } from "../../editor";
-import { SubmitButton } from "@multica/ui/components/common/submit-button";
-import { useChatStore, DRAFT_NEW_SESSION } from "@multica/core/chat";
-import { createLogger } from "@multica/core/logger";
+import { SubmitButton } from "@polybet/ui/components/common/submit-button";
+import { useChatStore, DRAFT_NEW_SESSION } from "@polybet/core/chat";
+import { createLogger } from "@polybet/core/logger";
 import { useT } from "../../i18n";
 
 const logger = createLogger("chat.ui");

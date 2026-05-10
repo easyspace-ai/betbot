@@ -26,28 +26,28 @@ import {
 import { Command as CommandPrimitive } from "cmdk";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import type { SearchIssueResult, SearchProjectResult } from "@multica/core/types";
-import { api } from "@multica/core/api";
-import { useRecentIssuesStore } from "@multica/core/issues/stores";
-import { issueDetailOptions } from "@multica/core/issues/queries";
-import { useWorkspaceId } from "@multica/core";
-import { paths, useCurrentWorkspace, useWorkspacePaths } from "@multica/core/paths";
-import type { WorkspacePaths } from "@multica/core/paths";
-import { useModalStore } from "@multica/core/modals";
-import { workspaceListOptions } from "@multica/core/workspace/queries";
+import type { SearchIssueResult, SearchProjectResult } from "@polybet/core/types";
+import { api } from "@polybet/core/api";
+import { useRecentIssuesStore } from "@polybet/core/issues/stores";
+import { issueDetailOptions } from "@polybet/core/issues/queries";
+import { useWorkspaceId } from "@polybet/core";
+import { paths, useCurrentWorkspace, useWorkspacePaths } from "@polybet/core/paths";
+import type { WorkspacePaths } from "@polybet/core/paths";
+import { useModalStore } from "@polybet/core/modals";
+import { workspaceListOptions } from "@polybet/core/workspace/queries";
 import { StatusIcon } from "../issues/components";
 import { ProjectIcon } from "../projects/components/project-icon";
-import { STATUS_CONFIG } from "@multica/core/issues/config";
-import { PROJECT_STATUS_CONFIG } from "@multica/core/projects/config";
-import type { ProjectStatus } from "@multica/core/types";
+import { STATUS_CONFIG } from "@polybet/core/issues/config";
+import { PROJECT_STATUS_CONFIG } from "@polybet/core/projects/config";
+import type { ProjectStatus } from "@polybet/core/types";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@multica/ui/components/ui/dialog";
-import { useTheme } from "@multica/ui/components/common/theme-provider";
+} from "@polybet/ui/components/ui/dialog";
+import { useTheme } from "@polybet/ui/components/common/theme-provider";
 import { useNavigation } from "../navigation";
 import { useT } from "../i18n";
 import { useSearchStore } from "./search-store";

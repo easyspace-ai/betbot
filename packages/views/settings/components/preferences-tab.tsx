@@ -1,16 +1,16 @@
 "use client";
 
 import { toast } from "sonner";
-import { useTheme } from "@multica/ui/components/common/theme-provider";
-import { cn } from "@multica/ui/lib/utils";
+import { useTheme } from "@polybet/ui/components/common/theme-provider";
+import { cn } from "@polybet/ui/lib/utils";
 import {
   DEFAULT_LOCALE,
   SUPPORTED_LOCALES,
   type SupportedLocale,
-} from "@multica/core/i18n";
-import { useLocaleAdapter } from "@multica/core/i18n/react";
-import { useAuthStore } from "@multica/core/auth";
-import { api } from "@multica/core/api";
+} from "@polybet/core/i18n";
+import { useLocaleAdapter } from "@polybet/core/i18n/react";
+import { useAuthStore } from "@polybet/core/auth";
+import { api } from "@polybet/core/api";
 import { useT } from "../../i18n";
 
 const LIGHT_COLORS = {

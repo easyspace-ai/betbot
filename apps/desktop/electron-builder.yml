@@ -1,5 +1,5 @@
-appId: ai.betbot.desktop
-productName: Betbot
+appId: ai.polybet.desktop
+productName: polybet
 electronVersion: 39.2.6
 directories:
   buildResources: build
@@ -10,11 +10,14 @@ files:
   - "!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}"
   - "!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}"
 protocols:
-  - name: Betbot
+  - name: polybet
     schemes:
-      - betbot
+      - polybet
 asarUnpack:
   - resources/**
+  - node_modules/which
+  - node_modules/isexe
+  - node_modules/cross-spawn
 mac:
   # Disable signing for local dev builds - set CSC_IDENTITY_AUTO_DISCOVERY
   # or CODE_SIGNING_KEYCHAIN in CI to enable
@@ -23,24 +26,24 @@ mac:
   target:
     - dmg
     - zip
-  # Hardcoded name avoids the `@betbot/desktop-*` subdirectory that
+  # Hardcoded name avoids the `@polybet/desktop-*` subdirectory that
   # `${name}` produces for scoped package names.
-  # Naming scheme: betbot-desktop-<version>-<platform>-<arch>.<ext>
+  # Naming scheme: polybet-desktop-<version>-<platform>-<arch>.<ext>
   # so the filename alone surfaces kind, version, platform, and CPU arch.
-  artifactName: betbot-desktop-${version}-mac-${arch}.${ext}
+  artifactName: polybet-desktop-${version}-mac-${arch}.${ext}
   # Notarize via notarytool. Requires APPLE_ID + APPLE_APP_SPECIFIC_PASSWORD
   # + APPLE_TEAM_ID env vars at package time. Non-mac contributors are
   # unaffected because `pnpm package` already requires the Developer ID
   # signing cert — notarization is a strict superset.
   notarize: true
 dmg:
-  artifactName: betbot-desktop-${version}-mac-${arch}.${ext}
+  artifactName: polybet-desktop-${version}-mac-${arch}.${ext}
 linux:
   target:
     - AppImage
     - deb
     - rpm
-  artifactName: betbot-desktop-${version}-linux-${arch}.${ext}
+  artifactName: polybet-desktop-${version}-linux-${arch}.${ext}
 rpm:
   # Disable RPM build-id symlinks. Electron apps embed the upstream Electron
   # binary, whose GNU build-id is identical across every app shipping the same
@@ -52,15 +55,14 @@ rpm:
 win:
   target:
     - nsis
-  artifactName: betbot-desktop-${version}-windows-${arch}.${ext}
+  artifactName: polybet-desktop-${version}-windows-${arch}.${ext}
 publish:
   provider: github
-  owner: betbot-ai
-  repo: betbot
+  owner: easyspace-ai
+  repo: polybet
   # Align with our CLI release flow which pre-creates a *published* GitHub
   # Release via `gh release create`. The electron-builder default of
   # `releaseType: draft` conflicts with `existingType=release` and causes
   # uploads of the DMG/ZIP/blockmaps/latest-mac.yml to be silently skipped,
   # which breaks electron-updater auto-update on installed clients.
   releaseType: release
-asar: false

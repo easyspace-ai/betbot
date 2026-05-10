@@ -1,7 +1,7 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import { act, render, screen } from "@testing-library/react";
-import type { AgentRuntime } from "@multica/core/types";
-import { I18nProvider } from "@multica/core/i18n/react";
+import type { AgentRuntime } from "@polybet/core/types";
+import { I18nProvider } from "@polybet/core/i18n/react";
 import enCommon from "../../locales/en/common.json";
 import enOnboarding from "../../locales/en/onboarding.json";
 
@@ -23,7 +23,7 @@ const mocks = vi.hoisted(() => ({
   },
 }));
 
-vi.mock("@multica/core/analytics", () => ({
+vi.mock("@polybet/core/analytics", () => ({
   captureEvent: mocks.captureEvent,
   setPersonProperties: mocks.setPersonProperties,
 }));

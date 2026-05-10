@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, waitFor, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ReactElement, ReactNode } from "react";
-import { I18nProvider } from "@multica/core/i18n/react";
+import { I18nProvider } from "@polybet/core/i18n/react";
 import enCommon from "../locales/en/common.json";
 import enAuth from "../locales/en/auth.json";
 import enSettings from "../locales/en/settings.json";
@@ -43,7 +43,7 @@ vi.mock("@tanstack/react-query", async () => {
   return { ...actual, useQueryClient: () => ({ setQueryData: mockSetQueryData }) };
 });
 
-vi.mock("@multica/core/auth", () => ({
+vi.mock("@polybet/core/auth", () => ({
   useAuthStore: Object.assign(
     // Zustand hook form — component may call useAuthStore(selector)
     (selector?: (s: unknown) => unknown) => {
@@ -59,7 +59,7 @@ vi.mock("@multica/core/auth", () => ({
   ),
 }));
 
-vi.mock("@multica/core/api", () => ({
+vi.mock("@polybet/core/api", () => ({
   api: {
     listWorkspaces: mockApiListWorkspaces,
     verifyCode: mockApiVerifyCode,
@@ -69,7 +69,7 @@ vi.mock("@multica/core/api", () => ({
   },
 }));
 
-vi.mock("@multica/core/types", () => ({}));
+vi.mock("@polybet/core/types", () => ({}));
 
 // ---------------------------------------------------------------------------
 // Import after mocks
@@ -117,7 +117,7 @@ describe("LoginPage", () => {
   it("renders email form with 'Sign in to Multica' title", () => {
     renderWithI18n(<LoginPage onSuccess={onSuccess} />);
     expect(
-      screen.getByText(/sign in to multica/i),
+      screen.getByText(/sign in to polybet/i),
     ).toBeInTheDocument();
     expect(
       screen.getByText(/enter your email to get a login code/i),
@@ -490,7 +490,7 @@ describe("LoginPage", () => {
     );
 
     expect(
-      screen.getByText(/sign in to multica/i),
+      screen.getByText(/sign in to polybet/i),
     ).toBeInTheDocument();
   });
 
@@ -676,7 +676,7 @@ describe("LoginPage", () => {
     await user.click(screen.getByRole("button", { name: /back/i }));
 
     expect(
-      screen.getByText(/sign in to multica/i),
+      screen.getByText(/sign in to polybet/i),
     ).toBeInTheDocument();
   });
 
@@ -692,7 +692,7 @@ describe("validateCliCallback", () => {
   });
 
   it("accepts http://127.0.0.1", () => {
-    expect(validateCliCallback("http://127.0.0.1:8080/cb")).toBe(true);
+    expect(validateCliCallback("http://127.0.0.1:7655/cb")).toBe(true);
   });
 
   it("accepts 10.x.x.x private IPs", () => {
@@ -712,7 +712,7 @@ describe("validateCliCallback", () => {
 
   it("accepts 192.168.x.x private IPs", () => {
     expect(validateCliCallback("http://192.168.1.131:41117/callback")).toBe(true);
-    expect(validateCliCallback("http://192.168.0.1:8080/cb")).toBe(true);
+    expect(validateCliCallback("http://192.168.0.1:7655/cb")).toBe(true);
   });
 
   it("rejects https:// URLs", () => {
