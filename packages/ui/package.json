@@ -56,7 +56,9 @@
     "react-dom": "catalog:"
   },
   "devDependencies": {
+    "@polybet/eslint-config": "workspace:*",
     "@polybet/tsconfig": "workspace:*",
+    "eslint": "^9.28.0",
     "@types/linkify-it": "^5.0.0",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",

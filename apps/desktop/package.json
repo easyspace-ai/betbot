@@ -57,6 +57,7 @@
   },
   "devDependencies": {
     "@electron-toolkit/tsconfig": "^2.0.0",
+    "@polybet/eslint-config": "workspace:*",
     "@polybet/tsconfig": "workspace:*",
     "@tailwindcss/vite": "^4",
     "@testing-library/jest-dom": "catalog:",
@@ -68,6 +69,7 @@
     "electron": "^39.2.6",
     "electron-builder": "^26.0.12",
     "electron-vite": "^5.0.0",
+    "eslint": "^9.28.0",
     "jsdom": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",

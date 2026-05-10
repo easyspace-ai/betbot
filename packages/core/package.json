@@ -99,7 +99,9 @@
     "react": "catalog:"
   },
   "devDependencies": {
+    "@polybet/eslint-config": "workspace:*",
     "@polybet/tsconfig": "workspace:*",
+    "eslint": "^9.28.0",
     "@types/react": "catalog:",
     "jsdom": "catalog:",
     "typescript": "catalog:",
