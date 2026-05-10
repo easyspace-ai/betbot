@@ -102,6 +102,8 @@
     "@polybet/eslint-config": "workspace:*",
     "@polybet/tsconfig": "workspace:*",
     "eslint": "^9.28.0",
+    "@tanstack/react-query": "catalog:",
+    "@tanstack/react-table": "catalog:",
     "@testing-library/dom": "catalog:",
     "@testing-library/jest-dom": "catalog:",
     "@testing-library/react": "catalog:",
@@ -110,9 +112,15 @@
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "catalog:",
     "eslint-plugin-i18next": "catalog:",
+    "i18next": "catalog:",
     "jsdom": "catalog:",
+    "lucide-react": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-i18next": "catalog:",
     "rehype-sanitize": "^6.0.0",
     "typescript": "catalog:",
-    "vitest": "catalog:"
+    "vitest": "catalog:",
+    "zustand": "catalog:"
   }
 }
